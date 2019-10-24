@@ -1,8 +1,3 @@
-/* File: point.h */
-/* Tanggal: 28 Agustus 2016 */
-/* *** Definisi ABSTRACT DATA TYPE POINT *** */
-
-
 #include "point.h"
 #include <math.h>
 #include <stdio.h>
