@@ -1,6 +1,6 @@
 #include "bangunan.h"
-#include "boolean.h"
-#include "point.h"
+#include "ADT/boolean.h"
+#include "ADT/point.h"
 
 int getArmy(Bangunan B)
 {

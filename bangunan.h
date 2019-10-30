@@ -1,8 +1,8 @@
 #ifndef BANGUNAN_H
 #define BANGUNAN_H
 
-#include "boolean.h"
-#include "point.h"
+#include "ADT/boolean.h"
+#include "ADT/point.h"
 
 typedef struct {
 	int level;
