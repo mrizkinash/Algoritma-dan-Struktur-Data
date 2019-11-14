@@ -3,6 +3,7 @@
 
 #include "ADT/boolean.h"
 #include "ADT/point.h"
+#include "array.h"
 
 typedef struct {
 	int level;
@@ -14,6 +15,8 @@ typedef struct {
 	char type;
 	POINT P;
 } Bangunan;
+
+typedef TabInt Bangunan;
 
 #define AbsisBangunan(B) ((B).P).X
 #define OrdinatBangunan(B) ((B).P).Y
