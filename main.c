@@ -5,7 +5,8 @@
 #include "ADT/queue.h"
 #include "ADT/stackt.h"
 #include "ADT/listlinier.h"
-#include "ADT/graph.h"
+//#include "ADT/graph.h"
+#include "bangunan.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,7 +80,7 @@ int main(){
     char type;
 
     counter = 1;
-    STARTKATA()         // Baca dari file config
+    STARTKATA();         // Baca dari file config
     while (!EndKata){
 
         if (counter == 1){
@@ -88,12 +89,12 @@ int main(){
             ADVKATA()
             lebar = KataToInt(CKata);
 
-            MakeMATRIKS(tinggi + 2, lebar + 2, &M);  // Membuat matriks (+ 2 karna pagar Mapnya)
+            MakeMATRIKS(tinggi + 1, lebar + 1, &M);  // Membuat matriks (+ 2 karna pagar Mapnya)
 
-            for (i = 1; i <= M.NBrsEff; i++){          // Bikin pager
-                for (j = 1; j<= M.NKolEff; j++){
+            for (i = 0; i <= M.NBrsEff; i++){          // Bikin pager
+                for (j = 0; j<= M.NKolEff; j++){
 
-                    if ((i == 1) || (i == M.NBrsEff) || (j == 1) || (j == M.NKolEff)){
+                    if ((i == 0) || (i == M.NBrsEff) || (j == 0) || (j == M.NKolEff)){
 
                         initBangunan(&B, '*', i, j);
                         Elmt(M, i, j) = B;
