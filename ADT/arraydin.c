@@ -4,7 +4,7 @@
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MakeEmpty(TabInt *T, int maxel){
+void MakeEmptyAB(TabInt *T, int maxel){
 /* I.S. T sembarang, maxel > 0 */
 /* F.S. Terbentuk tabel T kosong dengan kapasitas maxel + 1 */
 
@@ -13,7 +13,7 @@ void MakeEmpty(TabInt *T, int maxel){
     MaxEl(*T) = maxel;
 }
 
-void Dealokasi(TabInt *T){
+void DealokasiAB(TabInt *T){
 /* I.S. T terdefinisi; */
 /* F.S. TI(T) dikembalikan ke system, MaxEl(T)=0; Neff(T)=0 */
 
@@ -24,7 +24,7 @@ void Dealokasi(TabInt *T){
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
-int NbElmt(TabInt T){
+int NbElmtAB(TabInt T){
 /* Mengirimkan banyaknya elemen efektif tabel */
 /* Mengirimkan nol jika tabel kosong */
 
@@ -32,21 +32,21 @@ int NbElmt(TabInt T){
 }
 
 /* *** Daya tampung container *** */
-int MaxElement(TabInt T){
+int MaxElementAB(TabInt T){
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 
     return MaxEl(T);
 }
 
 /* *** Selektor INDEKS *** */
-IdxType GetFirstIdx(TabInt T){
+IdxType GetFirstIdxAB(TabInt T){
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T pertama */
 
     return IdxMin;
 }
 
-IdxType GetLastIdx(TabInt T){
+IdxType GetLastIdxAB(TabInt T){
 /* Prekondisi : Tabel T tidak kosong */
 /* Mengirimkan indeks elemen T terakhir */
 
@@ -54,14 +54,14 @@ IdxType GetLastIdx(TabInt T){
 }
 
 /* ********** Test Indeks yang valid ********** */
-boolean IsIdxValid(TabInt T, IdxType i){
+boolean IsIdxValidAB(TabInt T, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang valid utk ukuran tabel */
 /* yaitu antara indeks yang terdefinisi utk container*/
 
     return ((i >= IdxMin) && (i <= MaxEl(T)));
 }
 
-boolean IsIdxEff(TabInt T, IdxType i){
+boolean IsIdxEffAB(TabInt T, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
@@ -70,14 +70,14 @@ boolean IsIdxEff(TabInt T, IdxType i){
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test tabel kosong *** */
-boolean IsEmpty(TabInt T){
+boolean IsEmptyAB(TabInt T){
 /* Mengirimkan true jika tabel T kosong, mengirimkan false jika tidak */
 
     return (Neff(T) == 0);
 }
 
 /* *** Test tabel penuh *** */
-boolean IsFull(TabInt T){
+boolean IsFullAB(TabInt T){
 /* Mengirimkan true jika tabel T penuh, mengirimkan false jika tidak */
 
     return (Neff(T) == MaxEl(T));
@@ -85,36 +85,36 @@ boolean IsFull(TabInt T){
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi tabel dari pembacaan *** */
-void BacaIsi(TabInt *T){
-/* I.S. T sembarang dan sudah dialokasikan sebelumnya */
-/* F.S. Tabel T terdefinisi */
-/* Proses : membaca banyaknya elemen T dan mengisi nilainya */
-/* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-/*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxElement(T) */
-/*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-/* 2. Jika 0 < N <= MaxElement(T); Lakukan N kali: Baca elemen mulai dari indeks
-      IdxMin satu per satu diakhiri enter */
-/*    Jika N = 0; hanya terbentuk T kosong */
+// void BacaIsi(TabInt *T){
+// /* I.S. T sembarang dan sudah dialokasikan sebelumnya */
+// /* F.S. Tabel T terdefinisi */
+// /* Proses : membaca banyaknya elemen T dan mengisi nilainya */
+// /* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
+// /*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxElement(T) */
+// /*    Jika N tidak valid, tidak diberikan pesan kesalahan */
+// /* 2. Jika 0 < N <= MaxElement(T); Lakukan N kali: Baca elemen mulai dari indeks
+//       IdxMin satu per satu diakhiri enter */
+// /*    Jika N = 0; hanya terbentuk T kosong */
 
-    int N;
-    IdxType i;
-    ElType temp;
+//     int N;
+//     IdxType i;
+//     ElType temp;
 
-    scanf("%d", &N);
-    while ((N < 0) || (N > MaxEl(*T))){
-        scanf("%d", &N);
-    }
+//     scanf("%d", &N);
+//     while ((N < 0) || (N > MaxEl(*T))){
+//         scanf("%d", &N);
+//     }
 
-    if (N > 0){
-        for (i = IdxMin; i <= N; i++){
-            scanf("%d", &temp);
-            Elmt(*T, i) = temp;
-        }
-        Neff(*T) = N;
-    }
-}
+//     if (N > 0){
+//         for (i = IdxMin; i <= N; i++){
+//             scanf("%d", &temp);
+//             Elmt(*T, i) = temp;
+//         }
+//         Neff(*T) = N;
+//     }
+// }
 
-void TulisIsiTab(TabInt T){
+void TulisIsiAB(TabInt T){
 /* Proses : Menuliskan isi tabel dengan traversal, tabel ditulis di antara kurung siku;
    antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
    di tengah, atau di belakang, termasuk spasi dan enter */
@@ -124,274 +124,273 @@ void TulisIsiTab(TabInt T){
 /* Jika tabel kosong : menulis [] */
 
     IdxType i;
-
-    printf("[");
     if (Neff(T) > 0){
-        for (i = IdxMin; i < Neff(T); i++){
-            printf("%d,", Elmt(T, i));
+        for (i = 1; i <=Neff(T); i++){
+            printf("%c ",Type(Elmt(T,i)));
+            printf("(%d,%d) ",AbsisBangunan(Elmt(T,i)),OrdinatBangunan(Elmt(T,i)))
+            printf("%d ",Army(Elmt(T,i)));
+            printf("lv. %d\n",Level(Elmt(T,i)));
         }
-        printf("%d", Elmt(T, i));
     }
-    printf("]");
 }
 
 /* ********** OPERATOR ARITMATIKA ********** */
 /* *** Aritmatika tabel : Penjumlahan, pengurangan, perkalian, ... *** */
-TabInt PlusMinusTab(TabInt T1, TabInt T2, boolean plus){
-/* Prekondisi : T1 dan T2 memiliki Neff sama dan tidak kosong */
-/* Jika plus = true, mengirimkan  T1+T2, yaitu setiap elemen T1 dan T2 pada indeks yang sama dijumlahkan */
-/* Jika plus = false, mengirimkan T1-T2, yaitu setiap elemen T1 dikurangi elemen T2 pada indeks yang sama */
+// TabInt PlusMinusTab(TabInt T1, TabInt T2, boolean plus){
+// /* Prekondisi : T1 dan T2 memiliki Neff sama dan tidak kosong */
+// /* Jika plus = true, mengirimkan  T1+T2, yaitu setiap elemen T1 dan T2 pada indeks yang sama dijumlahkan */
+// /* Jika plus = false, mengirimkan T1-T2, yaitu setiap elemen T1 dikurangi elemen T2 pada indeks yang sama */
 
-    TabInt TOut;
-    IdxType i;
+//     TabInt TOut;
+//     IdxType i;
 
-    MakeEmpty(&TOut, Neff(T1));
-    Neff(TOut) = Neff(T1);
+//     MakeEmpty(&TOut, Neff(T1));
+//     Neff(TOut) = Neff(T1);
 
-    if (plus){
-        for (i = IdxMin; i <= Neff(TOut); i++){
-            Elmt(TOut, i) = Elmt(T1, i) + Elmt(T2, i);
-        }
-    }
-    else{
-        for (i = IdxMin; i <= Neff(TOut); i++){
-            Elmt(TOut, i) = Elmt(T1, i) - Elmt(T2, i);
-        }
-    }
+//     if (plus){
+//         for (i = IdxMin; i <= Neff(TOut); i++){
+//             Elmt(TOut, i) = Elmt(T1, i) + Elmt(T2, i);
+//         }
+//     }
+//     else{
+//         for (i = IdxMin; i <= Neff(TOut); i++){
+//             Elmt(TOut, i) = Elmt(T1, i) - Elmt(T2, i);
+//         }
+//     }
 
-    return TOut;
-}
+//     return TOut;
+// }
 
 /* ********** OPERATOR RELASIONAL ********** */
 /* *** Operasi pembandingan tabel : < =, > *** */
-boolean IsEQ(TabInt T1, TabInt T2){
-/* Mengirimkan true jika T1 sama dengan T2 yaitu jika Neff T1 = T2 dan semua elemennya sama */
+// boolean IsEQ(TabInt T1, TabInt T2){
+// /* Mengirimkan true jika T1 sama dengan T2 yaitu jika Neff T1 = T2 dan semua elemennya sama */
 
-    IdxType i;
-    boolean check;
+//     IdxType i;
+//     boolean check;
 
-    i = IdxMin;
-    check = true;
-    if (Neff(T1) == Neff(T2)){
-        while ((check) && (i <= Neff(T1))){
-            if (Elmt(T1, i) != Elmt(T2, i)){
-                check = false;
-            }
-            else{
-                i++;
-            }
-        }
-    }
-    else{
-        check = false;
-    }
+//     i = IdxMin;
+//     check = true;
+//     if (Neff(T1) == Neff(T2)){
+//         while ((check) && (i <= Neff(T1))){
+//             if (Elmt(T1, i) != Elmt(T2, i)){
+//                 check = false;
+//             }
+//             else{
+//                 i++;
+//             }
+//         }
+//     }
+//     else{
+//         check = false;
+//     }
 
-    return check;
-}
+//     return check;
+// }
 
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
-IdxType Search1(TabInt T, ElType X){
-/* Search apakah ada elemen tabel T yang bernilai X */
-/* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
-/* Jika tidak ada, mengirimkan IdxUndef */
-/* Menghasilkan indeks tak terdefinisi (IdxUndef) jika tabel T kosong */
-/* Skema Searching yang digunakan bebas */
+// IdxType Search1(TabInt T, ElType X){
+// /* Search apakah ada elemen tabel T yang bernilai X */
+// /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
+// /* Jika tidak ada, mengirimkan IdxUndef */
+// /* Menghasilkan indeks tak terdefinisi (IdxUndef) jika tabel T kosong */
+// /* Skema Searching yang digunakan bebas */
 
-    IdxType i;
-    boolean found;
+//     IdxType i;
+//     boolean found;
 
-    if (IsEmpty(T)){
-        return IdxUndef;
-    }
-    else{
-        i = IdxMin;
-        found = false;
-        while ((!found) && (i <= Neff(T))){
-            if (Elmt(T, i) == X){
-                found = true;
-            }
-            else{
-                i++;
-            }
-        }
+//     if (IsEmpty(T)){
+//         return IdxUndef;
+//     }
+//     else{
+//         i = IdxMin;
+//         found = false;
+//         while ((!found) && (i <= Neff(T))){
+//             if (Elmt(T, i) == X){
+//                 found = true;
+//             }
+//             else{
+//                 i++;
+//             }
+//         }
 
-        if (found){
-            return i;
-        }
-        else{
-            return IdxUndef;
-        }
-    }
-}
+//         if (found){
+//             return i;
+//         }
+//         else{
+//             return IdxUndef;
+//         }
+//     }
+// }
 
-boolean SearchB(TabInt T, ElType X){
-/* Search apakah ada elemen tabel T yang bernilai X */
-/* Jika ada, menghasilkan true, jika tidak ada menghasilkan false */
-/* Skema searching yang digunakan bebas */
+// boolean SearchB(TabInt T, ElType X){
+// /* Search apakah ada elemen tabel T yang bernilai X */
+// /* Jika ada, menghasilkan true, jika tidak ada menghasilkan false */
+// /* Skema searching yang digunakan bebas */
 
-    IdxType i;
-    boolean found;
+//     IdxType i;
+//     boolean found;
 
-    i = IdxMin;
-    found = false;
+//     i = IdxMin;
+//     found = false;
 
-    if (!IsEmpty(T)){
-        while ((!found) && (i <= Neff(T))){
-            if (Elmt(T, i) == X){
-                found = true;
-            }
-            else{
-                i++;
-            }
-        }
-    }
+//     if (!IsEmpty(T)){
+//         while ((!found) && (i <= Neff(T))){
+//             if (Elmt(T, i) == X){
+//                 found = true;
+//             }
+//             else{
+//                 i++;
+//             }
+//         }
+//     }
 
-    return found;
-}
+//     return found;
+// }
 
 /* ********** NILAI EKSTREM ********** */
-void MaxMin(TabInt T, ElType *Max, ElType *Min){
-/* I.S. Tabel T tidak kosong */
-/* F.S. Max berisi nilai maksimum T;
-        Min berisi nilai minimum T */
+// void MaxMin(TabInt T, ElType *Max, ElType *Min){
+// /* I.S. Tabel T tidak kosong */
+// /* F.S. Max berisi nilai maksimum T;
+//         Min berisi nilai minimum T */
 
-    IdxType i;
+//     IdxType i;
 
-    *Max = Elmt(T, GetFirstIdx(T));
-    *Min = Elmt(T, GetFirstIdx(T));
+//     *Max = Elmt(T, GetFirstIdx(T));
+//     *Min = Elmt(T, GetFirstIdx(T));
 
-    if (Neff(T) > 1){
-        for (i = (GetFirstIdx(T) + 1); i <= GetLastIdx(T); i++){
-            if (Elmt(T, i) > *Max){
-                *Max = Elmt(T, i);
-            }
-            if (Elmt(T, i) < *Min){
-                *Min = Elmt(T, i);
-            }
-        }
-    }
-}
+//     if (Neff(T) > 1){
+//         for (i = (GetFirstIdx(T) + 1); i <= GetLastIdx(T); i++){
+//             if (Elmt(T, i) > *Max){
+//                 *Max = Elmt(T, i);
+//             }
+//             if (Elmt(T, i) < *Min){
+//                 *Min = Elmt(T, i);
+//             }
+//         }
+//     }
+// }
 
 /* ********** OPERASI LAIN ********** */
-void CopyTab(TabInt Tin, TabInt *Tout){
-/* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
-/* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
-/* Proses : Menyalin isi Tin ke Tout */
+// void CopyTab(TabInt Tin, TabInt *Tout){
+// /* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
+// /* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
+// /* Proses : Menyalin isi Tin ke Tout */
 
-    IdxType i;
+//     IdxType i;
 
-    MakeEmpty(Tout, MaxEl(Tin));
-    Neff(*Tout) = Neff(Tin);
+//     MakeEmpty(Tout, MaxEl(Tin));
+//     Neff(*Tout) = Neff(Tin);
 
-    for (i = GetFirstIdx(Tin); i <= GetLastIdx(Tin); i++){
-        Elmt(*Tout, i) = Elmt(Tin, i);
-    }
-}
+//     for (i = GetFirstIdx(Tin); i <= GetLastIdx(Tin); i++){
+//         Elmt(*Tout, i) = Elmt(Tin, i);
+//     }
+// }
 
-ElType SumTab(TabInt T){
-/* Menghasilkan hasil penjumlahan semua elemen T */
-/* Jika T kosong menghasilkan 0 */
+// ElType SumTab(TabInt T){
+// /* Menghasilkan hasil penjumlahan semua elemen T */
+// /* Jika T kosong menghasilkan 0 */
 
-    ElType total;
-    IdxType i;
+//     ElType total;
+//     IdxType i;
 
-    total = 0;
+//     total = 0;
 
-    if (!IsEmpty(T)){
-        for (i = GetFirstIdx(T); i <= GetLastIdx(T); i++){
-            total += Elmt(T, i);
-        }
-    }
+//     if (!IsEmpty(T)){
+//         for (i = GetFirstIdx(T); i <= GetLastIdx(T); i++){
+//             total += Elmt(T, i);
+//         }
+//     }
 
-    return total;
-}
+//     return total;
+// }
 
-int CountX(TabInt T, ElType X){
-/* Menghasilkan berapa banyak kemunculan X di T */
-/* Jika T kosong menghasilkan 0 */
+// int CountX(TabInt T, ElType X){
+// /* Menghasilkan berapa banyak kemunculan X di T */
+// /* Jika T kosong menghasilkan 0 */
 
-    IdxType i;
-    int count;
+//     IdxType i;
+//     int count;
 
-    count = 0;
-    if(!IsEmpty(T)){
-        for (i = GetFirstIdx(T); i <= GetLastIdx(T); i++){
-            if (Elmt(T, i) == X){
-                count += 1;
-            }
-        }
-    }
+//     count = 0;
+//     if(!IsEmpty(T)){
+//         for (i = GetFirstIdx(T); i <= GetLastIdx(T); i++){
+//             if (Elmt(T, i) == X){
+//                 count += 1;
+//             }
+//         }
+//     }
 
-    return count;
-}
+//     return count;
+// }
 
-boolean IsAllGenap(TabInt T){
-/* Menghasilkan true jika semua elemen T genap. T boleh kosong */
+// boolean IsAllGenap(TabInt T){
+// /* Menghasilkan true jika semua elemen T genap. T boleh kosong */
 
-    IdxType i;
-    boolean genap;
+//     IdxType i;
+//     boolean genap;
 
-    i = GetFirstIdx(T);
-    genap = true;
-    if (IsEmpty(T)){
-        return false;
-    }
-    else{
-        while ((genap) && (i <= GetLastIdx(T))){
-            if (Elmt(T,i) % 2 != 0){
-                genap = false;
-            }
-            else{
-                i++;
-            }
-        }
+//     i = GetFirstIdx(T);
+//     genap = true;
+//     if (IsEmpty(T)){
+//         return false;
+//     }
+//     else{
+//         while ((genap) && (i <= GetLastIdx(T))){
+//             if (Elmt(T,i) % 2 != 0){
+//                 genap = false;
+//             }
+//             else{
+//                 i++;
+//             }
+//         }
 
-        return genap;
-    }
-}
+//         return genap;
+//     }
+// }
 
-/* ********** SORTING ********** */
-void Sort(TabInt *T, boolean asc){
-/* I.S. T boleh kosong */
-/* F.S. Jika asc = true, T terurut membesar */
-/*      Jika asc = false, T terurut mengecil */
-/* Proses : Mengurutkan T dengan salah satu algoritma sorting,
-   algoritma bebas */
+// /* ********** SORTING ********** */
+// void Sort(TabInt *T, boolean asc){
+// /* I.S. T boleh kosong */
+// /* F.S. Jika asc = true, T terurut membesar */
+// /*      Jika asc = false, T terurut mengecil */
+// /* Proses : Mengurutkan T dengan salah satu algoritma sorting,
+//    algoritma bebas */
 
-    IdxType i, j;
-    ElType temp;
+//     IdxType i, j;
+//     ElType temp;
 
-    if (asc){
-        for(i = (GetFirstIdx(*T) + 1); i <= (GetLastIdx(*T)); i++){
-            j = i;
+//     if (asc){
+//         for(i = (GetFirstIdx(*T) + 1); i <= (GetLastIdx(*T)); i++){
+//             j = i;
 
-            while(j > GetFirstIdx(*T) && Elmt(*T, j) < Elmt(*T, (j - 1))){
-                temp = Elmt(*T, j);
-                Elmt(*T, j) = Elmt(*T, (j - 1));
-                Elmt(*T, (j - 1)) = temp;
-                 j--;
-            }
-        }
-    }
+//             while(j > GetFirstIdx(*T) && Elmt(*T, j) < Elmt(*T, (j - 1))){
+//                 temp = Elmt(*T, j);
+//                 Elmt(*T, j) = Elmt(*T, (j - 1));
+//                 Elmt(*T, (j - 1)) = temp;
+//                  j--;
+//             }
+//         }
+//     }
 
-    else{
-        for(i = (GetFirstIdx(*T) + 1); i <= (GetLastIdx(*T)); i++){
-            j = i;
+//     else{
+//         for(i = (GetFirstIdx(*T) + 1); i <= (GetLastIdx(*T)); i++){
+//             j = i;
 
-            while(j > GetFirstIdx(*T) && Elmt(*T, j) > Elmt(*T, (j - 1))){
-                temp = Elmt(*T, j);
-                Elmt(*T, j) = Elmt(*T, (j - 1));
-                Elmt(*T, (j - 1)) = temp;
-                 j--;
-            }
-        }
-    }
-}
+//             while(j > GetFirstIdx(*T) && Elmt(*T, j) > Elmt(*T, (j - 1))){
+//                 temp = Elmt(*T, j);
+//                 Elmt(*T, j) = Elmt(*T, (j - 1));
+//                 Elmt(*T, (j - 1)) = temp;
+//                  j--;
+//             }
+//         }
+//     }
+// }
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void AddAsLastEl(TabInt *T, ElType X){
+void AddBangunan(TabInt *T, ElType X){
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
@@ -402,7 +401,7 @@ void AddAsLastEl(TabInt *T, ElType X){
     }
 }
 
-void DelLastEl(TabInt *T, ElType *X){
+void DelLastElAB(TabInt *T, ElType *X){
 /* Proses : Menghapus elemen terakhir tabel */
 /* I.S. Tabel tidak kosong */
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
@@ -444,3 +443,29 @@ void CompactTab(TabInt *T){
     TI(*T) = (ElType *)realloc(TI(*T), (Neff(*T))*sizeof(ElType));
     MaxEl(*T) = Neff(*T);
 }
+
+/* TAMBAHAN PUNGSI BANGUNAN */
+
+void AddPasukanTurn(TabInt T,int X){
+    for(int i=1; i<=Neff(T); i++){
+        if(Owner(Elmt(T,i))==X) AddPasukan(Elmt(T,i)); 
+    }
+}
+// menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
+int JmlBOwnedX(TabInt T, int X){
+/* menghitung jumlah bangunan yang dimiliki X */
+    int cnt=0
+    for(int i=1; i<=Neff(T); i++){
+        if(Owner(Elmt(T,i))==X) cnt+=1;
+    }
+    return cnt;
+}
+
+TabInt BOwnedX(TabInt T, int X){
+    TabInt *owned;
+    for(int i=1; i<=Neff(T); i++){
+        if(Owner(Elmt(T,i))==X) AddBangunan(&owned,Elmt(T,i));
+    }
+    return owned;
+}
+// mengeluarkan array bangunan yang dimiliki oleh X
