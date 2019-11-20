@@ -31,49 +31,6 @@ int KataToInt (Kata CKata){
     return retval;
 }
 
-void initBangunan (Bangunan *B, char CC, int X, int Y){
-
-    setBangunanType(B, CC);
-    setBangunanLevel(B, 1);
-    setBangunanPoint(B, X, Y);
-
-    if (CC == 'C'){
-
-        (*B).gain = 10;
-        (*B).max = 40;
-        initArmy(B, 40);
-        setBangunanShield(B, false);
-    }
-    else if (CC == 'T'){
-
-        (*B).gain = 5;
-        (*B).max = 20;
-        initArmy(B, 30);
-        setBangunanShield(B, true);
-    }
-    else if (CC == 'F'){
-
-        (*B).gain = 10;
-        (*B).max = 20;
-        initArmy(B, 80);
-        setBangunanShield(B, false);
-    }
-    else if (CC == 'V'){
-
-        (*B).gain = 5;
-        (*B).max = 20;
-        initArmy(B, 20);
-        setBangunanShield(B, false);
-    }
-    else{
-
-        (*B).gain = 0;
-        (*B).max = 0;
-        initArmy(B, 0);
-        setBangunanShield(B, false);
-    }
-}
-
 int main(){
     int counter, tinggi, lebar, i, j;
     MATRIKS M;
@@ -82,7 +39,7 @@ int main(){
     List *L1, *L2; // L1( list keterhubungan bangunan yang dimiliki player 1)
                    // L2( list keterhubungan bangunan yang dimiliki player 2)
 
-    // DEKRALADI A, M, P BANGUNAN
+    // DEKRALASI A, M, P BANGUNAN
     int AC[4],MC[4],AT[4],MT[4],AF[4],MF[4],AV[4],MV[4];
     boolean PC[4],PT[4],PF[4],PV[4];
     AC[1]=10; AC[2]=15; AC[3]=20; AC[4]=25;
@@ -93,6 +50,13 @@ int main(){
     MF[1]=20; MF[2]=40; MF[3]=60; MF[4]=80;
     AV[1]=5;  AV[2]=10; AV[3]=15; AV[4]=20;
     MV[1]=20; MV[2]=30; MV[3]=40; MV[4]=50;
+    for(int i=1; i<=4; i++){
+        PC[i]=false;
+        PT[i]=true;
+        PV[i]=false;
+        PF[i]=false;
+    }
+    PF[3]=true; PF[4]=true;
 
     CreateEmptyLB(&L1);
     CreateEmptyLB(&L2);
@@ -115,6 +79,7 @@ int main(){
                 for (j = 0; j<= M.NKolEff; j++){
 
                     if ((i == 0) || (i == M.NBrsEff) || (j == 0) || (j == M.NKolEff)){
+                        // matriks ganti jd nyimpen type sm owner aja
                         Elmt(M, i, j) = B;
                     }
                 }
@@ -141,6 +106,7 @@ int main(){
                 if(x==1) InsVLastLB(&L1,1); // bangunan 1 milik pemain 1
                 else if(x==2) InsVLastLB(&L2,2); // bangunan 2 milik pemain 2
                 
+                // matriks ganti jd nyimpen type sm owner aja
                 Elmt(M, i, j) = B;  // Bangunan dijadikan elemen matriks of bangunan
 
                 ADVKATA();
