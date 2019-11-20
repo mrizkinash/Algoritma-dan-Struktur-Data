@@ -13,16 +13,16 @@ void CreateBangunan (Bangunan *B, char c, int i, int j){
 }
 
 void LevelUpBangunan(Bangunan *B){
-    if(Type(*B)=='C') Army(B)-(0.5 * MC[Level(*B)]);
-	else if(Type(*B)=='T') Army(B)-(0.5 * MT[Level(*B)]);
-	else if(Type(*B)=='F') Army(B)-(0.5 * MF[Level(*B)]);
-	else if(Type(*B)=='V') Army(B)-(0.5 * MV[Level(*B)]);
-    Level(B)+=1;
+    if(Type(*B)=='C') Army(*B)-(0.5 * MC[Level(*B)]);
+	else if(Type(*B)=='T') Army(*B)-(0.5 * MT[Level(*B)]);
+	else if(Type(*B)=='F') Army(*B)-(0.5 * MF[Level(*B)]);
+	else if(Type(*B)=='V') Army(*B)-(0.5 * MV[Level(*B)]);
+    Level(*B)+=1;
 }
 // level +=1
 // jumlah pasukan berkurang M/2
 
-Boolean CekBatasPasukan(Bangunan B){
+boolean CekBatasPasukan(Bangunan B){
     if(Type(B)=='C') return (Army(B)+AC[Level(B)] >= MC[Level(B)]);
 	else if(Type(B)=='T') return (Army(B)+AT[Level(B)] >= MT[Level(B)]);
 	else if(Type(B)=='F') return (Army(B)+AF[Level(B)] >= MF[Level(B)]);
@@ -52,8 +52,8 @@ void ChangeOwnerB(Bangunan *B, int X, int Y){
 // dengan X sebagai jumlah pasukan yang baru
 // dan Y sebagai pemilik yang baru
 
-void MovePasukan(Bangunan *B1, Bangunan *B2, int X){
-	Army(*B1)-=pas;
-    Army(*B2)+=pas;
+void MovePasukan(Bangunan *B1, Bangunan *B2, int x){
+	Army(*B1)-=x;
+    Army(*B2)+=x;
 }
 // memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
