@@ -20,6 +20,8 @@ typedef struct {
 #define Type(B) (B).type
 #define Owner(B) (B).owner
 
+void CreateBangunan (Bangunan *B, char c, int i, int j);
+// membuat inisialisasi bangunan pada awal input
 void LevelUpBangunan(Bangunan B);
 // level +=1
 // jumlah pasukan berkurang M/2
