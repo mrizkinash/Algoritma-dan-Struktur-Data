@@ -22,19 +22,19 @@ typedef struct {
 
 void CreateBangunan (Bangunan *B, char c, int i, int j);
 // membuat inisialisasi bangunan pada awal input
-void LevelUpBangunan(Bangunan B);
+void LevelUpBangunan(Bangunan *B);
 // level +=1
 // jumlah pasukan berkurang M/2
 boolean CekBatasPasukan(Bangunan B);
 // Cek apakah nilai dari penambahan pasukan melebihi M
 // jika sudah melebihi, stop penambahan
-void AddPasukan(Bangunan B);
+void AddPasukan(Bangunan *B);
 // menambahkan A jumlah pasukan ke bangunan B
-void ChangeOwnerB(Bangunan B, int X, int Y);
+void ChangeOwnerB(Bangunan *B, int X, int Y);
 // reset bangunan saat pindah kepemilikan, 
 // dengan X sebagai jumlah pasukan yang baru
 // dan Y sebagai pemilik yang baru
-void MovePasukan(Bangunan B1, Bangunan B2, int X);
+void MovePasukan(Bangunan *B1, Bangunan *B2, int X);
 // memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
 
 #endif
