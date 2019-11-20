@@ -195,9 +195,6 @@ void CompactTab(TabInt *T);
 /* F.S. Ukuran MaxEl = Neff */
 
 /* TAMBAHAN PUNGSI BANGUNAN */
-
-void AddPasukanTurn(TabInt T,int X);
-// menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
 int JmlBOwnedX(TabInt T, int X);
 /* menghitung jumlah bangunan yang dimiliki X */
 
