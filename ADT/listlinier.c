@@ -237,17 +237,19 @@ void PrintInfoLB (List L)
 	
 	P = First(L);
 	if (P != Nil) {
-		printf("%c ",Type(Info(P));
-		printf("(%d,%d) ",AbsisBangunan(Info(P)),OrdinatBangunan(Info(P)))
-		printf("%d ",Army(Info(P)));
-		printf("lv. %d\n",Level(Info(P)));
+		int idxb=Info(P);
+		printf("Tipe: %c ",Type(ArrBang[idxb]);
+		printf("(%d,%d) ", AbsisBangunan(ArrBang[idxb]), OrdinatBangunan(ArrBang[idxb]) )
+		printf("%d ",Army(ArrBang[idxb]));
+		printf("lv. %d\n",Level(ArrBang[idxb]));
 	}
 	P = Next(P);
 	while (P != Nil) {
-		printf("%c ",Type(Info(P));
-		printf("(%d,%d) ",AbsisBangunan(Info(P)),OrdinatBangunan(Info(P)))
-		printf("%d ",Army(Info(P)));
-		printf("lv. %d\n",Level(Info(P)));
+		int idxb=Info(P);
+		printf("Tipe: %c ",Type(ArrBang[idxb]);
+		printf("(%d,%d) ", AbsisBangunan(ArrBang[idxb]), OrdinatBangunan(ArrBang[idxb]) )
+		printf("%d ",Army(ArrBang[idxb]));
+		printf("lv. %d\n",Level(ArrBang[idxb]));
 		P = Next(P);
 	}
 }
