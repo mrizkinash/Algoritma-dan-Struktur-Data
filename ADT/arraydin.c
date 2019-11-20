@@ -445,13 +445,6 @@ void CompactTab(TabInt *T){
 }
 
 /* TAMBAHAN PUNGSI BANGUNAN */
-
-void AddPasukanTurn(TabInt T,int X){
-    for(int i=1; i<=Neff(T); i++){
-        if(Owner(Elmt(T,i))==X) AddPasukan(Elmt(T,i)); 
-    }
-}
-// menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
 int JmlBOwnedX(TabInt T, int X){
 /* menghitung jumlah bangunan yang dimiliki X */
     int cnt=0
