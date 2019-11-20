@@ -3,40 +3,38 @@
 
 #include "ADT/boolean.h"
 #include "ADT/point.h"
-#include "array.h"
 
 typedef struct {
+    int owner; // 0 -> no owner, 1 -> pemain 1, 2 -> pemain 2
+    int army;
 	int level;
-	boolean shield; //pertahanan
-	int army;
-	int gain;
-	int max;
-	int index; // kepemilikan
 	char type;
 	POINT P;
 } Bangunan;
-
-typedef TabInt Bangunan;
 
 #define AbsisBangunan(B) ((B).P).X
 #define OrdinatBangunan(B) ((B).P).Y
 #define Level(B) (B).level
 #define Army(B) (B).army
-#define Shield(B) (B).shield
+#define Defense(B) (B).defense
 #define Type(B) (B).type
-#define Index(B) (B).index
+#define Owner(B) (B).owner
 
-
-int getArmy(Bangunan B);
-boolean getBangunanShield(Bangunan B);
-int getBangunanLevel(Bangunan B);
-int getBangunanIndex(Bangunan B);
-char getBangunanType(Bangunan B);
-void setBangunanPoint(Bangunan *B, int X, int Y);
-void setBangunanType(Bangunan *B, char CC);
-void setBangunanIndex(Bangunan *B,int i);
-void initArmy(Bangunan *B, int U);
-void setBangunanShield(Bangunan *B, boolean X);
-void setBangunanLevel(Bangunan *B, int X);
+void CreateBangunan (Bangunan *B, char c, int i, int j);
+// membuat inisialisasi bangunan pada awal input
+void LevelUpBangunan(Bangunan B);
+// level +=1
+// jumlah pasukan berkurang M/2
+Boolean CekBatasPasukan(Bangunan B);
+// Cek apakah nilai dari penambahan pasukan melebihi M
+// jika sudah melebihi, stop penambahan
+void AddPasukan(Bangunan B);
+// menambahkan A jumlah pasukan ke bangunan B
+void ChangeOwnerB(Bangunan B, int X, int Y);
+// reset bangunan saat pindah kepemilikan, 
+// dengan X sebagai jumlah pasukan yang baru
+// dan Y sebagai pemilik yang baru
+void MovePasukan(Bangunan B1, Bangunan B2, int X);
+// memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
 
 #endif

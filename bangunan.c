@@ -1,50 +1,59 @@
+#include <stdio.h>
 #include "bangunan.h"
-#include "ADT/boolean.h"
-#include "ADT/point.h"
 
-int getArmy(Bangunan B)
-{
-	return(Army(B));
+void CreateBangunan (Bangunan *B, char c, int i, int j){
+	Type(*B) = c;
+    AbsisBangunan(*B) = i;
+    OrdinatBangunan(*B) = j;
+	Level(*B)=1;
+	if(Type(*B)=='C') Army(*B)=40;
+	else if(Type(*B)=='T') Army(*B)=30;
+	else if(Type(*B)=='F') Army(*B)=80;
+	else if(Type(*B)=='V') Army(*B)=20;
 }
 
-boolean getBangunanShield(Bangunan B)
-{
-	return(Shield(B));
+void LevelUpBangunan(Bangunan *B){
+    if(Type(*B)=='C') Army(B)-(0.5 * MC[Level(*B)]);
+	else if(Type(*B)=='T') Army(B)-(0.5 * MT[Level(*B)]);
+	else if(Type(*B)=='F') Army(B)-(0.5 * MF[Level(*B)]);
+	else if(Type(*B)=='V') Army(B)-(0.5 * MV[Level(*B)]);
+    Level(B)+=1;
 }
-int getBangunanLevel(Bangunan B)
-{
-	return (Level(B));
+// level +=1
+// jumlah pasukan berkurang M/2
+
+Boolean CekBatasPasukan(Bangunan B){
+    if(Type(B)=='C') return (Army(B)+AC[Level(B)] >= MC[Level(B)]);
+	else if(Type(B)=='T') return (Army(B)+AT[Level(B)] >= MT[Level(B)]);
+	else if(Type(B)=='F') return (Army(B)+AF[Level(B)] >= MF[Level(B)]);
+	else if(Type(B)=='V') return (Army(B)+AV[Level(B)] >= MV[Level(B)]);
 }
-int getBangunanIndex(Bangunan B)
-{
-	return (Index(B));
+// Cek apakah nilai dari penambahan pasukan melebihi M
+// jika sudah melebihi, stop penambahan
+
+
+
+void AddPasukan(Bangunan *B){
+	if(CekBatasPasukan(*B) && Owner(*B)!=0){
+		if(Type(*B)=='C') Army(*B)+=AC[Level(*B)];
+		else if(Type(*B)=='T') Army(*B)+=AT[Level(*B)];
+		else if(Type(*B)=='F') Army(*B)+=AF[Level(*B)];
+		else if(Type(*B)=='V') Army(*B)+=AV[Level(*B)];
+	}
 }
-char getBangunanType(Bangunan B)
-{
-	return (Type(B));
+// menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
+
+void ChangeOwnerB(Bangunan *B, int X, int Y){
+    Level(*B) = 1;
+    Army(*B) = X;
+    Owner(*B) = Y;
 }
-void setBangunanPoint(Bangunan *B, int X, int Y)
-{
-	AbsisBangunan(*B) = X;
-	OrdinatBangunan(*B) = Y;
+// reset bangunan saat pindah kepemilikan, 
+// dengan X sebagai jumlah pasukan yang baru
+// dan Y sebagai pemilik yang baru
+
+void MovePasukan(Bangunan *B1, Bangunan *B2, int X){
+	Army(*B1)-=pas;
+    Army(*B2)+=pas;
 }
-void setBangunanType(Bangunan *B, char CC)
-{
-	Type(*B) = CC;
-}
-void setBangunanIndex(Bangunan *B,int i)
-{
-	Index(*B) = i;
-}
-void initArmy(Bangunan *B, int U)
-{
-	Army(*B) = U;
-}
-void setBangunanShield(Bangunan *B, boolean X)
-{
-	Shield(*B) = X;
-}
-void setBangunanLevel(Bangunan *B, int X)
-{
-	Level(*B) = X;
-}	
+// memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
