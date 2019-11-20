@@ -25,7 +25,7 @@ void CreateBangunan (Bangunan *B, char c, int i, int j);
 void LevelUpBangunan(Bangunan B);
 // level +=1
 // jumlah pasukan berkurang M/2
-Boolean CekBatasPasukan(Bangunan B);
+boolean CekBatasPasukan(Bangunan B);
 // Cek apakah nilai dari penambahan pasukan melebihi M
 // jika sudah melebihi, stop penambahan
 void AddPasukan(Bangunan B);
