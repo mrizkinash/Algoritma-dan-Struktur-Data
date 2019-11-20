@@ -7,11 +7,11 @@
 #define listlinier_H
 
 #include "boolean.h"
-#include "bangunan.h"
+#include "arraydin.h"
 
 #define Nil NULL
 
-typedef Bangunan infotype;
+typedef int infotype;
 typedef struct tElmtlist *address;
 
 typedef struct tElmtlist {
