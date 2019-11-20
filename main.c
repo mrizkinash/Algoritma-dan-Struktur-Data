@@ -5,7 +5,8 @@
 #include "ADT/queue.h"
 #include "ADT/stackt.h"
 #include "ADT/listlinier.h"
-//#include "ADT/graph.h"
+#include "ADT/boolean.h"
+#include "ADT/graph.h"
 #include "bangunan.h"
 
 #include <stdio.h>
@@ -76,9 +77,28 @@ void initBangunan (Bangunan *B, char CC, int X, int Y){
 int main(){
     int counter, tinggi, lebar, i, j;
     MATRIKS M;
-    Bangunan B;
     char type;
+    TabInt ArrBang; //array dinamis yang menyimpan seluruh bangunan
+    List *L1, *L2; // L1( list keterhubungan bangunan yang dimiliki player 1)
+                   // L2( list keterhubungan bangunan yang dimiliki player 2)
 
+    // DEKRALADI A, M, P BANGUNAN
+    int AC[4],MC[4],AT[4],MT[4],AF[4],MF[4],AV[4],MV[4];
+    boolean PC[4],PT[4],PF[4],PV[4];
+    AC[1]=10; AC[2]=15; AC[3]=20; AC[4]=25;
+    MC[1]=40; MC[2]=60; MC[3]=80; MC[4]=100;
+    AT[1]=5;  AT[2]=10; AT[3]=20; AT[4]=30;
+    MT[1]=20; MT[2]=30; MT[3]=40; MT[4]=50;
+    AF[1]=10; AF[2]=20; AF[3]=30; AF[4]=40;
+    MF[1]=20; MF[2]=40; MF[3]=60; MF[4]=80;
+    AV[1]=5;  AV[2]=10; AV[3]=15; AV[4]=20;
+    MV[1]=20; MV[2]=30; MV[3]=40; MV[4]=50;
+
+    CreateEmptyLB(&L1);
+    CreateEmptyLB(&L2);
+
+
+    
     counter = 1;
     STARTKATA();         // Baca dari file config
     while (!EndKata){
@@ -95,8 +115,6 @@ int main(){
                 for (j = 0; j<= M.NKolEff; j++){
 
                     if ((i == 0) || (i == M.NBrsEff) || (j == 0) || (j == M.NKolEff)){
-
-                        initBangunan(&B, '*', i, j);
                         Elmt(M, i, j) = B;
                     }
                 }
@@ -104,11 +122,13 @@ int main(){
             counter++;
         }
         else if(counter == 2){
-
-            counter += KataToInt(CKata);
+            int size = KataToInt(CKata)
+            counter += size;
             ADVKATA();
+            MakeEmptyAB(&ArrBang,size);
+            int x=1; // idx array bangunan
+            Bangunan B;
             while (counter > 2){
-
                 // Bikin bangunan disini
                 type = CKata.TabKata[1];
                 ADVKATA();
@@ -116,10 +136,15 @@ int main(){
                 ADVKATA();
                 j = KataToInt(CKata);
 
-                initBangunan(&B, type, i, j);
+                B = Elmt(ArrBang,x);
+                CreateBangunan(&B,type,i,j); // create bangunan ke x
+                if(x==1) InsVLastLB(&L1,1); // bangunan 1 milik pemain 1
+                else if(x==2) InsVLastLB(&L2,2); // bangunan 2 milik pemain 2
+                
                 Elmt(M, i, j) = B;  // Bangunan dijadikan elemen matriks of bangunan
 
                 ADVKATA();
+                x+=1;
                 counter--
             }
             counter++;
