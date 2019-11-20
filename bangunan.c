@@ -1,7 +1,18 @@
 #include <stdio.h>
 #include "bangunan.h"
 
-void LevelUpBangunan(Bangunan B){
+void CreateBangunan (Bangunan *B, char c, int i, int j){
+	Type(B) = c;
+    AbsisBangunan(B) = i;
+    OrdinatBangunan(B) = j;
+	Level(B)=1;
+	if(Type(B)=='C') Army(B)=40;
+	else if(Type(B)=='T') Army(B)=30;
+	else if(Type(B)=='F') Army(B)=80;
+	else if(Type(B)=='V') Army(B)=20;
+}
+
+void LevelUpBangunan(Bangunan *B){
     if(Type(B)=='C') Army(B)-MC[Level(B)];
 	else if(Type(B)=='T') Army(B)-MT[Level(B)];
 	else if(Type(B)=='F') Army(B)-MF[Level(B)];
@@ -11,16 +22,18 @@ void LevelUpBangunan(Bangunan B){
 // level +=1
 // jumlah pasukan berkurang M/2
 
-Boolean CekBatasPasukan(Bangunan B){
-    if(Type(B)=='C') return (Army(B)+AC[Level(B)] < MC[Level(B)]);
-	else if(Type(B)=='T') return (Army(B)+AT[Level(B)] < MT[Level(B)]);
-	else if(Type(B)=='F') return (Army(B)+AF[Level(B)] < MF[Level(B)]);
-	else if(Type(B)=='V') return (Army(B)+AV[Level(B)] < MV[Level(B)]);
+Boolean CekBatasPasukan(Bangunan *B){
+    if(Type(B)=='C') return (Army(B)+AC[Level(B)] >= MC[Level(B)]);
+	else if(Type(B)=='T') return (Army(B)+AT[Level(B)] >= MT[Level(B)]);
+	else if(Type(B)=='F') return (Army(B)+AF[Level(B)] >= MF[Level(B)]);
+	else if(Type(B)=='V') return (Army(B)+AV[Level(B)] >= MV[Level(B)]);
 }
 // Cek apakah nilai dari penambahan pasukan melebihi M
 // jika sudah melebihi, stop penambahan
 
-void AddPasukan(Bangunan B){
+
+
+void AddPasukan(Bangunan *B){
 	if(CekBatasPasukan(B) && Owner(B)!=0){
 		if(Type(B)=='C') Army(B)+=AC[Level(B)];
 		else if(Type(B)=='T') Army(B)+=AT[Level(B)];
@@ -30,7 +43,7 @@ void AddPasukan(Bangunan B){
 }
 // menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
 
-void ChangeOwnerB(Bangunan B, int X, int Y){
+void ChangeOwnerB(Bangunan *B, int X, int Y){
     Level(B) = 1;
     Army(B) = X;
     Owner(B) = Y;
