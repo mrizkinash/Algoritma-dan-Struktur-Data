@@ -13,11 +13,23 @@ void CreateBangunan (Bangunan *B, char c, int i, int j){
 }
 
 void LevelUpBangunan(Bangunan *B){
-    if(Type(*B)=='C') Army(*B)-(0.5 * MC[Level(*B)]);
-	else if(Type(*B)=='T') Army(*B)-(0.5 * MT[Level(*B)]);
-	else if(Type(*B)=='F') Army(*B)-(0.5 * MF[Level(*B)]);
-	else if(Type(*B)=='V') Army(*B)-(0.5 * MV[Level(*B)]);
-    Level(*B)+=1;
+    if(Type(*B)=='C' && Army(*B)>= 0.5* MC[Level(*B)]){
+		Army(*B)-(0.5 * MC[Level(*B)]);
+		Level(*B)+=1;
+	}
+	else if(Type(*B)=='T' && Army(*B)>= 0.5* MT[Level(*B)]){
+		Army(*B)-(0.5 * MT[Level(*B)]);
+		Level(*B)+=1;
+	}
+	else if(Type(*B)=='F' && Army(*B)>= 0.5* MF[Level(*B)]){
+		Army(*B)-(0.5 * MF[Level(*B)]);
+		Level(*B)+=1;
+	}
+	else if(Type(*B)=='V' && Army(*B)>= 0.5* MV[Level(*B)]){
+		Army(*B)-(0.5 * MV[Level(*B)]);
+		Level(*B)+=1;
+	}
+	else printf("Anda tidak bisa level up\n");
 }
 // level +=1
 // jumlah pasukan berkurang M/2
