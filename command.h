@@ -4,16 +4,19 @@
 
 #include "bangunan.h"
 #include "boolean.h"
+#include "arraydin.h"
+#include "listlinier.h"
+#include "graph.h"
 
 
 
-void attack();
-void level_up();
+void attack(); //otw
+void level_up(); //ok
 void skill();
 void undo();
 void end_turn();
 //void save();
-//void move();
+void move(); //ok
 void exit();
 
 
