@@ -36,5 +36,7 @@ void ChangeOwnerB(Bangunan *B, int X, int Y);
 // dan Y sebagai pemilik yang baru
 void MovePasukan(Bangunan *B1, Bangunan *B2, int X);
 // memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
+void CetakBangunan(Bangunan B);
+// mencetak kondisi bangunan
 
 #endif
