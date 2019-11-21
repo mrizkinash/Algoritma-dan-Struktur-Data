@@ -77,14 +77,16 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
 8 9 10
 */
 {
-    int i, j;
+    int i, j, temp;
+    char CC; 
 
     MakeMATRIKS(NB, NK, M);
     for (i = 1; i <= NB; i++)
     {
         for (j = 1; j <= NK; j++)
         {
-            scanf("%d", &Elmt(*M, i, j));
+            scanf("%d", &Own(Elmt(*M, i, j)));
+            scanf(" %c", &Type(Elmt(*M, i, j)));
         }
     }
 }
@@ -106,7 +108,8 @@ void TulisMATRIKS (MATRIKS M)
         for (j = 1; j <= NKolEff(M); j++)
         {
 
-            printf("%d", M.Mem[i][j]);
+            printf("%d,", Own(Elmt(M, i, j)));
+            printf(" %c,", Type(Elmt(M, i, j)));
 
             if (j != NKolEff(M))
             {

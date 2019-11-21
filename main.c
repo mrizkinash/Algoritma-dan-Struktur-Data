@@ -40,8 +40,8 @@ int main(){
                    // L2( list keterhubungan bangunan yang dimiliki player 2)
 
     // DEKRALASI A, M, P BANGUNAN
-    int AC[4],MC[4],AT[4],MT[4],AF[4],MF[4],AV[4],MV[4];
-    boolean PC[4],PT[4],PF[4],PV[4];
+    int AC[5],MC[5],AT[5],MT[5],AF[5],MF[5],AV[5],MV[5];		// Indeks dari 0
+    boolean PC[5],PT[5],PF[5],PV[5];
     AC[1]=10; AC[2]=15; AC[3]=20; AC[4]=25;
     MC[1]=40; MC[2]=60; MC[3]=80; MC[4]=100;
     AT[1]=5;  AT[2]=10; AT[3]=20; AT[4]=30;
@@ -61,26 +61,25 @@ int main(){
     CreateEmptyLB(&L1);
     CreateEmptyLB(&L2);
 
-
-    
     counter = 1;
     STARTKATA();         // Baca dari file config
     while (!EndKata){
 
-        if (counter == 1){
+        if (counter == 1){ // Membaca baris 1, Konfigurasi lebar dan tinggi peta
 
             tinggi = KataToInt(CKata);
             ADVKATA()
             lebar = KataToInt(CKata);
 
-            MakeMATRIKS(tinggi + 1, lebar + 1, &M);  // Membuat matriks (+ 2 karna pagar Mapnya)
+            MakeMATRIKS(tinggi + 2, lebar + 2, &M);  // Membuat matriks (+ 2 karna pagar Mapnya)
 
             for (i = 0; i <= M.NBrsEff; i++){          // Bikin pager
                 for (j = 0; j<= M.NKolEff; j++){
 
                     if ((i == 0) || (i == M.NBrsEff) || (j == 0) || (j == M.NKolEff)){
-                        // matriks ganti jd nyimpen type sm owner aja
-                        Elmt(M, i, j) = B;
+                        
+                        Own(Elmt(M, i, j)) = 0;
+                        Type(Elmt(M, i, j)) = '*'
                     }
                 }
             }
@@ -90,7 +89,7 @@ int main(){
             int size = KataToInt(CKata)
             counter += size;
             ADVKATA();
-            MakeEmptyAB(&ArrBang,size);
+            MakeEmptyAB(&ArrBang,size + 1);
             int x=1; // idx array bangunan
             Bangunan B;
             while (counter > 2){
@@ -103,11 +102,22 @@ int main(){
 
                 CreateBangunan(&B,type,i,j); // create bangunan ke x
                 Elmt(ArrBang,x) = B; // masukin bangunan yg baru di create ke arrbang
-                if(x==1) InsVLastLB(&L1,1); // bangunan 1 milik pemain 1
-                else if(x==2) InsVLastLB(&L2,2); // bangunan 2 milik pemain 2
+                if(x==1){
 
-                // matriks ganti jd nyimpen type sm owner aja
-                Elmt(M, i, j) = B;  // Bangunan dijadikan elemen matriks of bangunan
+               		InsVLastLB(&L1,1);	 // bangunan 1 milik pemain 1
+               		Own(Elmt(M, i, j)) = 1; // Kepemilikan bangunan di matriks diset jadi 1 (player 1)
+               	}
+                else if(x==2){
+
+                	InsVLastLB(&L2,2); // bangunan 2 milik pemain 2
+                	Own(Elmt(M, i, j)) = 2; // Kepemilikan bangunan di matriks diset jadi 2 (player 2)
+                }
+                else {
+
+                	Own(Elmt(M, i, j)) = 0;	// Kepemilikan bangunan di matriks diset jadi 0 (bukan punya siapa siapa)
+                }
+
+                Type(Elmt(M, i, j)) = type;
 
                 ADVKATA();
                 x+=1;
