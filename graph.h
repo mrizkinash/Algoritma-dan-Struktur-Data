@@ -1,31 +1,24 @@
 #ifndef graph_H
 #define graph_H
 
-#include "ADT/boolean.h"
+#include "boolean.h"
 #include "bangunan.h"
 #include "arraydin.h"
+#include "listlinier.h"
 
 #define Nil NULL
 
-typedef int infotype;
-typedef struct tElmtlist *address;
-typedef struct tElmtlist2 *address2;
+typedef struct tElmtRow * adrG;
 
-typedef struct tElmtlist {
+typedef struct tElmtRow {
 	infotype info;
+    adrG nextg;
 	address next;
-    address2 next2;
-} ElmtList;
-
-
-typedef struct tElmtlist2 {
-	infotype info;
-    address2 next2;
-} ElmtList2;
+} ElmtRow;
 
 typedef struct {
-	address First;
-} MultiList;
+	adrG First;
+} Graph;
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
@@ -33,8 +26,8 @@ typedef struct {
 /* Elemen terakhir list : jika addressnya Last, maka Next(Last)=Nil */
 
 #define Info(P) (P)->info
-#define Next(P) (P)->next
-#define Next2(P) (P)->next2
+#define Nextg(G) (G)->nextg
+#define list(G) (G)->next
 #define First(G) ((G).First)
 
 #include "graph.h"
@@ -62,29 +55,29 @@ address AlokasiG (infotype X);
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 
-address2 AlokasiCon (infotype X);
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next2(P)=Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
+// address2 AlokasiCon (infotype X);
+// /* Mengirimkan address hasil alokasi sebuah elemen */
+// /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+// /* menghasilkan P, maka Info(P)=X, Next2(P)=Nil */
+// /* Jika alokasi gagal, mengirimkan Nil */
 
-void DealokasiG (address *P);
+void DealokasiG (adrG *P);
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
 
-void DealokasiCon (address2 *P);
-/* I.S. P terdefinisi */
-/* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
+// void DealokasiCon (address2 *P);
+// /* I.S. P terdefinisi */
+// /* F.S. P dikembalikan ke sistem */
+// /* Melakukan dealokasi/pengembalian address P */
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address SearchG (MultiList G, infotype X);
+adrG SearchG (MultiList G, infotype X);
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
-address2 SearchCon (MultiList G, address P, infotype X);
+address SearchCon (MultiList G, adrG P, infotype X);
 /* mencari address bangunan Y yang terdapat dalam hubungan dengan bangunan X */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
@@ -102,13 +95,13 @@ void InsVLastG (MultiList *G, infotype X);
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertLastG (MultiList *G, address P);
+void InsertLastG (MultiList *G, adrG P);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
-void InsertFirstCon (MultiList *G, address P1, address2 P2);
+void InsertFirstCon (MultiList *G, adrG P1, address P2);
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. Menambahkan elemen ber-address P sebagai elemen pertama */
-void InsVLastCon (MultiList *G, address P, infotype X);
+void InsVLastCon (MultiList *G, adrG P, infotype X);
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 int NbElmtCon (MultiList G, infotype X);
@@ -116,4 +109,5 @@ int NbElmtCon (MultiList G, infotype X);
 
 int CariIdxBCon(MultiList G, infotype X, infotype Y);
 
+void AddRel (Graph *G, int from, int to);
 #endif
