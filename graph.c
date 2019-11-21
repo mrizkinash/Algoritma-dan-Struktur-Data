@@ -166,17 +166,6 @@ int NbElmtCon (MultiList G, infotype X){
     return cnt;
 }
 
-void CetakBConnected(MultiList G, infotype X){
-    address P = SearchG(G,X);
-    address2 P2 = Next2(P);
-    int i=1;
-    while(Next2(P2)!=Nil){
-        printf("%d. ",i);
-        CetakBangunan(ArrBang[Info(P2)]);
-    }
-}
-// mencetak seluruh bangunan yang terhubung dengan bangunan X
-
 int CariIdxBCon(MultiList G, infotype X, infotype Y){
     address P = SearchG(G,X);
     address2 P2 = Next2(P);
