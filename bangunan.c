@@ -57,3 +57,15 @@ void MovePasukan(Bangunan *B1, Bangunan *B2, int x){
     Army(*B2)+=x;
 }
 // memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
+
+void CetakBangunan(Bangunan B){
+	if(Type(B)=='C') printf("Castle ");
+	else if(Type(B)=='T') printf("Tower ");
+	else if(Type(B)=='F') printf("Fort ");
+	else if(Type(B)=='V') printf("Village ");
+	int x = AbsisBangunan(B);
+	int y = OrdinatBangunan(B);
+	printf("(%d,&d) ",x,y);
+	printf("%d ",Army(B));
+	printf("lv. %d\n",Level(B));
+}
