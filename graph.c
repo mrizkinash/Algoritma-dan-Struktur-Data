@@ -4,34 +4,34 @@
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmptyG (MultiList G){
+boolean IsEmptyG (Graph G){
     return(First(G)==Nil);
 }
 /* Mengirim true jika tidak ada bangunan */
-boolean IsEmptyCon (MultiList G, address X){
-    return (Next2(X) == Nil);
+boolean IsEmptyCon (Graph G, address X){
+    return (Next(X) == Nil);
 }
 /* Mengirim true jika tidak ada bangunan yang terhubung dengan bangunan ber address X */
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmptyG (MultiList *G){
+void CreateEmptyG (Graph *G){
     First(*G)=Nil;
 }
 /* I.S. sembarang             */
-/* F.S. Terbentuk Multilist */
-void CreateEmptyCon (MultiList *G, address P){
-    Next2(P)=Nil;
+/* F.S. Terbentuk Graph */
+void CreateEmptyCon (Graph *G, address P){
+    Next(P)=Nil;
 }
 /* membuat list yang berisi keterhubungan dengan bangunan ber address P  */
 
 /****************** Manajemen Memori ******************/
-address AlokasiG (infotype X){
-    address P;
-	P = (address) malloc (sizeof (ElmtList));
+adrG AlokasiG (infotype X){
+    adrG P;
+	P = (address) malloc (sizeof (ElmtRow));
 	if (P != Nil) {
 		Info(P) = X;
-		Next(P) = Nil;
-        Next2(P) = Nil;
+		Nextg(P) = Nil;
+        Next(P) = Nil;
 		return P;
 	} else return Nil;
 }
@@ -40,12 +40,12 @@ address AlokasiG (infotype X){
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 
-address2 AlokasiCon (infotype X){
-    address2 P2;
-	P2 = (address2) malloc (sizeof (ElmtList2));
+adrG AlokasiCon (infotype X){
+    adrG P2;
+	P2 = (address) malloc (sizeof (ElmtList));
 	if (P2 != Nil) {
 		Info(P2) = X;
-		Next2(P2) = Nil;
+		Next(P2) = Nil;
 		return P2;
 	} else return Nil;
 }
@@ -54,14 +54,14 @@ address2 AlokasiCon (infotype X){
 /* menghasilkan P, maka Info(P)=X, Next2(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 
-void DealokasiG (address *P){
+void DealokasiG (adrG *P){
     free(*P);
 }
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
 /* Melakukan dealokasi/pengembalian address P */
 
-void DealokasiCon (address2 *P){
+void DealokasiCon (address *P){
     free(*P);
 }
 /* I.S. P terdefinisi */
@@ -69,8 +69,8 @@ void DealokasiCon (address2 *P){
 /* Melakukan dealokasi/pengembalian address2 P */
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address SearchG (MultiList G, infotype X){
-    address P;
+adrG SearchG (Graph G, infotype X){
+    adrG P;
 	boolean found = false;
 	P = First(G);
 
@@ -87,8 +87,8 @@ address SearchG (MultiList G, infotype X){
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
-address2 SearchCon (MultiList G, address P, infotype X){
-    address2 P2=Next2(P);
+address SearchCon (Graph G, adrG P, infotype X){
+    address P2=Next(P);
     boolean found = false;
     while(P2!=Nil && !found){
         if(Info(P2)==X) found = true;
@@ -100,8 +100,8 @@ address2 SearchCon (MultiList G, address P, infotype X){
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void InsVLastG (MultiList *G, infotype X){
-    address P;
+void InsVLastG (Graph *G, infotype X){
+    adrG P;
 	P = AlokasiG(X);
     
 	if (P != Nil) {
@@ -116,64 +116,94 @@ void InsVLastG (MultiList *G, infotype X){
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertLastG (MultiList *G, address P){
-    address Pr;
+void InsertLastG (Graph *G, adrG P){
+    adrG Pr;
 	if(IsEmptyG(*G)){
-		Next(P) = First(*G);
+		Nextg(P) = First(*G);
 	    First(*G) = P;
 	} else{
 		Pr = First(*G);
-		while(Next(Pr) != Nil){
-			Pr =Next(Pr);
+		while(Nextg(Pr) != Nil){
+			Pr =Nextg(Pr);
 		}
-		Next(P) = Next(Pr);
-	    Next(Pr) = P;
+		Nextg(P) = Nextg(Pr);
+	    Nextg(Pr) = P;
 	}
 }
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
-void InsertLastCon (MultiList *G, address P1, address2 P2){
-    address2 Pr;
-	if(Next2(P1)==Nil){
-		Next2(P2) = Next2(P1);
-	    Next2(P1) = P2;
+void InsertLastCon (Graph *G, adrG P1, address P2){
+    address Pr;
+	if(Next(P1)==Nil){
+		Next(P2) = Next(P1);
+	    Next(P1) = P2;
 	} else{
-		Pr = Next2(P1);
-		while(Next2(Pr) != Nil){
-			Pr =Next2(Pr);
+		Pr = Next(P1);
+		while(Next(Pr) != Nil){
+			Pr =Next(Pr);
 		}
-		Next2(P2) = Nil;
-	    Next2(Pr) = P2;
+		Next(P2) = Nil;
+	    Next(Pr) = P2;
 	}
 }
 
-void InsVLastCon (MultiList *G, address P, infotype X){
-    address2 P2 = AlokasiCon(X);
+void InsVLastCon (Graph *G, adrG P, infotype X){
+    address P2 = AlokasiCon(X);
     if (P2 != Nil) {
 		InsertLastCon(G, P, P2);
 	}
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-int NbElmtCon (MultiList G, infotype X){
+int NbElmtCon (Graph G, infotype X){
     int cnt=0;
-    address P=SearchG(G,X);
-    address2 P2=Next2(P);
-    while(Next2(P2)!=Nil){
+    adrG P=SearchG(G,X);
+    address P2=Next(P);
+    while(P2!=Nil){
         cnt+=1;
-        P2=Next2(P2);
+        P2=Next(P2);
     }
     return cnt;
 }
 
-int CariIdxBCon(MultiList G, infotype X, infotype Y){
-    address P = SearchG(G,X);
-    address2 P2 = Next2(P);
+int CariIdxBCon(Graph G, infotype X, infotype Y){
+    adrG P = SearchG(G,X);
+    address P2 = Next(P);
     int ans;
     while(P2!=Nil && Y>0){
         ans = Info(P2);
         Y--;
-        P2 = Next2(P2);
+        P2 = Next(P2);
     }
     return ans;
+}
+
+void AddRel (Graph *G, int from, int to) {
+    adrG R;
+    address C;
+    if (IsEmptyG(*G)) {
+        R = AlokasiG(from);
+        First(*G) = R;
+    } else {
+        R = First(*G);
+        while (Nextg(R) != Nil && Info(R) != from) {
+            R = Nextg(R);
+        }
+        if (Info(R) != from) {
+            Nextg(R) = AlokRow(from);
+            R = Nextg(R);
+        }
+    }
+    if (Next(R) == Nil) {
+        C = AlokasiCon(to);
+        Next(R) = C;
+    } else {
+        C = Next(R);
+        while (Next(C) != Nil && Info(C) != to) {
+            C = Next(C);
+        }
+        if (Info(C) != to) {
+            Next(C) = AlokasiCon(to);
+        }
+    }
 }
