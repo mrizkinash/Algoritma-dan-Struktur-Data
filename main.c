@@ -101,11 +101,11 @@ int main(){
                 ADVKATA();
                 j = KataToInt(CKata);
 
-                B = Elmt(ArrBang,x);
                 CreateBangunan(&B,type,i,j); // create bangunan ke x
+                Elmt(ArrBang,x) = B; // masukin bangunan yg baru di create ke arrbang
                 if(x==1) InsVLastLB(&L1,1); // bangunan 1 milik pemain 1
                 else if(x==2) InsVLastLB(&L2,2); // bangunan 2 milik pemain 2
-                
+
                 // matriks ganti jd nyimpen type sm owner aja
                 Elmt(M, i, j) = B;  // Bangunan dijadikan elemen matriks of bangunan
 
