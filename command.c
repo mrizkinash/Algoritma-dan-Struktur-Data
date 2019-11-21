@@ -1,88 +1,101 @@
-void attack(TabInt ArrBang, Graph G, int player, List L){
+#include <stdio.h>
+#include "command.h"
+
+void attack(TabInt *ArrBang, Graph G, int player, List *L1, List *L2){
+    Bangunan a;
     printf("Daftar Bangunan:\n");
-    CetakBangunan(L);
+    if(player==1) CetakListB(*L1,*ArrBang);
+    else CetakListB(*L2,*ArrBang);
     printf("Bangunan yang digunakan untuk menyerang: ");
     int x;
     scanf("%d",&x);
     // cek udh pernah nyerang atau belum
     boolean sudah;
-    sudah = CekAttack(L, x);
+    if(player==1) sudah = CekAttack(*L1, x);
+    else sudah = CekAttack(*L2, x);
     if(!sudah){
         int menyerang;
-        menyerang= CariIdxB(L,x);
+        if(player==1) menyerang= CariIdxB(*L1,x);
+        else menyerang= CariIdxB(*L2,x);
         printf("Daftar bangunan yang dapat diserang:\n");
-        TabInt *TLawan; // menyimpan data bangunan yg bisa di attack
-        MakeEmptyAB(&TLawan);
-        address P = SearchG(G,menyerang);
-        address2 P2= Next2(P);
+        int TLawan[30]; // menyimpan data bangunan yg bisa di attack
+        // MakeEmptyAB(TLawan,30);
+        adrG P = SearchG(G,menyerang);
+        address P2= Next(P);
         int i=1;
         while(P2!=Nil){
-            if(Owner(ArrBang[Info(P2)])!=Player){
-                *Tlawan[i]=Info(P2);
+            if(Owner(ArrBang->TI[Info(P2)])!=player){
+                TLawan[i]=Info(P2);
                 printf("%d. ",i);
-                CetakBangunan(ArrBang[info(P2)]);
+                CetakBangunan(ArrBang->TI[TLawan[i]]);
                 i++;
             }
-            P2=Next2(P2);
+            P2=Next(P2);
         }
         printf("Bangunan yang diserang: ");
         int y;
         scanf("%d",&y);
         int diserang;
-        diserang = Tlawan[y];
+        diserang = TLawan[y];
         printf("Jumlah pasukan: ");
         int pas;
         scanf("%d",&pas);
-        while (pas<Army(ArrBang[menyerang])){
+        while (pas<Army(ArrBang->TI[menyerang])){
             printf("jumlah pasukan tidak valid\n");
             scanf("%d",&pas);
         }
-        //kondisi menang
-        int new_pas = pas-Army(ArrBang[diserang]);
-        if(player==1){
-            //bangunan jd punya player 1
-            ChangeOwnerB(ArrBang[diserang], new_pas, 1);
-            DelPLB (&L2, diserang);
+        // kondisi kalah
+        if(pas<Army(ArrBang->TI[diserang])){
+            Army(ArrBang->TI[diserang])-=pas;
+            printf("Bangunan gagal direbut\n");
+        }else{
+            //kondisi menang
+            int new_pas = pas-Army(ArrBang->TI[diserang]);
+            if(player==1){
+                //bangunan jd punya player 1
+                ChangeOwnerB(&(ArrBang->TI[diserang]), new_pas, 1);
+                DelPLB (&L2, diserang);
+            }
+            else{
+                ChangeOwnerB(&(ArrBang->TI[diserang]), new_pas, 2);
+                DelPLB (&L1, diserang);
+            }
+            printf("Bangunan menjadi milikmu\n");
+            SudahAttack(L,x); // ubah jadi pernah nyerang
         }
-        else{
-            ChangeOwnerB(ArrBang[diserang], new_pas, 2);
-            DelPLB (&L1, diserang);
-        }
-        printf("Bangunan menjadi milikmu\n");
-        SudahAttack(&L,x); // ubah jadi pernah nyerang
     }
 }
 
-void level_up(List L){
+void level_up(List L, TabInt ArrBang){
     printf("Daftar Bangunan:\n");
-    CetakBangunan(L);
+    CetakListB(L,ArrBang);
     printf("Bangunan yang akan di level up: ");
     int x;
     scanf("%d",&x);
     int lvlup;
     lvlup = CariIdxB(L,x);
-    LevelUpBangunan(&ArrBang[lvlup]);
+    LevelUpBangunan(&(ArrBang.TI[lvlup]));
 }
 
-void move(List L){
+void move(TabInt *ArrBang, Graph G, int player, List *L){
     printf("Daftar Bangunan:\n");
-    CetakBangunan(L);
+    CetakListB(*L,*ArrBang);
     printf("Pilih bangunan: ");
     int x;
     scanf("%d",&x);
     int asal;
-    asal= CariIdxB(L,x);
+    asal= CariIdxB(*L,x);
     printf("Daftar bangunan yang dapat terdekat:\n");
-        TabInt *TLawan; // menyimpan data bangunan yg bisa di attack
+        int TLawan[30]; // menyimpan data bangunan yg bisa di attack
         MakeEmptyAB(&TLawan);
-        address P = SearchG(G,menyerang);
-        address2 P2= Next2(P);
+        adrG P = SearchG(G,asal);
+        address P2= Next2(P);
         int i=1;
         while(P2!=Nil){
-            if(Owner(ArrBang[Info(P2)])!=Player){
-                *Tlawan[i]=Info(P2);
+            if(Owner(ArrBang->TI[Info(P2)])==player){
+                TLawan[i]=Info(P2);
                 printf("%d. ",i);
-                CetakBangunan(ArrBang[info(P2)]);
+                CetakBangunan(ArrBang->TI[info(P2)]);
                 i++;
             }
             P2=Next2(P2);
@@ -91,9 +104,9 @@ void move(List L){
         int y;
         scanf("%d",&y);
         int terima;
-        terima = Tlawan[y];
+        terima = TLawan[y];
         printf("Bangunan yang akan menerima: ");
         int gain;
         scanf("%d",&gain);
-        MovePasukan(&ArrBang[asal], &ArrBang[terima], int gain);
+        MovePasukan(&ArrBang[asal], &ArrBang[terima],gain);
 }
