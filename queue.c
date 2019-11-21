@@ -12,19 +12,19 @@ boolean IsEmptyQueue (Queue Q)
 }
 boolean IsFullQueue (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
-/* yaitu mengandung elemen sebanyak MaxEl */
+/* yaitu mengandung elemen sebanyak MaxElQ */
 {
-	return(Tail(Q) == MaxEl(Q));
+	return(Tail(Q) == MaxElQ(Q));
 }
 int NBElmtQueue (Queue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 {
 	if (IsEmptyQueue(Q)) {
-		return Nil;
+		return Nol;
 	} else if (Head(Q) <= Tail(Q)){
 		return (Tail(Q)-Head(Q)+1);
 	} else {
-		return (MaxEl(Q) - Head(Q) + Tail(Q) + 1);
+		return (MaxElQ(Q) - Head(Q) + Tail(Q) + 1);
 	}
 }
 /* *** Kreator *** */
@@ -32,16 +32,16 @@ void CreateEmptyQueue (Queue * Q, int Max)
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
-/* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
+/* atau : jika alokasi gagal, Q kosong dg MaxElQ=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 {
 	(*Q).T = (infotype *) malloc ((Max+1) * sizeof(infotype));
 	if((*Q).T != NULL){
-		Head(*Q) = Nil;
-		Tail(*Q) = Nil;
-		MaxEl(*Q) = Max;
+		Head(*Q) = Nol;
+		Tail(*Q) = Nol;
+		MaxElQ(*Q) = Max;
 	} else {
-		(*Q).MaxEl = 0;
+		(*Q).MaxElQ = 0;
 	}
 
 }
@@ -49,10 +49,10 @@ void CreateEmptyQueue (Queue * Q, int Max)
 void DeAlokasiQueue (Queue * Q)
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
-/* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
+/* F.S. Q menjadi tidak terdefinisi lagi, MaxElQ(Q) diset 0 */
 {
 	free((*Q).T);
-	MaxEl(*Q) =Nil;
+	MaxElQ(*Q) =Nol;
 }
 /* *** Primitif Add/Delete *** */
 void AddQueue (Queue * Q, infotype X)
@@ -77,14 +77,14 @@ void AddQueue (Queue * Q, infotype X)
 void DelQueue (Queue * Q, infotype * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
-/* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
+/* F.S. X = Nolai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
 {
 
 	*X = InfoHead(*Q);
 	if(IsFullQueue(*Q)){
-		Head(*Q) = Nil;
-		Tail(*Q) = Nil;
+		Head(*Q) = Nol;
+		Tail(*Q) = Nol;
 	}else {
 		Head(*Q)++;
 	}

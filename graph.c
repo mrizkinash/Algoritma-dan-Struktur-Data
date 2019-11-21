@@ -5,29 +5,29 @@
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
 boolean IsEmptyG (MultiList G){
-    return(First(G)==Nil);
+    return(FirstG(G)==Nil);
 }
 /* Mengirim true jika tidak ada bangunan */
-boolean IsEmptyCon (MultiList G, address X){
+boolean IsEmptyCon (MultiList G, addressG X){
     return (Next2(X) == Nil);
 }
-/* Mengirim true jika tidak ada bangunan yang terhubung dengan bangunan ber address X */
+/* Mengirim true jika tidak ada bangunan yang terhubung dengan bangunan ber addressG X */
 
 /****************** PEMBUATAN LIST KOSONG ******************/
 void CreateEmptyG (MultiList *G){
-    First(*G)=Nil;
+    FirstG(*G)=Nil;
 }
 /* I.S. sembarang             */
 /* F.S. Terbentuk Multilist */
-void CreateEmptyCon (MultiList *G, address P){
+void CreateEmptyCon (MultiList *G, addressG P){
     Next2(P)=Nil;
 }
-/* membuat list yang berisi keterhubungan dengan bangunan ber address P  */
+/* membuat list yang berisi keterhubungan dengan bangunan ber addressG P  */
 
 /****************** Manajemen Memori ******************/
-address AlokasiG (infotype X){
-    address P;
-	P = (address) malloc (sizeof (ElmtList));
+addressG AlokasiG (infotype X){
+    addressG P;
+	P = (addressG) malloc (sizeof (ElmtListG));
 	if (P != Nil) {
 		Info(P) = X;
 		Next(P) = Nil;
@@ -35,44 +35,44 @@ address AlokasiG (infotype X){
 		return P;
 	} else return Nil;
 }
-/* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+/* Mengirimkan addressG hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka addressG tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 
-address2 AlokasiCon (infotype X){
-    address2 P2;
-	P2 = (address2) malloc (sizeof (ElmtList2));
+addressG2 AlokasiCon (infotype X){
+    addressG2 P2;
+	P2 = (addressG2) malloc (sizeof (ElmtListG2));
 	if (P2 != Nil) {
 		Info(P2) = X;
 		Next2(P2) = Nil;
 		return P2;
 	} else return Nil;
 }
-/* Mengirimkan address2 hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address2 tidak nil, dan misalnya */
+/* Mengirimkan addressG2 hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka addressG2 tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next2(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 
-void DealokasiG (address *P){
+void DealokasiG (addressG *P){
     free(*P);
 }
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address P */
+/* Melakukan dealokasi/pengembalian addressG P */
 
-void DealokasiCon (address2 *P){
+void DealokasiCon (addressG2 *P){
     free(*P);
 }
 /* I.S. P terdefinisi */
 /* F.S. P dikembalikan ke sistem */
-/* Melakukan dealokasi/pengembalian address2 P */
+/* Melakukan dealokasi/pengembalian addressG2 P */
 
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
-address SearchG (MultiList G, infotype X){
-    address P;
+addressG SearchG (MultiList G, infotype X){
+    addressG P;
 	boolean found = false;
-	P = First(G);
+	P = FirstG(G);
 
 	while((P!= Nil)&& (!(found))){
 		if(Info(P) == X){
@@ -84,11 +84,11 @@ address SearchG (MultiList G, infotype X){
 	return P;
 }
 /* Mencari apakah ada elemen list dengan Info(P)= X */
-/* Jika ada, mengirimkan address elemen tersebut. */
+/* Jika ada, mengirimkan addressG elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
-address2 SearchCon (MultiList G, address P, infotype X){
-    address2 P2=Next2(P);
+addressG2 SearchCon (MultiList G, addressG P, infotype X){
+    addressG2 P2=Next2(P);
     boolean found = false;
     while(P2!=Nil && !found){
         if(Info(P2)==X) found = true;
@@ -96,12 +96,12 @@ address2 SearchCon (MultiList G, address P, infotype X){
     }
     return P2;
 }
-/* mencari address bangunan Y yang terdapat dalam hubungan dengan bangunan X */
+/* mencari addressG bangunan Y yang terdapat dalam hubungan dengan bangunan X */
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
 void InsVLastG (MultiList *G, infotype X){
-    address P;
+    addressG P;
 	P = AlokasiG(X);
     
 	if (P != Nil) {
@@ -116,13 +116,13 @@ void InsVLastG (MultiList *G, infotype X){
 
 /****************** PRIMITIF BERDASARKAN ALAMAT ******************/
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
-void InsertLastG (MultiList *G, address P){
-    address Pr;
+void InsertLastG (MultiList *G, addressG P){
+    addressG Pr;
 	if(IsEmptyG(*G)){
-		Next(P) = First(*G);
-	    First(*G) = P;
+		Next(P) = FirstG(*G);
+	    FirstG(*G) = P;
 	} else{
-		Pr = First(*G);
+		Pr = FirstG(*G);
 		while(Next(Pr) != Nil){
 			Pr =Next(Pr);
 		}
@@ -132,8 +132,8 @@ void InsertLastG (MultiList *G, address P){
 }
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
-void InsertLastCon (MultiList *G, address P1, address2 P2){
-    address2 Pr;
+void InsertLastCon (MultiList *G, addressG P1, addressG2 P2){
+    addressG2 Pr;
 	if(Next2(P1)==Nil){
 		Next2(P2) = Next2(P1);
 	    Next2(P1) = P2;
@@ -147,8 +147,8 @@ void InsertLastCon (MultiList *G, address P1, address2 P2){
 	}
 }
 
-void InsVLastCon (MultiList *G, address P, infotype X){
-    address2 P2 = AlokasiCon(X);
+void InsVLastCon (MultiList *G, addressG P, infotype X){
+    addressG2 P2 = AlokasiCon(X);
     if (P2 != Nil) {
 		InsertLastCon(G, P, P2);
 	}
@@ -157,8 +157,8 @@ void InsVLastCon (MultiList *G, address P, infotype X){
 /****************** PROSES SEMUA ELEMEN LIST ******************/
 int NbElmtCon (MultiList G, infotype X){
     int cnt=0;
-    address P=SearchG(G,X);
-    address2 P2=Next2(P);
+    addressG P=SearchG(G,X);
+    addressG2 P2=Next2(P);
     while(Next2(P2)!=Nil){
         cnt+=1;
         P2=Next2(P2);
@@ -166,20 +166,20 @@ int NbElmtCon (MultiList G, infotype X){
     return cnt;
 }
 
-void CetakBConnected(MultiList G, infotype X){
-    address P = SearchG(G,X);
-    address2 P2 = Next2(P);
+void CetakBConnected(MultiList G, infotype X, TabInt ArrBang){
+    addressG P = SearchG(G,X);
+    addressG2 P2 = Next2(P);
     int i=1;
     while(Next2(P2)!=Nil){
         printf("%d. ",i);
-        CetakBangunan(ArrBang[Info(P2)]);
+        CetakBangunan(ElmtArr(ArrBang, Info(P2)));
     }
 }
 // mencetak seluruh bangunan yang terhubung dengan bangunan X
 
 int CariIdxBCon(MultiList G, infotype X, infotype Y){
-    address P = SearchG(G,X);
-    address2 P2 = Next2(P);
+    addressG P = SearchG(G,X);
+    addressG2 P2 = Next2(P);
     int ans;
     while(P2!=Nil && Y>0){
         ans = Info(P2);
@@ -187,4 +187,16 @@ int CariIdxBCon(MultiList G, infotype X, infotype Y){
         P2 = Next2(P2);
     }
     return ans;
+}
+
+addressG FindLastG (MultiList G){
+	addressG P;
+
+	P = FirstG(G);
+	while (Next(P) != Nil){
+
+		P = Next(P);
+	}
+
+	return P;
 }

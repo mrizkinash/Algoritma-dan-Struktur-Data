@@ -1,8 +1,8 @@
 #ifndef BANGUNAN_H
 #define BANGUNAN_H
 
-#include "ADT/boolean.h"
-#include "ADT/point.h"
+#include "boolean.h"
+#include "point.h"
 
 typedef struct {
     int owner; // 0 -> no owner, 1 -> pemain 1, 2 -> pemain 2

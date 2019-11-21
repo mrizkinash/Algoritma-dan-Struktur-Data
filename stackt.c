@@ -11,22 +11,22 @@
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyStack (Stack *S)
 /* I.S. sembarang; */
-/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
-/* jadi indeksnya antara 1.. MaxEl+1 karena 0 tidak dipakai */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxElStack */
+/* jadi indeksnya antara 1.. MaxElStack+1 karena 0 tidak dipakai */
+/* Ciri stack kosong : TOP berNolai Nol */
 {
-	Top(*S) = Nil;
+	Top(*S) = Nol;
 }
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack (Stack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
-	return(Top(S) == Nil);
+	return(Top(S) == Nol);
 }
 boolean IsFull (Stack S)
-/* Mengirim true jika tabel penampung nilai elemen stack penuh */
+/* Mengirim true jika tabel penampung Nolai elemen stack penuh */
 {
-	return (Top(S) == MaxEl);
+	return (Top(S) == MaxElStack);
 }
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
 void PushStack (Stack * S, infotype X)
@@ -42,7 +42,7 @@ void PushStack (Stack * S, infotype X)
 void PopStack (Stack * S, infotype* X)
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
-/* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+/* F.S. X adalah Nolai elemen TOP yang lama, TOP berkurang 1 */
 {
 	*X =InfoTop(*S);
 	Top(*S)--;

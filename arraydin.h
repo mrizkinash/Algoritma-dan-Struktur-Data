@@ -18,14 +18,14 @@
 
 /* Definisi elemen dan koleksi objek */
 typedef int IdxType; /* type indeks */
-typedef Bangunan ElType;  /* type elemen tabel */
+typedef Bangunan ElTypeArr;  /* type elemen tabel */
 typedef struct
 {
-  ElType *TI; /* memori tempat penyimpan elemen (container) */
+  ElTypeArr *TI; /* memori tempat penyimpan elemen (container) */
   int Neff;   /* >=0, banyaknya elemen efektif */
-  int MaxEl;  /* ukuran elemen */
+  int MaxElArr;  /* ukuran elemen */
 } TabInt;
-/* Indeks yang digunakan [IdxMin..MaxEl] */
+/* Indeks yang digunakan [IdxMin..MaxElArr] */
 /* Jika T adalah TabInt, cara deklarasi dan akses: */
 /* Deklarasi : T : TabInt */
 /* Maka cara akses:
@@ -40,18 +40,18 @@ typedef struct
 /* ********** SELEKTOR ********** */
 #define Neff(T) (T).Neff
 #define TI(T) (T).TI
-#define Elmt(T, i) (T).TI[(i)]
-#define MaxEl(T) (T).MaxEl
+#define ElmtArr(T, i) (T).TI[(i)]
+#define MaxElArr(T) (T).MaxElArr
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create tabel kosong  */
-void MakeEmptyAB(TabInt *T, int maxel);
-/* I.S. T sembarang, maxel > 0 */
-/* F.S. Terbentuk tabel T kosong dengan kapasitas maxel + 1 */
+void MakeEmptyAB(TabInt *T, int MaxElArr);
+/* I.S. T sembarang, MaxElArr > 0 */
+/* F.S. Terbentuk tabel T kosong dengan kapasitas MaxElArr + 1 */
 
 void DealokasiAB(TabInt *T);
 /* I.S. T terdefinisi; */
-/* F.S. TI(T) dikembalikan ke system, MaxEl(T)=0; Neff(T)=0 */
+/* F.S. TI(T) dikembalikan ke system, MaxElArr(T)=0; Neff(T)=0 */
 
 /* ********** SELEKTOR (TAMBAHAN) ********** */
 /* *** Banyaknya elemen *** */
@@ -60,7 +60,7 @@ int NbElmtAB(TabInt T);
 /* Mengirimkan nol jika tabel kosong */
 
 /* *** Daya tampung container *** */
-int MaxElementAB(TabInt T);
+int MaxElArrementAB(TabInt T);
 /* Mengirimkan maksimum elemen yang dapat ditampung oleh tabel */
 
 /* *** Selektor INDEKS *** */
@@ -97,9 +97,9 @@ boolean IsFullAB(TabInt T);
 // /* F.S. Tabel T terdefinisi */
 // /* Proses : membaca banyaknya elemen T dan mengisi nilainya */
 // /* 1. Baca banyaknya elemen diakhiri enter, misalnya N */
-// /*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxElement(T) */
+// /*    Pembacaan diulangi sampai didapat N yang benar yaitu 0 <= N <= MaxElArrement(T) */
 // /*    Jika N tidak valid, tidak diberikan pesan kesalahan */
-// /* 2. Jika 0 < N <= MaxElement(T); Lakukan N kali: Baca elemen mulai dari indeks
+// /* 2. Jika 0 < N <= MaxElArrement(T); Lakukan N kali: Baca elemen mulai dari indeks
 //       IdxMin satu per satu diakhiri enter */
 // /*    Jika N = 0; hanya terbentuk T kosong */
 
@@ -125,7 +125,7 @@ void TulisIsiAB(TabInt T);
 // /* Mengirimkan true jika T1 sama dengan T2 yaitu jika Neff T1 = T2 dan semua elemennya sama */
 /* ********** SEARCHING ********** */
 /* ***  Perhatian : Tabel boleh kosong!! *** */
-// IdxType Search1(TabInt T, ElType X);
+// IdxType Search1(TabInt T, ElTypeArr X);
 // /* Search apakah ada elemen tabel T yang bernilai X */
 // /* Jika ada, menghasilkan indeks i terkecil, dengan elemen ke-i = X */
 // /* Jika tidak ada, mengirimkan IdxUndef */
@@ -133,7 +133,7 @@ void TulisIsiAB(TabInt T);
 // /* Skema Searching yang digunakan bebas */
 
 /* ********** NILAI EKSTREM ********** */
-// void MaxMin(TabInt T, ElType *Max, ElType *Min);
+// void MaxMin(TabInt T, ElTypeArr *Max, ElTypeArr *Min);
 // /* I.S. Tabel T tidak kosong */
 // /* F.S. Max berisi nilai maksimum T;
 //         Min berisi nilai minimum T */
@@ -141,14 +141,14 @@ void TulisIsiAB(TabInt T);
 /* ********** OPERASI LAIN ********** */
 // void CopyTab(TabInt Tin, TabInt *Tout);
 // /* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
-// /* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
+// /* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxElArr sama) */
 // /* Proses : Menyalin isi Tin ke Tout */
 
-// ElType SumTab(TabInt T);
+// ElTypeArr SumTab(TabInt T);
 // /* Menghasilkan hasil penjumlahan semua elemen T */
 // /* Jika T kosong menghasilkan 0 */
 
-// int CountX(TabInt T, ElType X);
+// int CountX(TabInt T, ElTypeArr X);
 // /* Menghasilkan berapa banyak kemunculan X di T */
 // /* Jika T kosong menghasilkan 0 */
 
@@ -165,12 +165,12 @@ void TulisIsiAB(TabInt T);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void AddBangunan(TabInt *T, ElType X);
+void AddBangunan(TabInt *T, ElTypeArr X);
 /* Proses: Menambahkan X sebagai elemen terakhir tabel */
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
 
-void DelLastElAB(TabInt *T, ElType *X);
+void DelLastElAB(TabInt *T, ElTypeArr *X);
 /* Proses : Menghapus elemen terakhir tabel */
 /* I.S. Tabel tidak kosong */
 /* F.S. X adalah nilai elemen terakhir T sebelum penghapusan, */
@@ -185,14 +185,14 @@ void GrowTab(TabInt *T, int num);
 
 void ShrinkTab(TabInt *T, int num);
 /* Proses : Mengurangi max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi, ukuran MaxEl >= num. */
+/* I.S. Tabel sudah terdefinisi, ukuran MaxElArr >= num. */
 /* F.S. Ukuran tabel berkurang sebanyak num.*/
 /*      Elemen yang berada di indeks di atas Neff dihapus.*/
 
 void CompactTab(TabInt *T);
-/* Proses : Mengurangi max element sehingga Neff = MaxEl */
+/* Proses : Mengurangi max element sehingga Neff = MaxElArr */
 /* I.S. Tabel tidak kosong */
-/* F.S. Ukuran MaxEl = Neff */
+/* F.S. Ukuran MaxElArr = Neff */
 
 /* TAMBAHAN PUNGSI BANGUNAN */
 int JmlBOwnedX(TabInt T, int X);
