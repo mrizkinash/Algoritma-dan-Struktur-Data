@@ -128,6 +128,8 @@ void PrintInfoLB (List L);
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 int NbElmtLB (List L);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
+int CariIdxB(List L, int n);
+// mengeluarkan index ArrBang ke n yang dimiliki suatu player
 
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
 //infotype Max (List L);
