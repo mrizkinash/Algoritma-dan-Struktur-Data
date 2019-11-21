@@ -34,6 +34,7 @@ address AlokasiLB (infotype X)
 	P = (address) malloc (sizeof (ElmtList));
 	if (P != Nil) {
 		Info(P) = X;
+		Battle(P)=false;
 		Next(P) = Nil;
 		return P;
 	} else {
@@ -226,33 +227,7 @@ void DelAfterLB (List *L, address *Pdel, address Prec)
 	Next(*Pdel) = Nil;
 }
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-void PrintInfoLB (List L)
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, iai list dicetak ke kanan: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-{
-	address P;
-	
-	P = First(L);
-	if (P != Nil) {
-		int idxb=Info(P);
-		printf("Tipe: %c ",Type(ArrBang[idxb]);
-		printf("(%d,%d) ", AbsisBangunan(ArrBang[idxb]), OrdinatBangunan(ArrBang[idxb]) )
-		printf("%d ",Army(ArrBang[idxb]));
-		printf("lv. %d\n",Level(ArrBang[idxb]));
-	}
-	P = Next(P);
-	while (P != Nil) {
-		int idxb=Info(P);
-		printf("Tipe: %c ",Type(ArrBang[idxb]);
-		printf("(%d,%d) ", AbsisBangunan(ArrBang[idxb]), OrdinatBangunan(ArrBang[idxb]) )
-		printf("%d ",Army(ArrBang[idxb]));
-		printf("lv. %d\n",Level(ArrBang[idxb]));
-		P = Next(P);
-	}
-}
+
 int NbElmtLB (List L)
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 {
@@ -274,4 +249,36 @@ int CariIdxB(List L, int n){
 		P=Next(P);
 	}
 	return idx;
+}
+
+boolean CekAttack(List L, int x){
+	address P = First(L);
+	while(P!=Nil){
+		if(x==0) return Battle(P);
+		else{
+			P = Next(P);
+			x--;
+		}
+	}
+}
+
+void SudahAttack(List *L, int x){
+	address P = First(L);
+	while(P!=Nil){
+		if(x==0) Battle(P)=true;
+		else{
+			P = Next(P);
+			x--;
+		}
+	}
+}
+
+void CetakListB(List L, TabInt ArrBang){
+	address P = First(L);
+	int i=1;
+	while(P!=Nil){
+		printf("%d. ",i);
+		CetakBangunan(ArrBang.TI[Info(P)]);
+		i++;
+	}
 }
