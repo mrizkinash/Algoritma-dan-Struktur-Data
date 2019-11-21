@@ -16,6 +16,8 @@ typedef struct tElmtlist *address;
 
 typedef struct tElmtlist {
 	infotype info;
+	boolean battle;
+	//udh brp pasukan yg kita kasih
 	address next;
 } ElmtList;
 
@@ -29,6 +31,7 @@ typedef struct {
 /* Elemen terakhir list : jika addressnya Last, maka Next(Last)=Nil */
 
 #define Info(P) (P)->info
+#define Battle(P) (P)->battle
 #define Next(P) (P)->next
 #define First(L) ((L).First)
 
@@ -120,17 +123,13 @@ void DelAfterLB (List *L, address *Pdel, address Prec);
 /*      Pdel adalah alamat elemen list yang dihapus  */
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
-void PrintInfoLB (List L);
-/* I.S. List mungkin kosong */
-/* F.S. Jika list tidak kosong, iai list dicetak ke kanan: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika list kosong : menulis [] */
-/* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
 int NbElmtLB (List L);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 int CariIdxB(List L, int n);
 // mengeluarkan index ArrBang ke n yang dimiliki suatu player
-
+boolean CekAttack(List L, int x);
+void SudahAttack(List *L, int x);
+void CetakListB(List L, TabInt ArrBang);
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
 //infotype Max (List L);
 /* Mengirimkan nilai Info(P) yang maksimum */
