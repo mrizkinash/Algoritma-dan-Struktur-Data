@@ -114,9 +114,6 @@ void InsVLastCon (MultiList *G, address P, infotype X);
 int NbElmtCon (MultiList G, infotype X);
 /* mengeluarkan jumlah bangunan yang terhubung dengan bangunan X */
 
-void CetakBConnected(Multilist G, infotype X);
-// mencetak seluruh bangunan yang terhubung dengan bangunan X
-
 int CariIdxBCon(MultiList G, infotype X, infotype Y);
 
 #endif
