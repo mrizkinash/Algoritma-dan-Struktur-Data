@@ -412,42 +412,10 @@ void DelLastElAB(TabInt *T, ElType *X){
     Neff(*T) -= 1;
 }
 
-/* ********* MENGUBAH UKURAN ARRAY ********* */
-void GrowTab(TabInt *T, int num){
-/* Proses : Menambahkan max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi */
-/* F.S. Ukuran tabel bertambah sebanyak num */
-
-    TI(*T) = (ElType *)realloc(TI(*T), (MaxEl(*T) + 1 + num)*sizeof(ElType));
-    MaxEl(*T) += num;
-}
-
-void ShrinkTab(TabInt *T, int num){
-/* Proses : Mengurangi max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi, ukuran MaxEl >= num. */
-/* F.S. Ukuran tabel berkurang sebanyak num.*/
-/*      Elemen yang berada di indeks di atas Neff dihapus.*/
-
-    TI(*T) = (ElType *)realloc(TI(*T), (MaxEl(*T) + 1 - num)*sizeof(ElType));
-    MaxEl(*T) -= num;
-    if (MaxEl(*T) < Neff(*T)){
-        Neff(*T) = MaxEl(*T);
-    }
-}
-
-void CompactTab(TabInt *T){
-/* Proses : Mengurangi max element sehingga Neff = MaxEl */
-/* I.S. Tabel tidak kosong */
-/* F.S. Ukuran MaxEl = Neff */
-
-    TI(*T) = (ElType *)realloc(TI(*T), (Neff(*T))*sizeof(ElType));
-    MaxEl(*T) = Neff(*T);
-}
-
 /* TAMBAHAN PUNGSI BANGUNAN */
 int JmlBOwnedX(TabInt T, int X){
 /* menghitung jumlah bangunan yang dimiliki X */
-    int cnt=0
+    int cnt=0;
     for(int i=1; i<=Neff(T); i++){
         if(Owner(Elmt(T,i))==X) cnt+=1;
     }
@@ -459,6 +427,6 @@ TabInt BOwnedX(TabInt T, int X){
     for(int i=1; i<=Neff(T); i++){
         if(Owner(Elmt(T,i))==X) AddBangunan(&owned,Elmt(T,i));
     }
-    return owned;
+    return *owned;
 }
 // mengeluarkan array bangunan yang dimiliki oleh X
