@@ -56,8 +56,8 @@ void ReadMatriksSize(MATRIKS *M){
             }
             else {
 
-                MOwn(ElmtMat(M, i, j)) = 0;
-                MType(ElmtMat(M, i, j)) = ' ';  
+                MOwn(ElmtMat(*M, i, j)) = 0;
+                MType(ElmtMat(*M, i, j)) = ' ';  
             }
         }
     }    
@@ -257,7 +257,7 @@ int main(){
             printf("Player 1\n");
             CetakListB(S.P1.listbangunan, S.ArrBang);
             printf("Skill Available : ");
-            PrintQueue(S.P1.skill);
+            PrintSkill(S.P1.skill);
             printf("ENTER COMMAND : ");
             STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang
             for (i = 1; i <= CKata.Length; i++){
@@ -271,11 +271,10 @@ int main(){
             }
             else if (strcmp(CKata.TabKata, "level_up")){
                 level_up(S.P1.listbangunan, &(S.ArrBang));
-            }/*
-            else if (strcmp(CKata.TabKata, "skill")){
-
-
             }
+            else if (strcmp(CKata.TabKata, "skill")){
+                UseSkill(&S);
+            }/*
             else if (strcmp(CKata.TabKata, "undo")){
 
 
@@ -301,7 +300,7 @@ int main(){
             printf("Player 2\n");
             CetakListB(S.P2.listbangunan, S.ArrBang);
             printf("Skill Available : ");
-            PrintQueue(S.P2.skill);
+            PrintSkill(S.P2.skill);
             printf("ENTER COMMAND : ");
             STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang   
             for (i = 1; i <= CKata.Length; i++){
@@ -315,11 +314,10 @@ int main(){
             }
             else if (strcmp(CKata.TabKata, "level_up")){
                 level_up(S.P2.listbangunan, &(S.ArrBang));
-            }/*
-            else if (strcmp(CKata.TabKata, "skill")){
-
-
             }
+            else if (strcmp(CKata.TabKata, "skill")){
+                UseSkill(&S);
+            }/*
             else if (strcmp(CKata.TabKata, "undo")){
 
 
