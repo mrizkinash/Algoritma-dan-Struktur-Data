@@ -293,3 +293,11 @@ void ResetBattle(List L){
 		P=Next(P);
 	}
 }
+
+boolean ceklvl4(List L, TabInt ArrBang){
+	address P = First(L);
+	while(P!=Nil){
+		if(Level(ArrBang.TI[Info(P)])!=4) return false;
+	}
+	return true;
+}
