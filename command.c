@@ -93,15 +93,14 @@ void move(TabInt *ArrBang, Graph G, int player, List L){
     asal= CariIdxB(L,x);
     printf("Daftar bangunan yang dapat terdekat:\n");
         int TLawan[30]; // menyimpan data bangunan yg tersambung dan milik sendiri
-        MakeEmptyAB(&TLawan,30);
         adrG P = SearchG(G,asal);
-        address P2= Next2(P);
+        address P2= Next(P);
         int i=1;
         while(P2!=Nil){
             if(Owner(ArrBang->TI[Info(P2)])==player){
                 TLawan[i]=Info(P2);
                 printf("%d. ",i);
-                CetakBangunan(ArrBang->TI[info(P2)]);
+                CetakBangunan(ArrBang->TI[Info(P2)]);
                 i++;
             }
             P2=Next(P2);
@@ -114,5 +113,5 @@ void move(TabInt *ArrBang, Graph G, int player, List L){
         printf("Jumlah pasukan: ");
         int gain;
         scanf("%d",&gain);
-        MovePasukan(&ArrBang[asal], &ArrBang[terima], gain);
+        MovePasukan(&(ArrBang->TI[asal]),&(ArrBang->TI[terima]), gain);
 }
