@@ -82,12 +82,12 @@ void ReadBangunan(state *S/*TabInt *ArrBang, List *L1, List *L2, MATRIKS *M*/){
         ElmtArr(S->ArrBang,x) = B; // masukin bangunan yg baru di create ke arrbang
         if(x==1){
 
-            InsVLastLB(&(S->P1.listbangunan),1);   // bangunan 1 milik pemain 1
+            InsVLastLB(&(S->P1.listbangunan), 1);   // bangunan 1 milik pemain 1
             MOwn(ElmtMat(S->M, i, j)) = 1; // Kepemilikan bangunan di matriks diset jadi 1 (player 1)
         }
         else if(x==2){
 
-            InsVLastLB(&(S->P2.listbangunan),2); // bangunan 2 milik pemain 2
+            InsVLastLB(&(S->P2.listbangunan), 2); // bangunan 2 milik pemain 2
             MOwn(ElmtMat(S->M, i, j)) = 2; // Kepemilikan bangunan di matriks diset jadi 2 (player 2)
         }
         else {
@@ -142,9 +142,9 @@ int main(){
     InitPlayer(&P1);
     InitPlayer(&P2);
     //Queue Q1, Q2;
-    Graph G;
-    TabInt ArrBang; //array dinamis yang menyimpan seluruh bangunan
-    List L1, L2; // L1( list keterhubungan bangunan yang dimiliki player 1)
+    //Graph G;
+    //TabInt ArrBang; //array dinamis yang menyimpan seluruh bangunan
+    //List L1, L2; // L1( list keterhubungan bangunan yang dimiliki player 1)
                    // L2( list keterhubungan bangunan yang dimiliki player 2)
     MATRIKS M;
     //boolean P1Turn, P2Turn, EndGame;
@@ -182,13 +182,12 @@ int main(){
             }
             
             if (strcmp(CKata.TabKata, "attack")){
-
+                attack(&S);
 
             }
             else if (strcmp(CKata.TabKata, "level_up")){
-
-
-            }
+                level_up(S.P1.listbangunan, &(S.ArrBang));
+            }/*
             else if (strcmp(CKata.TabKata, "skill")){
 
 
@@ -206,12 +205,10 @@ int main(){
 
             }*/
             else if (strcmp(CKata.TabKata, "move")){
-
-
+                move(&(S.ArrBang), S.G, 1, S.P1.listbangunan);
             }
             else if (strcmp(CKata.TabKata, "exit")){
-
-
+                EndGame = true;
             }
 
         }
@@ -229,13 +226,12 @@ int main(){
             }
             
             if (strcmp(CKata.TabKata, "attack")){
-
+                attack(&S);
 
             }
             else if (strcmp(CKata.TabKata, "level_up")){
-
-
-            }
+                level_up(S.P2.listbangunan, &(S.ArrBang));
+            }/*
             else if (strcmp(CKata.TabKata, "skill")){
 
 
@@ -252,13 +248,11 @@ int main(){
 
 
             }*/
-            /*else if (strcmp(CKata.TabKata, "move")){
-
-
-            }*/
+            else if (strcmp(CKata.TabKata, "move")){
+                move(&(S.ArrBang), S.G, 2, S.P2.listbangunan);
+            }
             else if (strcmp(CKata.TabKata, "exit")){
-
-                
+                EndGame=true;
             }
         }
     }
