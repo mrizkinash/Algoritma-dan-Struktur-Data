@@ -9,11 +9,13 @@ typedef struct {
     Queue skill;
     boolean turn;
     List listbangunan;
+    boolean et;
 } Player;
 
 #define LB(P) P.listbangunan
 #define Turn(P) P.turn
 #define Skill(P) P.skill
+#define ET(P) P.et
 
 void InitPlayer (Player *P);
 
