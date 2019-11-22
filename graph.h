@@ -110,4 +110,7 @@ int NbElmtCon (MultiList G, infotype X);
 int CariIdxBCon(MultiList G, infotype X, infotype Y);
 
 void AddRel (Graph *G, int from, int to);
+
+adrG FindLastG (MultiList G);
+
 #endif

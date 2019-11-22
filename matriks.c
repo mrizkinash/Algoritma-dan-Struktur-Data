@@ -11,7 +11,7 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M)
 /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
 {
-	NBrsEff(*M) = NB;
+    NBrsEff(*M) = NB;
     NKolEff(*M) = NK;
  }
 /* *** Selektor "DUNIA MATRIKS" *** */
@@ -47,10 +47,10 @@ boolean IsIdxEffMatriksMatriks (MATRIKS M, indeks i, indeks j)
 {
     return ((i >= 1) && (i <= NBrsEff(M)) && (j <= NKolEff(M)) && (j >= 1));
 }
-ElType GetElmtDiagonalMatriks (MATRIKS M, indeks i)
+ElTypeMat GetElmtDiagonalMatriks (MATRIKS M, indeks i)
 /* Mengirimkan elemen M(i,i) */
 {
-    return(Elmt(M,i,i));
+    return(ElmtMat(M,i,i));
 }
 /* ********** Assignment  MATRIKS ********** */
 void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
@@ -61,7 +61,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
     MakeMATRIKS(NBrsEff(MIn),NKolEff(MIn),MHsl);
     for (i=1;i<=NBrsEff(MIn);i++){
         for(j=1;j<=NKolEff(MIn);j++){
-            Elmt(*MHsl,i,j) = Elmt(MIn,i,j);
+            ElmtMat(*MHsl,i,j) = ElmtMat(MIn,i,j);
         }
     }
 }
@@ -85,8 +85,8 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
     {
         for (j = 1; j <= NK; j++)
         {
-            scanf("%d", &Own(Elmt(*M, i, j)));
-            scanf(" %c", &Type(Elmt(*M, i, j)));
+            scanf("%d", &MOwn(ElmtMat(*M, i, j)));
+            scanf(" %c", &MType(ElmtMat(*M, i, j)));
         }
     }
 }
@@ -108,17 +108,15 @@ void TulisMATRIKS (MATRIKS M)
         for (j = 1; j <= NKolEff(M); j++)
         {
 
-            printf("%d,", Own(Elmt(M, i, j)));
-            printf(" %c,", Type(Elmt(M, i, j)));
+            printf("%c", MType(ElmtMat(M, i, j)));
 
             if (j != NKolEff(M))
             {
                 printf(" ");
             } else {
-                if (i != NBrsEff(M))
-                {
-                    printf("\n");
-                }
+                
+                printf("\n");
+                
             }
         }
     }

@@ -37,3 +37,9 @@ void ADV() {
        fclose(pita);
     }
 }
+
+void STARTCMD() {
+
+    pita = stdin;
+    ADV();
+}

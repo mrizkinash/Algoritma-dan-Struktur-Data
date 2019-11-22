@@ -70,3 +70,21 @@ void SalinKata()
     } while(((CC != BLANK)&& (CC != '.')) && (i<=NMax));
     CKata.Length = i-1;
 }   
+
+void STARTKATACMD()
+/* I.S. : CC sembarang
+   F.S. : EndKata = true, dan CC = MARK;
+          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
+{
+    STARTCMD();
+    IgnoreBlank();
+
+    if(CC == '.'){
+        EndKata = true;
+    } else {
+        EndKata = false;
+        SalinKata();
+        IgnoreBlank();
+    }
+}

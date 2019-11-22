@@ -207,3 +207,15 @@ void AddRel (Graph *G, int from, int to) {
         }
     }
 }
+
+adrG FindLastG (MultiList G){
+    adrG P;
+
+    P = First(G);
+    while (Next(P) != Nil){
+
+        P = list(P);
+    }
+
+    return P;
+}
