@@ -66,7 +66,7 @@ void DelQueue (Queue * Q, infotype * X);
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
 // void PrintQueue(Queue Q);
-// void PrintSkill(Queue Q);
+void PrintSkill(Queue Q);
 // void UseSkill(state *S);
 // void instantUpgrade(state *S);
 // void instantReinforcement(state *S);
