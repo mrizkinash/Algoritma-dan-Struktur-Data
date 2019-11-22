@@ -272,6 +272,7 @@ void SudahAttack(List *L, int x){
 		}
 	}
 }
+// bangunan ke x di list sudah battle
 
 void CetakListB(List L, TabInt ArrBang){
 	address P = First(L);
@@ -280,5 +281,13 @@ void CetakListB(List L, TabInt ArrBang){
 		printf("%d. ",i);
 		CetakBangunan(ArrBang.TI[Info(P)]);
 		i++;
+	}
+}
+
+void ResetBattle(List L){
+	address P = First(L);
+	while(P!=Nil){
+		Battle(P)=false;
+		P=Next(P);
 	}
 }

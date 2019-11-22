@@ -130,6 +130,7 @@ int CariIdxB(List L, int n);
 boolean CekAttack(List L, int x);
 void SudahAttack(List *L, int x);
 void CetakListB(List L, TabInt ArrBang);
+void ResetBattle(List L);
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
 //infotype Max (List L);
 /* Mengirimkan nilai Info(P) yang maksimum */
