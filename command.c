@@ -57,30 +57,41 @@ void attack(state *S){
             if(player==1){
                 //bangunan jd punya player 1
                 ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 1);
-                DelPLB (&(S->P2.listbangunan), diserang);
-                // nambahin bangunan di list L1
+                DelPLB (&(S->P2.listbangunan), diserang); // apus bangunan dari list player 2
+                InsVLastLB(&(S->P1.listbangunan),diserang);// nambahin bangunan di list L1
             }
             else{
                 ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 2);
-                DelPLB (&(S->P1.listbangunan), diserang);
-                // nambahin bangunan di list L2
+                DelPLB (&(S->P1.listbangunan), diserang); // apus dari list player 1
+                InsVLastLB(&(S->P2.listbangunan),diserang);// nambahin bangunan di list L2
             }
             printf("Bangunan menjadi milikmu\n");
-            if(S->P1.turn) SudahAttack(&(S->P1.listbangunan),x);
-            SudahAttack(&(S->P2.listbangunan),x); // ubah jadi pernah nyerang
+            if(S->P1.turn){
+                SudahAttack(&(S->P1.listbangunan),x); // ubah jadi pernah nyerang
+                if(Type(S->ArrBang.TI[diserang])=='F') AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn 
+                else if(NbElmtLB(S->P1.listbangunan)==10) AddQueue(&(S->P1.skill),4); // syarat dapet skill barrage 
+            }else{
+                SudahAttack(&(S->P2.listbangunan),x);
+                if(Type(S->ArrBang.TI[diserang])=='F') AddQueue(&(S->P1.skill),2);
+                else if(NbElmtLB(S->P2.listbangunan)==10) AddQueue(&(S->P2.skill),4);
+            }
         }
     }
 }
 
-void level_up(List L, TabInt *ArrBang){
+void level_up(state *S/*List L, TabInt *ArrBang, int player*/){
     printf("Daftar Bangunan:\n");
-    CetakListB(L,*ArrBang);
+    if(S->P1.turn) CetakListB(S->P1.listbangunan,S->ArrBang);
+    else CetakListB(S->P2.listbangunan,S->ArrBang);
     printf("Bangunan yang akan di level up: ");
     int x;
     scanf("%d",&x);
     int lvlup;
-    lvlup = CariIdxB(L,x);
-    LevelUpBangunan(&(ArrBang->TI[lvlup]));
+    if(S->P1.turn) lvlup = CariIdxB(S->P1.listbangunan,x);
+    else lvlup = CariIdxB(S->P2.listbangunan,x);
+    LevelUpBangunan(&(S->ArrBang.TI[lvlup]));
+    if(S->P1.turn && ceklvl4(S->P1.listbangunan)) AddQueue(&(S->P1.skill),3); // syarat dapet skill instant reinforcement
+    else if(S->P2.turn && ceklvl4(S->P2.listbangunan)) AddQueue(&(S->P2.skill),3); // syarat dapet skill instant reinforcement
 }
 
 void move(TabInt *ArrBang, Graph G, int player, List L){
