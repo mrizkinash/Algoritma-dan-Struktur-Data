@@ -5,6 +5,7 @@
 #include "bangunan.h"
 #include "graph.h"
 #include "player.h"
+#include "matriks.h"
 
 typedef struct {
     Player P1,P2;
