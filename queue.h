@@ -7,20 +7,20 @@
 
 #include "boolean.h"
 
-#define Nil 0
-/* Konstanta untuk mendefinisikan address tak terdefinisi */
+#define Nol 0
+/* Konstanta untuk mendefinisikan adrQ tak terdefinisi */
 
-/* Definisi elemen dan address */
+/* Definisi elemen dan adrQ */
 typedef int infotype;
-typedef int address;   /* indeks tabel */
+typedef int adrQ;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype Queue : */
 /* Versi I : tabel dinamik, Head dan Tail eksplisit, ukuran disimpan */
 typedef struct { infotype * T;   /* tabel penyimpan elemen */
-                 address HEAD;  /* alamat penghapusan */
-                 address TAIL;  /* alamat penambahan */
-                 int MaxEl;     /* Max elemen queue */
+                 adrQ HEAD;  /* alamat penghapusan */
+                 adrQ TAIL;  /* alamat penambahan */
+                 int MaxElQueue;     /* Max elemen queue */
                } Queue;
-/* Definisi Queue kosong: HEAD=Nil; TAIL=Nil. */
+/* Definisi Queue kosong: HEAD=Nol; TAIL=Nol. */
 /* Catatan implementasi: T[0] tidak pernah dipakai */
 
 /* ********* AKSES (Selektor) ********* */
@@ -29,14 +29,14 @@ typedef struct { infotype * T;   /* tabel penyimpan elemen */
 #define Tail(Q) (Q).TAIL
 #define InfoHead(Q) (Q).T[(Q).HEAD]
 #define InfoTail(Q) (Q).T[(Q).TAIL]
-#define MaxEl(Q) (Q).MaxEl
+#define MaxElQueue(Q) (Q).MaxElQueue
 
 /* ********* Prototype ********* */
 boolean IsEmptyQueue(Queue Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 boolean IsFullQueue(Queue Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
-/* yaitu mengandung elemen sebanyak MaxEl */
+/* yaitu mengandung elemen sebanyak MaxElQueue */
 int NBElmtQueue(Queue Q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
@@ -45,14 +45,14 @@ void CreateEmptyQueue(Queue * Q, int Max);
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max+1 */
-/* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
+/* atau : jika alokasi gagal, Q kosong dg MaxElQueue=0 */
 /* Proses : Melakukan alokasi, membuat sebuah Q kosong */
 
 /* *** Destruktor *** */
 void DeAlokasiQueue(Queue * Q);
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
-/* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
+/* F.S. Q menjadi tidak terdefinisi lagi, MaxElQueue(Q) diset 0 */
 
 /* *** Primitif Add/Delete *** */
 void AddQueue (Queue * Q, infotype X);
@@ -64,5 +64,7 @@ void DelQueue (Queue * Q, infotype * X);
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
+
+void PrintQueue(Queue Q);
 
 #endif

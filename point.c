@@ -26,7 +26,7 @@ void BacaPOINT (POINT * P)
 /* F.S. P terdefinisi */
 {
 	float x,y;
-	scanf("%f %f",&x, &y);
+	scanf("%d %d",&x, &y);
 	*P = MakePOINT(x,y);
 }
 void TulisPOINT (POINT P)
@@ -38,7 +38,7 @@ void TulisPOINT (POINT P)
 /* I.S. P terdefinisi */
 /* F.S. P tertulis di layar dengan format "(X,Y)" */                
 {
-	printf("(%0.2f,%0.2f)",Absis(P),Ordinat(P));
+	printf("(%d,%d)",Absis(P),Ordinat(P));
 }
 /* *** Kelompok operasi relasional terhadap POINT *** */
 boolean EQPoint (POINT P1, POINT P2)

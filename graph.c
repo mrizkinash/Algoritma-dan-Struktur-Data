@@ -5,7 +5,7 @@
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
 boolean IsEmptyG (Graph G){
-    return(First(G)==Nil);
+    return(FirstG(G)==Nil);
 }
 /* Mengirim true jika tidak ada bangunan */
 boolean IsEmptyCon (Graph G, address X){
@@ -15,7 +15,7 @@ boolean IsEmptyCon (Graph G, address X){
 
 /****************** PEMBUATAN LIST KOSONG ******************/
 void CreateEmptyG (Graph *G){
-    First(*G)=Nil;
+    FirstG(*G)=Nil;
 }
 /* I.S. sembarang             */
 /* F.S. Terbentuk Graph */
@@ -72,7 +72,7 @@ void DealokasiCon (address *P){
 adrG SearchG (Graph G, infotype X){
     adrG P;
 	boolean found = false;
-	P = First(G);
+	P = FirstG(G);
 
 	while((P!= Nil)&& (!(found))){
 		if(Info(P) == X){
@@ -119,10 +119,10 @@ void InsVLastG (Graph *G, infotype X){
 void InsertLastG (Graph *G, adrG P){
     adrG Pr;
 	if(IsEmptyG(*G)){
-		Nextg(P) = First(*G);
-	    First(*G) = P;
+		Nextg(P) = FirstG(*G);
+	    FirstG(*G) = P;
 	} else{
-		Pr = First(*G);
+		Pr = FirstG(*G);
 		while(Nextg(Pr) != Nil){
 			Pr =Nextg(Pr);
 		}
@@ -183,9 +183,9 @@ void AddRel (Graph *G, int from, int to) {
     address C;
     if (IsEmptyG(*G)) {
         R = AlokasiG(from);
-        First(*G) = R;
+        FirstG(*G) = R;
     } else {
-        R = First(*G);
+        R = FirstG(*G);
         while (Nextg(R) != Nil && Info(R) != from) {
             R = Nextg(R);
         }
@@ -211,7 +211,7 @@ void AddRel (Graph *G, int from, int to) {
 adrG FindLastG (MultiList G){
     adrG P;
 
-    P = First(G);
+    P = FirstG(G);
     while (Next(P) != Nil){
 
         P = list(P);

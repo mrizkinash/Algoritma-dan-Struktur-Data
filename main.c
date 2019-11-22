@@ -8,6 +8,7 @@
 #include "boolean.h"
 #include "graph.h"
 #include "bangunan.h"
+#include "command.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,21 +35,23 @@ int KataToInt (Kata CKata){
 }
 
 void ReadMatriksSize(MATRIKS *M){
+    int tinggi, lebar, i, j;
 
     tinggi = KataToInt(CKata);
     ADVKATA();
     lebar = KataToInt(CKata);
     ADVKATA();
 
-    MakeMATRIKS(tinggi + 2, lebar + 2, &M);  // Membuat matriks (+ 2 karna pagar Mapnya)
+    MakeMATRIKS(tinggi + 2, lebar + 2, M);  // Membuat matriks (+ 2 karna pagar Mapnya)
 
-    for (i = 0; i <= M.NBrsEff; i++){          // Bikin pager
-    for (j = 0; j<= M.NKolEff; j++){
+    for (i = 0; i <= (*M).NBrsEff; i++){          // Bikin pager
+        for (j = 0; j<= (*M).NKolEff; j++){
 
-        if ((i == 0) || (i == M.NBrsEff) || (j == 0) || (j == M.NKolEff)){
+            if ((i == 0) || (i == (*M).NBrsEff) || (j == 0) || (j == (*M).NKolEff)){
                         
-            MOwn(ElmtMat(M, i, j)) = 0;
-            MType(ElmtMat(M, i, j)) = '*';
+                MOwn(ElmtMat(*M, i, j)) = 0;
+                MType(ElmtMat(*M, i, j)) = '*';
+            }
         }
     }    
 }
@@ -119,7 +122,7 @@ void ReadGraph(Graph *G, int size){
 
                 if (i % size == 0){
 
-                    InsVLastCon(G, FindLastG(*G), size)    
+                    InsVLastCon(G, FindLastG(*G), size);    
                 }
                 else{
 
@@ -134,6 +137,8 @@ void ReadGraph(Graph *G, int size){
 }
 
 int main(){
+    Queue Q1, Q2;
+    Graph G;
     TabInt ArrBang; //array dinamis yang menyimpan seluruh bangunan
     List L1, L2; // L1( list keterhubungan bangunan yang dimiliki player 1)
                    // L2( list keterhubungan bangunan yang dimiliki player 2)
@@ -145,11 +150,15 @@ int main(){
     STARTKATA();         // Baca dari file config
     ReadMatriksSize(&M);
     ReadBangunan(&ArrBang, &L1, &L2, &M);
-    ReadGraph(G, NbElmtAB(ArrBang));
+    ReadGraph(&G, NbElmtAB(ArrBang));
 
     EndGame = false;
     P1Turn = true;
     P2Turn = false;
+    CreateEmptyQueue(&Q1, 10);      // Inisialisasi Queue dan ngasih Instant Upgrade (direpresentasikan dengan 1 untuk sementara) ke Skill Queue kedua player 
+    CreateEmptyQueue(&Q1, 10);
+    AddQueue(&Q1, 1);       
+    AddQueue(&Q2, 1);
 
     while (!EndGame){
 

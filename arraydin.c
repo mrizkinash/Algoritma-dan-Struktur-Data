@@ -98,10 +98,10 @@ void TulisIsiAB(TabInt T){
     IdxType i;
     if (Neff(T) > 0){
         for (i = 1; i <=Neff(T); i++){
-            printf("%c ",Type(Elmt(T,i)));
-            printf("(%d,%d) ",AbsisBangunan(Elmt(T,i)),OrdinatBangunan(Elmt(T,i)))
-            printf("%d ",Army(Elmt(T,i)));
-            printf("lv. %d\n",Level(Elmt(T,i)));
+            printf("%c ",Type(ElmtArr(T,i)));
+            printf("(%d,%d) ",AbsisBangunan(ElmtArr(T,i)),OrdinatBangunan(ElmtArr(T,i)))
+            printf("%d ",Army(ElmtArr(T,i)));
+            printf("lv. %d\n",Level(ElmtArr(T,i)));
         }
     }
 }
@@ -114,7 +114,7 @@ void AddBangunan(TabInt *T, ElType X){
 /* F.S. X adalah elemen terakhir T yang baru */
 
     if (!IsFull(*T)){
-        Elmt(*T, (GetLastIdx(*T) + 1)) = X;
+        ElmtArr(*T, (GetLastIdx(*T) + 1)) = X;
         Neff(*T) += 1;
     }
 }
@@ -126,7 +126,7 @@ void DelLastElAB(TabInt *T, ElType *X){
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
 
-    *X = Elmt(*T, GetLastIdx(*T));
+    *X = ElmtArr(*T, GetLastIdx(*T));
     Neff(*T) -= 1;
 }
 
@@ -135,7 +135,7 @@ int JmlBOwnedX(TabInt T, int X){
 /* menghitung jumlah bangunan yang dimiliki X */
     int cnt=0;
     for(int i=1; i<=Neff(T); i++){
-        if(Owner(Elmt(T,i))==X) cnt+=1;
+        if(Owner(ElmtArr(T,i))==X) cnt+=1;
     }
     return cnt;
 }
@@ -143,7 +143,7 @@ int JmlBOwnedX(TabInt T, int X){
 TabInt BOwnedX(TabInt T, int X){
     TabInt *owned;
     for(int i=1; i<=Neff(T); i++){
-        if(Owner(Elmt(T,i))==X) AddBangunan(&owned,Elmt(T,i));
+        if(Owner(ElmtArr(T,i))==X) AddBangunan(&owned,ElmtArr(T,i));
     }
     return *owned;
 }

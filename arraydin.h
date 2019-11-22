@@ -40,7 +40,7 @@ typedef struct
 /* ********** SELEKTOR ********** */
 #define Neff(T) (T).Neff
 #define TI(T) (T).TI
-#define Elmt(T, i) (T).TI[(i)]
+#define ElmtArr(T, i) (T).TI[(i)]
 #define MaxEl(T) (T).MaxEl
 
 /* ********** KONSTRUKTOR ********** */
