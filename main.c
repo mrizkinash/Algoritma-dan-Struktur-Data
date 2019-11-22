@@ -144,6 +144,77 @@ void ReadGraph(Graph *G, int size){
     //}
 }
 
+void instantUpgrade(state *S){
+    // seluruh bangunan yg dimiliki player levelnya naik 1
+	Player cek;
+	if(S->P1.turn) cek=S->P1;
+	else cek=S->P2;
+    address adr = First(cek.listbangunan);
+    while(adr != Nil){
+        LevelUpBangunan(&(S->ArrBang.TI[Info(adr)]));
+        adr = Next(adr);
+    }
+    printf("skill 'Instant Upgrade' berhasil dilakukan!\n");
+}
+
+void instantReinforcement(state *S){
+    // seluruh bangunan +5 army
+	Player cek;
+	if(S->P1.turn) cek=S->P1;
+	else cek=S->P2;
+    address adr;
+    adr = First(cek.listbangunan);
+    while(adr != Nil){
+        Army(S->ArrBang.TI[Info(adr)]) += 5;
+        adr = Next(adr);
+    }
+    printf("skill 'Instant Reinforcement' berhasil dilakukan!\n");
+}
+
+void Barrage(state *S){
+    // iterasi buat semua bangunan lawan di -10 army
+	Player cek;
+	if(S->P1.turn) cek=S->P1;
+	else cek=S->P2;
+    address adr;
+    adr = First(cek.listbangunan);
+    while(adr != Nil){
+        if (Army(S->ArrBang.TI[Info(adr)]) >= 10){
+            Army(S->ArrBang.TI[Info(adr)]) -= 10;
+        }else{
+            Army(S->ArrBang.TI[Info(adr)]) = 0;
+        }
+        adr = Next(adr);
+    }
+    
+    printf("skill 'Barrage' berhasil dilakukan!\n");
+}
+
+void extraTurn(state *S){
+	Player cek;
+	if(S->P1.turn) cek=S->P1;
+	else cek=S->P2;
+	cek.et=true;
+}
+
+void UseSkill(state *S){
+    int InfoSkill;
+	Player cek;
+	if(S->P1.turn) cek=S->P1;
+	else cek=S->P2;
+    InfoSkill = InfoHead(cek.skill);
+    if (InfoSkill == 1){
+        instantUpgrade(S);
+    }else if (InfoSkill == 3){
+        instantReinforcement(S);
+    }else if (InfoSkill == 4){
+        Barrage(S);
+    }else if (InfoSkill == 2){
+        extraTurn(S);
+    }
+    DelQueue(&(cek.skill), &InfoSkill);
+}
+
 int main(){
     printf("a");
     Player *P1,*P2;
