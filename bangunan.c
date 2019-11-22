@@ -1,6 +1,66 @@
 #include <stdio.h>
 #include "bangunan.h"
 
+int GetA(Bangunan B){
+	//CASTLE
+	if(Type(B)=='C' && Level(B)==1) return 10;
+	else if(Type(B)=='C' && Level(B)==2) return 15;
+	else if(Type(B)=='C' && Level(B)==3) return 20;
+	else if(Type(B)=='C' && Level(B)==4) return 25;
+	//TOWER
+	else if(Type(B)=='T' && Level(B)==1) return 5;
+	else if(Type(B)=='T' && Level(B)==2) return 10;
+	else if(Type(B)=='T' && Level(B)==3) return 20;
+	else if(Type(B)=='T' && Level(B)==4) return 30;
+	//FORT
+	else if(Type(B)=='F' && Level(B)==1) return 10;
+	else if(Type(B)=='F' && Level(B)==2) return 20;
+	else if(Type(B)=='F' && Level(B)==3) return 30;
+	else if(Type(B)=='F' && Level(B)==4) return 40;
+	//VILLAGE
+	else if(Type(B)=='V' && Level(B)==1) return 5;
+	else if(Type(B)=='V' && Level(B)==2) return 10;
+	else if(Type(B)=='V' && Level(B)==3) return 15;
+	else if(Type(B)=='V' && Level(B)==4) return 20;
+}
+
+int GetM(Bangunan B){
+	//CASTLE
+	if(Type(B)=='C' && Level(B)==1) return 40;
+	else if(Type(B)=='C' && Level(B)==2) return 60;
+	else if(Type(B)=='C' && Level(B)==3) return 80;
+	else if(Type(B)=='C' && Level(B)==4) return 100;
+	//TOWER
+	else if(Type(B)=='T' && Level(B)==1) return 20;
+	else if(Type(B)=='T' && Level(B)==2) return 30;
+	else if(Type(B)=='T' && Level(B)==3) return 40;
+	else if(Type(B)=='T' && Level(B)==4) return 50;
+	//FORT
+	else if(Type(B)=='F' && Level(B)==1) return 20;
+	else if(Type(B)=='F' && Level(B)==2) return 40;
+	else if(Type(B)=='F' && Level(B)==3) return 60;
+	else if(Type(B)=='F' && Level(B)==4) return 80;
+	//VILLAGE
+	else if(Type(B)=='V' && Level(B)==1) return 20;
+	else if(Type(B)=='V' && Level(B)==2) return 30;
+	else if(Type(B)=='V' && Level(B)==3) return 40;
+	else if(Type(B)=='V' && Level(B)==4) return 50;
+}
+
+boolean GetP(Bangunan B){
+	//CASTLE
+	if(Type(B)=='C') return false;
+	//TOWER
+	else if(Type(B)=='T') return true;
+	//FORT
+	else if(Type(B)=='F' && Level(B)==1) return false;
+	else if(Type(B)=='F' && Level(B)==2) return false;
+	else if(Type(B)=='F' && Level(B)==3) return true;
+	else if(Type(B)=='F' && Level(B)==4) return true;
+	//VILLAGE
+	else if(Type(B)=='V') return false;
+}
+
 void CreateBangunan (Bangunan *B, char c, int i, int j){
 	Type(*B) = c;
     AbsisBangunan(*B) = i;
@@ -13,20 +73,8 @@ void CreateBangunan (Bangunan *B, char c, int i, int j){
 }
 
 void LevelUpBangunan(Bangunan *B){
-    if(Type(*B)=='C' && Army(*B)>= 0.5* MC[Level(*B)]){
-		Army(*B)-(0.5 * MC[Level(*B)]);
-		Level(*B)+=1;
-	}
-	else if(Type(*B)=='T' && Army(*B)>= 0.5* MT[Level(*B)]){
-		Army(*B)-(0.5 * MT[Level(*B)]);
-		Level(*B)+=1;
-	}
-	else if(Type(*B)=='F' && Army(*B)>= 0.5* MF[Level(*B)]){
-		Army(*B)-(0.5 * MF[Level(*B)]);
-		Level(*B)+=1;
-	}
-	else if(Type(*B)=='V' && Army(*B)>= 0.5* MV[Level(*B)]){
-		Army(*B)-(0.5 * MV[Level(*B)]);
+	if(Army(*B) >= 0.5 * GetM(*B)){
+		Army(*B)-=(0.5 * GetM(*B));
 		Level(*B)+=1;
 	}
 	else printf("Anda tidak bisa level up\n");
@@ -35,22 +83,14 @@ void LevelUpBangunan(Bangunan *B){
 // jumlah pasukan berkurang M/2
 
 boolean CekBatasPasukan(Bangunan B){
-    if(Type(B)=='C') return (Army(B)+AC[Level(B)] >= MC[Level(B)]);
-	else if(Type(B)=='T') return (Army(B)+AT[Level(B)] >= MT[Level(B)]);
-	else if(Type(B)=='F') return (Army(B)+AF[Level(B)] >= MF[Level(B)]);
-	else if(Type(B)=='V') return (Army(B)+AV[Level(B)] >= MV[Level(B)]);
+	return (Army(B)+GetA(B) >= GetM(B));
 }
 // Cek apakah nilai dari penambahan pasukan melebihi M
 // jika sudah melebihi, stop penambahan
 
-
-
 void AddPasukan(Bangunan *B){
 	if(CekBatasPasukan(*B) && Owner(*B)!=0){
-		if(Type(*B)=='C') Army(*B)+=AC[Level(*B)];
-		else if(Type(*B)=='T') Army(*B)+=AT[Level(*B)];
-		else if(Type(*B)=='F') Army(*B)+=AF[Level(*B)];
-		else if(Type(*B)=='V') Army(*B)+=AV[Level(*B)];
+		Army(*B)+=GetA(*B);
 	}
 }
 // menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
