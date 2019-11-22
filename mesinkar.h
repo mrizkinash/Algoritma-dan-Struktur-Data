@@ -27,4 +27,7 @@ void ADV();
           Jika  CC = MARK maka EOP akan menyala (true) */
 
 void STARTCMD();
+
+void ADVCMD();
+
 #endif

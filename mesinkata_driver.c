@@ -62,5 +62,15 @@ int main(){
 		ADVKATA();
 	}
 
+	printf("Menerima Command User\n");
+	printf("Masukkan Command : \n" );
+	STARTKATACMD();
+	printf("Command yang dimasukkan = ");
+	for (i = 1; i <= CKata.Length; i++){
+
+		printf("%c", CKata.TabKata[i]);
+	}
+	printf("\n");
+
 	return 0;
 }

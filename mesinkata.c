@@ -85,6 +85,5 @@ void STARTKATACMD()
     } else {
         EndKata = false;
         SalinKata();
-        IgnoreBlank();
     }
 }

@@ -41,5 +41,14 @@ void ADV() {
 void STARTCMD() {
 
     pita = stdin;
-    ADV();
+    ADVCMD();
+}
+
+void ADVCMD(){
+
+    retval = fscanf(pita,"%c",&CC);
+    EOP = (CC == '\n');
+    if (EOP) {
+       fclose(pita);
+    }  
 }
