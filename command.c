@@ -90,8 +90,8 @@ void level_up(state *S/*List L, TabInt *ArrBang, int player*/){
     if(S->P1.turn) lvlup = CariIdxB(S->P1.listbangunan,x);
     else lvlup = CariIdxB(S->P2.listbangunan,x);
     LevelUpBangunan(&(S->ArrBang.TI[lvlup]));
-    if(S->P1.turn && ceklvl4(S->P1.listbangunan)) AddQueue(&(S->P1.skill),3); // syarat dapet skill instant reinforcement
-    else if(S->P2.turn && ceklvl4(S->P2.listbangunan)) AddQueue(&(S->P2.skill),3); // syarat dapet skill instant reinforcement
+    if(S->P1.turn && ceklvl4(S->P1.listbangunan,S->ArrBang)) AddQueue(&(S->P1.skill),3); // syarat dapet skill instant reinforcement
+    else if(S->P2.turn && ceklvl4(S->P2.listbangunan,S->ArrBang)) AddQueue(&(S->P2.skill),3); // syarat dapet skill instant reinforcement
 }
 
 void move(TabInt *ArrBang, Graph G, int player, List L){
