@@ -13,6 +13,7 @@ void attack(TabInt *ArrBang, Graph G, int player, List *L1, List *L2){
     boolean sudah;
     if(player==1) sudah = CekAttack(*L1, x);
     else sudah = CekAttack(*L2, x);
+    
     if(!sudah){
         int menyerang;
         if(player==1) menyerang= CariIdxB(*L1,x);
@@ -86,7 +87,7 @@ void move(TabInt *ArrBang, Graph G, int player, List *L){
     int asal;
     asal= CariIdxB(*L,x);
     printf("Daftar bangunan yang dapat terdekat:\n");
-        int TLawan[30]; // menyimpan data bangunan yg bisa di attack
+        int TLawan[30]; // menyimpan data bangunan yg tersambung dan milik sendiri
         MakeEmptyAB(&TLawan);
         adrG P = SearchG(G,asal);
         address P2= Next2(P);
@@ -105,8 +106,8 @@ void move(TabInt *ArrBang, Graph G, int player, List *L){
         scanf("%d",&y);
         int terima;
         terima = TLawan[y];
-        printf("Bangunan yang akan menerima: ");
+        printf("Jumlah pasukan: ");
         int gain;
         scanf("%d",&gain);
-        MovePasukan(&ArrBang[asal], &ArrBang[terima],gain);
+        MovePasukan(&ArrBang[asal], &ArrBang[terima], gain);
 }
