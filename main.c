@@ -137,10 +137,12 @@ void ReadGraph(Graph *G, int size){
 }
 
 int main(){
+    printf("a");
     Player *P1,*P2;
     state S;
-    InitPlayer(&P1);
-    InitPlayer(&P2);
+    
+    InitPlayer(P1);
+    InitPlayer(P2);
     //Queue Q1, Q2;
     //Graph G;
     //TabInt ArrBang; //array dinamis yang menyimpan seluruh bangunan
@@ -152,6 +154,7 @@ int main(){
     int i;
 
     // Untuk sekarang permainan langsung dimulai saat program dimulai
+    printf("a");
     STARTKATA();         // Baca dari file config
     ReadMatriksSize(&M);
     ReadBangunan(&S);
@@ -200,7 +203,7 @@ int main(){
 
 
             }
-            /*else if (strcmp(CKata.TabKata, "save")){
+            else if (strcmp(CKata.TabKata, "save")){
 
 
             }*/
@@ -244,7 +247,7 @@ int main(){
 
 
             }
-            /*else if (strcmp(CKata.TabKata, "save")){
+            else if (strcmp(CKata.TabKata, "save")){
 
 
             }*/
