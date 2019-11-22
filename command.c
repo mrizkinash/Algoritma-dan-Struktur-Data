@@ -72,25 +72,25 @@ void attack(state *S){
     }
 }
 
-void level_up(List L, TabInt ArrBang){
+void level_up(List L, TabInt *ArrBang){
     printf("Daftar Bangunan:\n");
-    CetakListB(L,ArrBang);
+    CetakListB(L,*ArrBang);
     printf("Bangunan yang akan di level up: ");
     int x;
     scanf("%d",&x);
     int lvlup;
     lvlup = CariIdxB(L,x);
-    LevelUpBangunan(&(ArrBang.TI[lvlup]));
+    LevelUpBangunan(&(ArrBang->TI[lvlup]));
 }
 
-void move(TabInt *ArrBang, Graph G, int player, List *L){
+void move(TabInt *ArrBang, Graph G, int player, List L){
     printf("Daftar Bangunan:\n");
-    CetakListB(*L,*ArrBang);
+    CetakListB(L,*ArrBang);
     printf("Pilih bangunan: ");
     int x;
     scanf("%d",&x);
     int asal;
-    asal= CariIdxB(*L,x);
+    asal= CariIdxB(L,x);
     printf("Daftar bangunan yang dapat terdekat:\n");
         int TLawan[30]; // menyimpan data bangunan yg tersambung dan milik sendiri
         MakeEmptyAB(&TLawan,30);
