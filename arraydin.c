@@ -9,8 +9,8 @@ void MakeEmptyAB(TabInt *T, int maxel){
 /* F.S. Terbentuk tabel T kosong dengan kapasitas maxel + 1 */
 
     TI(*T) = (ElType *)malloc((maxel + 1) * sizeof(ElType));
-    Neff(*T) = 0;
-    MaxEl(*T) = maxel;
+    Neff(*T) = maxel;
+    MaxEl(*T) = 30;
 }
 
 void DealokasiAB(TabInt *T){
