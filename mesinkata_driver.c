@@ -70,6 +70,15 @@ int main(){
 
 		printf("%c", CKata.TabKata[i]);
 	}
+
+	printf("\n");
+	printf("Command setelah di lowercase = ");
+
+	for (i = 1; i <= CKata.Length; i++){
+
+		CKata.TabKata[i] = tolower(CKata.TabKata[i]);
+		printf("%c", CKata.TabKata[i]);
+	}
 	printf("\n");
 
 	return 0;

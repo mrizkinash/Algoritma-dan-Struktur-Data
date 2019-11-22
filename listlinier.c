@@ -260,7 +260,7 @@ boolean CekAttack(List L, int x){
 			x--;
 		}
 	}
-	return Nil;
+	return false;
 }
 
 void SudahAttack(List *L, int x){

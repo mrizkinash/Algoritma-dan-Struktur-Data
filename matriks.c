@@ -103,17 +103,15 @@ void TulisMATRIKS (MATRIKS M)
 {
     int i, j;
 
-    for (i = 1; i <= NBrsEff(M); i++)
+    for (i = 0; i <= NBrsEff(M); i++)
     {
-        for (j = 1; j <= NKolEff(M); j++)
+        for (j = 0; j <= NKolEff(M); j++)
         {
 
             printf("%c", MType(ElmtMat(M, i, j)));
 
-            if (j != NKolEff(M))
+            if (j == NKolEff(M))
             {
-                printf(" ");
-            } else {
                 
                 printf("\n");
                 

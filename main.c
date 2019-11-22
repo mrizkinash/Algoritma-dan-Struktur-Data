@@ -54,6 +54,11 @@ void ReadMatriksSize(MATRIKS *M){
                 MOwn(ElmtMat(*M, i, j)) = 0;
                 MType(ElmtMat(*M, i, j)) = '*';
             }
+            else {
+
+                MOwn(ElmtMat(M, i, j)) = 0;
+                MType(ElmtMat(M, i, j)) = ' ';  
+            }
         }
     }    
 }
