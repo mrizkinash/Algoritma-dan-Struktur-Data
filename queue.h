@@ -6,7 +6,6 @@
 #define queue_H
 
 #include "boolean.h"
-#include "state.h"
 
 
 #define Nol 0
@@ -66,12 +65,12 @@ void DelQueue (Queue * Q, infotype * X);
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
-void PrintQueue(Queue Q);
-void PrintSkill(Queue Q);
-void UseSkill(state *S);
-void instantUpgrade(state *S);
-void instantReinforcement(state *S);
-void Barrage(state *S);
-void extraTurn(state *S);
+// void PrintQueue(Queue Q);
+// void PrintSkill(Queue Q);
+// void UseSkill(state *S);
+// void instantUpgrade(state *S);
+// void instantReinforcement(state *S);
+// void Barrage(state *S);
+// void extraTurn(state *S);
 
 #endif
