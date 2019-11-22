@@ -4,8 +4,6 @@
 #include "boolean.h"
 #include "point.h"
 
-extern int AC[5],MC[5],AT[5],MT[5],AF[5],MF[5],AV[5],MV[5];
-
 typedef struct {
     int owner; // 0 -> no owner, 1 -> pemain 1, 2 -> pemain 2
     int army;
