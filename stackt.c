@@ -29,7 +29,7 @@ boolean IsFull (Stack S)
 	return (Top(S) == MaxElST);
 }
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void PushStack (Stack * S, infotype X)
+void PushStack (Stack * S, infotypeST X)
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
@@ -39,7 +39,7 @@ void PushStack (Stack * S, infotype X)
 	
 }
 /* ************ Menghapus sebuah elemen Stack ************ */
-void PopStack (Stack * S, infotype* X)
+void PopStack (Stack * S, infotypeST* X)
 /* Menghapus X dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
