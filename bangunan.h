@@ -22,6 +22,12 @@ typedef struct {
 #define Type(B) (B).type
 #define Owner(B) (B).owner
 
+
+int GetA(Bangunan B);
+
+int GetM(Bangunan B);
+
+boolean GetP(Bangunan B);
 void CreateBangunan (Bangunan *B, char c, int i, int j);
 // membuat inisialisasi bangunan pada awal input
 void LevelUpBangunan(Bangunan *B);
