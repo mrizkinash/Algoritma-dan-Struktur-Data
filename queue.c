@@ -3,7 +3,9 @@
 /* Model Implementasi Versi III dengan circular buffer */
 #include "boolean.h"
 #include "queue.h"
-#include "stdlib.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 /* ********* Prototype ********* */
 boolean IsEmptyQueue (Queue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
@@ -91,7 +93,7 @@ void DelQueue (Queue * Q, infotype * X)
 }
 
 void PrintQueue(Queue Q){
-	address P;
+	adrQ P;
 
 	if(IsEmptyQueue(Q)){
 
@@ -103,7 +105,7 @@ void PrintQueue(Queue Q){
 		while (Head(Q) < Tail(Q)){
 
 			printf("InfoHead(Q) ");
-			Head(Q)++
+			Head(Q)++;
 		}
 		// Head(Q) = Tail(Q)
 		printf("InfoHead(P)\n");

@@ -168,7 +168,7 @@ int main(){
             printf("Player 1\n");
             CetakListB(L1, ArrBang);
             printf("Skill Available : ");
-            // Bikin fungsi PrintIsiQueue disini
+            PrintQueue(Q1);
             printf("ENTER COMMAND : ");
             STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang
             for (i = 1; i <= CKata.Length; i++){
@@ -215,7 +215,7 @@ int main(){
             printf("Player 2\n");
             CetakListB(L2, ArrBang);
             printf("Skill Available : ");
-            // Bikin fungsi PrintIsiQueue disini
+            PrintQueue(Q2);
             printf("ENTER COMMAND : ");
             STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang   
             for (i = 1; i <= CKata.Length; i++){

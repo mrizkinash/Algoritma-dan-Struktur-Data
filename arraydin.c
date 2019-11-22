@@ -65,7 +65,7 @@ boolean IsIdxEffAB(TabInt T, IdxType i){
 /* Mengirimkan true jika i adalah indeks yang terdefinisi utk tabel */
 /* yaitu antara FirstIdx(T)..LastIdx(T) */
 
-    return ((i >= GetFirstIdx(T)) && (i <= GetLastIdx(T)));
+    return ((i >= GetFirstIdxAB(T)) && (i <= GetLastIdxAB(T)));
 }
 
 /* ********** TEST KOSONG/PENUH ********** */
@@ -99,7 +99,7 @@ void TulisIsiAB(TabInt T){
     if(Neff(T) > 0){
         for (i = 1; i <=Neff(T); i++){
             printf("%c ",Type(ElmtArr(T,i)));
-            printf("(%d,%d) ",AbsisBangunan(ElmtArr(T,i)),OrdinatBangunan(ElmtArr(T,i)))
+            printf("(%d,%d) ",AbsisBangunan(ElmtArr(T,i)),OrdinatBangunan(ElmtArr(T,i)));
             printf("%d ",Army(ElmtArr(T,i)));
             printf("lv. %d\n",Level(ElmtArr(T,i)));
         }
@@ -113,8 +113,8 @@ void AddBangunan(TabInt *T, ElType X){
 /* I.S. Tabel T boleh kosong, tetapi tidak penuh */
 /* F.S. X adalah elemen terakhir T yang baru */
 
-    if (!IsFull(*T)){
-        ElmtArr(*T, (GetLastIdx(*T) + 1)) = X;
+    if (!IsFullAB(*T)){
+        ElmtArr(*T, (GetLastIdxAB(*T) + 1)) = X;
         Neff(*T) += 1;
     }
 }
@@ -126,7 +126,7 @@ void DelLastElAB(TabInt *T, ElType *X){
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
 
-    *X = ElmtArr(*T, GetLastIdx(*T));
+    *X = ElmtArr(*T, GetLastIdxAB(*T));
     Neff(*T) -= 1;
 }
 
@@ -143,7 +143,7 @@ int JmlBOwnedX(TabInt T, int X){
 TabInt BOwnedX(TabInt T, int X){
     TabInt *owned;
     for(int i=1; i<=Neff(T); i++){
-        if(Owner(ElmtArr(T,i))==X) AddBangunan(&owned,ElmtArr(T,i));
+        if(Owner(ElmtArr(T,i))==X) AddBangunan(owned,ElmtArr(T,i));
     }
     return *owned;
 }

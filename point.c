@@ -5,7 +5,7 @@
         
 /* *** DEFINISI PROTOTIPE PRIMITIF *** */
 /* *** Konstruktor membentuk POINT *** */
-POINT MakePOINT (float X, float Y)
+POINT MakePOINT (int X, int Y)
 /* Membentuk sebuah POINT dari komponen-komponennya */
 {
 	POINT P;
@@ -25,7 +25,7 @@ void BacaPOINT (POINT * P)
 /* I.S. Sembarang */
 /* F.S. P terdefinisi */
 {
-	float x,y;
+	int x,y;
 	scanf("%d %d",&x, &y);
 	*P = MakePOINT(x,y);
 }

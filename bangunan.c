@@ -117,7 +117,7 @@ void CetakBangunan(Bangunan B){
 	else if(Type(B)=='V') printf("Village ");
 	int x = AbsisBangunan(B);
 	int y = OrdinatBangunan(B);
-	printf("(%d,&d) ",x,y);
+	printf("(%d,%d) ",x,y);
 	printf("%d ",Army(B));
 	printf("lv. %d\n",Level(B));
 }

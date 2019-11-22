@@ -27,27 +27,27 @@ void CreateEmptyCon (Graph *G, address P){
 /****************** Manajemen Memori ******************/
 adrG AlokasiG (infotype X){
     adrG P;
-	P = (address) malloc (sizeof (ElmtRow));
-	if (P != Nil) {
-		Info(P) = X;
-		Nextg(P) = Nil;
+    P = (adrG) malloc (sizeof (ElmtRow));
+    if (P != Nil) {
+        Info(P) = X;
+        Nextg(P) = Nil;
         Next(P) = Nil;
-		return P;
-	} else return Nil;
+        return P;
+    } else return Nil;
 }
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
 /* Jika alokasi gagal, mengirimkan Nil */
 
-adrG AlokasiCon (infotype X){
-    adrG P2;
-	P2 = (address) malloc (sizeof (ElmtList));
-	if (P2 != Nil) {
-		Info(P2) = X;
-		Next(P2) = Nil;
-		return P2;
-	} else return Nil;
+address AlokasiCon (infotype X){
+    address P2;
+    P2 = (address) malloc (sizeof (ElmtList));
+    if (P2 != Nil) {
+        Info(P2) = X;
+        Next(P2) = Nil;
+        return P2;
+    } else return Nil;
 }
 /* Mengirimkan address2 hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address2 tidak nil, dan misalnya */
@@ -71,28 +71,28 @@ void DealokasiCon (address *P){
 /****************** PENCARIAN SEBUAH ELEMEN LIST ******************/
 adrG SearchG (Graph G, infotype X){
     adrG P;
-	boolean found = false;
-	P = FirstG(G);
+    boolean found = false;
+    P = FirstG(G);
 
-	while((P!= Nil)&& (!(found))){
-		if(Info(P) == X){
-			found = true;
-		} else{
-			P = Next(P);
-		}
-	}
-	return P;
+    while((P!= Nil)&& (!(found))){
+        if(Info(P) == X){
+            found = true;
+        } else{
+            P = Nextg(P);
+        }
+    }
+    return P;
 }
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
 address SearchCon (Graph G, adrG P, infotype X){
-    address P2=Next(P);
+    address P2=list(P);
     boolean found = false;
     while(P2!=Nil && !found){
         if(Info(P2)==X) found = true;
-        else P2 = Next2(P2);
+        else P2 = Next(P2);
     }
     return P2;
 }
@@ -102,11 +102,11 @@ address SearchCon (Graph G, adrG P, infotype X){
 /*** PENAMBAHAN ELEMEN ***/
 void InsVLastG (Graph *G, infotype X){
     adrG P;
-	P = AlokasiG(X);
+    P = AlokasiG(X);
     
-	if (P != Nil) {
-		InsertLastG(G, P);
-	}
+    if (P != Nil) {
+        InsertLastG(G, P);
+    }
 }
 /* I.S. L mungkin kosong */
 /* F.S. Melakukan alokasi sebuah elemen dan */
@@ -118,40 +118,40 @@ void InsVLastG (Graph *G, infotype X){
 /*** PENAMBAHAN ELEMEN BERDASARKAN ALAMAT ***/
 void InsertLastG (Graph *G, adrG P){
     adrG Pr;
-	if(IsEmptyG(*G)){
-		Nextg(P) = FirstG(*G);
-	    FirstG(*G) = P;
-	} else{
-		Pr = FirstG(*G);
-		while(Nextg(Pr) != Nil){
-			Pr =Nextg(Pr);
-		}
-		Nextg(P) = Nextg(Pr);
-	    Nextg(Pr) = P;
-	}
+    if(IsEmptyG(*G)){
+        Nextg(P) = FirstG(*G);
+        FirstG(*G) = P;
+    } else{
+        Pr = FirstG(*G);
+        while(Nextg(Pr) != Nil){
+            Pr =Nextg(Pr);
+        }
+        Nextg(P) = Nextg(Pr);
+        Nextg(Pr) = P;
+    }
 }
 /* I.S. Sembarang, P sudah dialokasi  */
 /* F.S. P ditambahkan sebagai elemen terakhir yang baru */
 void InsertLastCon (Graph *G, adrG P1, address P2){
     address Pr;
-	if(Next(P1)==Nil){
-		Next(P2) = Next(P1);
-	    Next(P1) = P2;
-	} else{
-		Pr = Next(P1);
-		while(Next(Pr) != Nil){
-			Pr =Next(Pr);
-		}
-		Next(P2) = Nil;
-	    Next(Pr) = P2;
-	}
+    if(Next(P1)==Nil){
+        Next(P2) = Next(P1);
+        Next(P1) = P2;
+    } else{
+        Pr = Next(P1);
+        while(Next(Pr) != Nil){
+            Pr =Next(Pr);
+        }
+        Next(P2) = Nil;
+        Next(Pr) = P2;
+    }
 }
 
 void InsVLastCon (Graph *G, adrG P, infotype X){
     address P2 = AlokasiCon(X);
     if (P2 != Nil) {
-		InsertLastCon(G, P, P2);
-	}
+        InsertLastCon(G, P, P2);
+    }
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
@@ -190,7 +190,7 @@ void AddRel (Graph *G, int from, int to) {
             R = Nextg(R);
         }
         if (Info(R) != from) {
-            Nextg(R) = AlokRow(from);
+            Nextg(R) = AlokasiG(from);
             R = Nextg(R);
         }
     }
@@ -208,13 +208,13 @@ void AddRel (Graph *G, int from, int to) {
     }
 }
 
-adrG FindLastG (MultiList G){
+adrG FindLastG (Graph G){
     adrG P;
 
     P = FirstG(G);
     while (Next(P) != Nil){
 
-        P = list(P);
+        P = Nextg(P);
     }
 
     return P;

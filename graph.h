@@ -49,7 +49,7 @@ void CreateEmptyCon (Graph *G, address P);
 /* membuat list yang terhubung dengan L berisi info X */
 
 /****************** Manajemen Memori ******************/
-address AlokasiG (infotype X);
+adrG AlokasiG (infotype X);
 /* Mengirimkan address hasil alokasi sebuah elemen */
 /* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
 /* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
