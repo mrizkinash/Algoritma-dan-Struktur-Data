@@ -1,11 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include"listlinier.h"
+#include"queue.h"
+#include"boolean.h"
+
 typedef struct {
     Queue skill;
     boolean turn;
     List listbangunan;
-} player;
+} Player;
 
 #define LB(P) P.listbangunan
 #define Turn(P) P.turn
