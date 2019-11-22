@@ -132,6 +132,7 @@ boolean CekAttack(List L, int x);
 void SudahAttack(List *L, int x);
 void CetakListB(List L, TabInt ArrBang);
 void ResetBattle(List L);
+boolean ceklvl4(List L, TabInt ArrBang);
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
 //infotype Max (List L);
 /* Mengirimkan nilai Info(P) yang maksimum */
