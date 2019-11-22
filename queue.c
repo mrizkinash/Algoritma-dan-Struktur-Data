@@ -82,33 +82,29 @@ void DelQueue (Queue * Q, infotype * X)
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer; 
         Q mungkin kosong */
 {
-
 	*X = InfoHead(*Q);
-	if(IsFullQueue(*Q)){
-		Head(*Q) = Nol;
-		Tail(*Q) = Nol;
-	}else {
-		Head(*Q)++;
-	}
+    if(Head(*Q)==Tail(*Q)){
+        Head(*Q) = Nol;
+        Tail(*Q) = Nol;
+    }
+    else{
+        Head(*Q) = Head(*Q) + 1;
+    }
 }
 
 void PrintQueue(Queue Q){
 	adrQ P;
 
 	if(IsEmptyQueue(Q)){
-
 		printf("\n");
 	}
 	else{
-
-		P = Head(Q);
 		while (Head(Q) < Tail(Q)){
-
-			printf("InfoHead(Q) ");
+			printf("%d ", InfoHead(Q));
 			Head(Q)++;
 		}
 		// Head(Q) = Tail(Q)
-		printf("InfoHead(P)\n");
+		printf("%d\n", InfoHead(Q));
 		Head(Q) = P;
 	}
 }
