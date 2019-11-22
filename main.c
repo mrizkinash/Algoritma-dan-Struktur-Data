@@ -151,7 +151,7 @@ void instantUpgrade(state *S){
 	else cek=S->P2;
     address adr = First(cek.listbangunan);
     while(adr != Nil){
-        LevelUpBangunan(&(S->ArrBang.TI[Info(adr)]));
+        S->ArrBang.TI[Info(adr)].level += 1;
         adr = Next(adr);
     }
     printf("skill 'Instant Upgrade' berhasil dilakukan!\n");
@@ -199,10 +199,10 @@ void extraTurn(state *S){
 
 void UseSkill(state *S){
     int InfoSkill;
-	Player cek;
-	if(S->P1.turn) cek=S->P1;
-	else cek=S->P2;
-    InfoSkill = InfoHead(cek.skill);
+	Player *cek;
+	if(S->P1.turn) cek=&S->P1;
+	else cek=&S->P2;
+    InfoSkill = InfoHead(cek->skill);
     if (InfoSkill == 1){
         instantUpgrade(S);
     }else if (InfoSkill == 3){
@@ -212,16 +212,14 @@ void UseSkill(state *S){
     }else if (InfoSkill == 2){
         extraTurn(S);
     }
-    DelQueue(&(cek.skill), &InfoSkill);
+    DelQueue(&(cek->skill), &InfoSkill);
 }
 
 int main(){
-    printf("a");
     Player *P1,*P2;
     state S;
-    *P1 = S.P1;
-    *P2 = S.P2;
-
+    P1 = &(S.P1);
+    P2 = &(S.P2);
     InitPlayer(P1);
     InitPlayer(P2);
     //Queue Q1, Q2;
@@ -235,20 +233,19 @@ int main(){
     int i;
 
     // Untuk sekarang permainan langsung dimulai saat program dimulai
-    printf("a");
+    // printf("a");
     STARTKATA();         // Baca dari file config
-    ReadMatriksSize(&M);
+    ReadMatriksSize(&(S.M));
     ReadBangunan(&S);
     ReadGraph(&(S.G), NbElmtAB(S.ArrBang));
 
     EndGame = false;
-    P2->turn = true;
+    P1->turn = true;
     P2->turn = false;
     CreateEmptyQueue(&(S.P1.skill), 10);      // Inisialisasi Queue dan ngasih Instant Upgrade (direpresentasikan dengan 1 untuk sementara) ke Skill Queue kedua player 
     CreateEmptyQueue(&(S.P2.skill), 10);
     AddQueue(&(S.P1.skill), 1);       
     AddQueue(&(S.P2.skill), 1);
-
     while (!EndGame){
 
         TulisMATRIKS(S.M);
@@ -267,26 +264,26 @@ int main(){
             
             if (strcmp(CKata.TabKata, "attack")){
                 attack(&S);
-
             }
-            else if (strcmp(CKata.TabKata, "level_up")){
-                level_up(S.P1.listbangunan, &(S.ArrBang));
-            }
+            // if (strcmp(CKata.TabKata, "level_up")){
+            //    level_up(&S);
+            //}
             else if (strcmp(CKata.TabKata, "skill")){
-                UseSkill(&S);
-            }/*
+                 UseSkill(&S);
+            }
+            /*
             else if (strcmp(CKata.TabKata, "undo")){
 
 
-            }
+            }*/
             else if (strcmp(CKata.TabKata, "end_turn")){
-
-
+                P2->turn=true;
+                P1->turn=false;
             }
             else if (strcmp(CKata.TabKata, "save")){
 
 
-            }*/
+            }
             else if (strcmp(CKata.TabKata, "move")){
                 move(&(S.ArrBang), S.G, 1, S.P1.listbangunan);
             }
@@ -304,13 +301,11 @@ int main(){
             printf("ENTER COMMAND : ");
             STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang   
             for (i = 1; i <= CKata.Length; i++){
-
                 CKata.TabKata[i] = tolower(CKata.TabKata[i]);       // Ngelowercase input user, supaya input seperti aTtAcK pun bisa diterima
             }
             
-            if (strcmp(CKata.TabKata, "attack")){
+            if (!strcmp(CKata.TabKata, "attack")){
                 attack(&S);
-
             }
             else if (strcmp(CKata.TabKata, "level_up")){
                 level_up(S.P2.listbangunan, &(S.ArrBang));
@@ -321,11 +316,11 @@ int main(){
             else if (strcmp(CKata.TabKata, "undo")){
 
 
-            }
+            }*/
             else if (strcmp(CKata.TabKata, "end_turn")){
-
-
-            }
+                P2->turn=false;
+                P1->turn=true;
+            }/*
             else if (strcmp(CKata.TabKata, "save")){
 
 
