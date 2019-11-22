@@ -15,4 +15,6 @@ typedef struct {
 #define Turn(P) P.turn
 #define Skill(P) P.skill
 
+void InitPlayer (Player *P);
+
 #endif
