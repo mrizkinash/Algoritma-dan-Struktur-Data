@@ -84,7 +84,7 @@ boolean IsFullAB(TabInt T){
 }
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
-/* *** Mendefinisikan isi tabel dari pembacaan *** *
+/* *** Mendefinisikan isi tabel dari pembacaan *** */
 
 void TulisIsiAB(TabInt T){
 /* Proses : Menuliskan isi tabel dengan traversal, tabel ditulis di antara kurung siku;
@@ -96,7 +96,7 @@ void TulisIsiAB(TabInt T){
 /* Jika tabel kosong : menulis [] */
 
     IdxType i;
-    if (Neff(T) > 0){
+    if(Neff(T) > 0){
         for (i = 1; i <=Neff(T); i++){
             printf("%c ",Type(Elmt(T,i)));
             printf("(%d,%d) ",AbsisBangunan(Elmt(T,i)),OrdinatBangunan(Elmt(T,i)))
