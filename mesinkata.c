@@ -15,7 +15,7 @@ void IgnoreBlank()
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 {
-    while((CC == BLANK) && (CC !='.')){
+    while(((CC == BLANK) || (CC == '\n')) && (CC !='.')){
         ADV();
     }
 }
@@ -67,7 +67,7 @@ void SalinKata()
         CKata.TabKata[i]=CC; 
         ADV();
         i++;
-    } while(((CC != BLANK)&& (CC != '.')) && (i<=NMax));
+    } while(((CC != BLANK) && (CC != '.')) && (i<=NMax) && (CC != '\n'));
     CKata.Length = i-1;
 }   
 
