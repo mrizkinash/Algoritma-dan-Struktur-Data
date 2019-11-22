@@ -72,7 +72,7 @@ void ReadBangunan(state *S/*TabInt *ArrBang, List *L1, List *L2, MATRIKS *M*/){
     CreateEmptyLB(&(S->P2.listbangunan));
     size = KataToInt(CKata);
     ADVKATA();
-    MakeEmptyAB(&(S->ArrBang),size + 1); // bikin array bangunan
+    MakeEmptyAB(&(S->ArrBang),size); // bikin array bangunan
     x = 1; // idx array bangunan
             
     while (x <= size){
@@ -107,45 +107,50 @@ void ReadBangunan(state *S/*TabInt *ArrBang, List *L1, List *L2, MATRIKS *M*/){
 }
 
 void ReadGraph(Graph *G, int size){
-    int i;
-    i = 1;
     CreateEmptyG(G);
-
-    while (!EndKata){
-
-        if (i % size == 1){
-
-            InsVLastG(G, (i / size) + 1);
-            if (CKata.TabKata[1] == '1'){
-
-                InsVLastCon(G, FindLastG(*G), 1);                
-            }            
+    for(int i=1; i<=size; i++){
+        for(int j=1; j<=size; j++){
+            if(CKata.TabKata[1]=='1') AddRel(G,i,j);
+            ADVKATA();
         }
-        else{
-
-            if (CKata.TabKata[1] == '1'){
-
-                if (i % size == 0){
-
-                    InsVLastCon(G, FindLastG(*G), size);    
-                }
-                else{
-
-                    InsVLastCon(G, FindLastG(*G), (i % size));
-                }
-            }
-        }
-
-        i++;
-        ADVKATA();
     }
+    // while (!EndKata){
+
+        // if (i % size == 1){
+
+        //     InsVLastG(G, (i / size) + 1);
+        //     if (CKata.TabKata[1] == '1'){
+
+        //         InsVLastCon(G, FindLastG(*G), 1);                
+        //     }            
+        // }
+        // else{
+
+        //     if (CKata.TabKata[1] == '1'){
+
+        //         if (i % size == 0){
+
+        //             InsVLastCon(G, FindLastG(*G), size);    
+        //         }
+        //         else{
+
+        //             InsVLastCon(G, FindLastG(*G), (i % size));
+        //         }
+        //     }
+        // }
+
+        // i++;
+        // ADVKATA();
+    //}
 }
 
 int main(){
     printf("a");
     Player *P1,*P2;
     state S;
-    
+    *P1 = S.P1;
+    *P2 = S.P2;
+
     InitPlayer(P1);
     InitPlayer(P2);
     //Queue Q1, Q2;
