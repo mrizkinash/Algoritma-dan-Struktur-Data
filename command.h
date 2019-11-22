@@ -7,6 +7,8 @@
 #include "arraydin.h"
 #include "listlinier.h"
 #include "graph.h"
+#include "state.h"
+#include "player.h"
 
 
 
