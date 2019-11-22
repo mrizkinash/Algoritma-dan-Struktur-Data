@@ -282,6 +282,7 @@ void CetakListB(List L, TabInt ArrBang){
 		printf("%d. ",i);
 		CetakBangunan(ArrBang.TI[Info(P)]);
 		i++;
+		P=Next(P);
 	}
 }
 
