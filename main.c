@@ -141,25 +141,6 @@ int main(){
     boolean P1Turn, P2Turn, EndGame;
     int i;
 
-    // DEKRALASI A, M, P BANGUNAN
-    /*int AC[5],MC[5],AT[5],MT[5],AF[5],MF[5],AV[5],MV[5];        // Indeks dari 0
-    boolean PC[5],PT[5],PF[5],PV[5];
-    AC[1]=10; AC[2]=15; AC[3]=20; AC[4]=25;
-    MC[1]=40; MC[2]=60; MC[3]=80; MC[4]=100;
-    AT[1]=5;  AT[2]=10; AT[3]=20; AT[4]=30;
-    MT[1]=20; MT[2]=30; MT[3]=40; MT[4]=50;
-    AF[1]=10; AF[2]=20; AF[3]=30; AF[4]=40;
-    MF[1]=20; MF[2]=40; MF[3]=60; MF[4]=80;
-    AV[1]=5;  AV[2]=10; AV[3]=15; AV[4]=20;
-    MV[1]=20; MV[2]=30; MV[3]=40; MV[4]=50;
-    for(int i=1; i<=4; i++){
-        PC[i]=false;
-        PT[i]=true;
-        PV[i]=false;
-        PF[i]=false;
-    }
-    PF[3]=true; PF[4]=true;*/
-
     // Untuk sekarang permainan langsung dimulai saat program dimulai
     STARTKATA();         // Baca dari file config
     ReadMatriksSize(&M);
