@@ -140,34 +140,6 @@ void ReadGraph(Graph *G, int size){
             ADVKATA();
         }
     }
-    // while (!EndKata){
-
-        // if (i % size == 1){
-
-        //     InsVLastG(G, (i / size) + 1);
-        //     if (CKata.TabKata[1] == '1'){
-
-        //         InsVLastCon(G, FindLastG(*G), 1);                
-        //     }            
-        // }
-        // else{
-
-        //     if (CKata.TabKata[1] == '1'){
-
-        //         if (i % size == 0){
-
-        //             InsVLastCon(G, FindLastG(*G), size);    
-        //         }
-        //         else{
-
-        //             InsVLastCon(G, FindLastG(*G), (i % size));
-        //         }
-        //     }
-        // }
-
-        // i++;
-        // ADVKATA();
-    //}
 }
 
 void instantUpgrade(state *S){
@@ -235,6 +207,9 @@ void UseSkill(state *S){
         Barrage(S);
     }else if (InfoSkill == 2){
         extraTurn(S);
+    }else if(InfoSkill == 5){
+        if(S->P1.turn) S->P1.shieldturn=2;
+        else S->P2.shieldturn=2;
     }
     DelQueue(&(cek->skill), &InfoSkill);
 }
@@ -246,18 +221,11 @@ int main(){
     P2 = &(S.P2);
     InitPlayer(P1);
     InitPlayer(P2);
-    //Queue Q1, Q2;
-    //Graph G;
-    //TabInt ArrBang; //array dinamis yang menyimpan seluruh bangunan
-    //List L1, L2; // L1( list keterhubungan bangunan yang dimiliki player 1)
-                   // L2( list keterhubungan bangunan yang dimiliki player 2)
     MATRIKS M;
     //boolean P1Turn, P2Turn, EndGame;
     boolean EndGame;
     int i;
 
-    // Untuk sekarang permainan langsung dimulai saat program dimulai
-    // printf("a");
     STARTKATA();         // Baca dari file config
     ReadMatriksSize(&(S.M));
     ReadBangunan(&S);
@@ -274,8 +242,14 @@ int main(){
         
         TulisMATRIKS(S.M);
         if (P1->turn){
-
-            printf("Player 1\n");
+            printf("          _                                   _ \n");
+            printf("  _ __   | |   __ _   _   _    ___   _ __    / |\n");
+            printf(" | '_ \\\  | |  / _` | | | | |  / _ \\\ | '__|   | |\n");
+            printf(" | |_) | | | | (_| | | |_| | |  __/ | |      | |\n");
+            printf(" | .__/  |_|  \\\__,_|  \\\__, |  \\\___| |_|      |_|\n");
+            printf(" |_|                  |___/                     \n");
+                    
+            //printf("Player 1\n");
             CetakListB(S.P1.listbangunan, S.ArrBang);
             printf("Skill Available : ");
             PrintSkill(S.P1.skill);
@@ -287,6 +261,10 @@ int main(){
             
             if (IsSameString(CKata, "attack")){
                 attack(&S);
+                if(NbElmtLB(S.P2.listbangunan)==0){
+                    printf("PLAYER 2 WIN!!!");
+                    EndGame=true;
+                }
             }
             else if (IsSameString(CKata, "level_up")){
                level_up(&S);
@@ -325,8 +303,14 @@ int main(){
 
         }
         else if (P2->turn){
-
-            printf("Player 2\n");
+            printf("          _                                   ____ \n");
+            printf("  _ __   | |   __ _   _   _    ___   _ __    |___ \\\ \n");
+            printf(" | '_ \\\  | |  / _` | | | | |  / _ \\\ | '__|     __) |\n");
+            printf(" | |_) | | | | (_| | | |_| | |  __/ | |       / __/ \n");
+            printf(" | .__/  |_|  \\\__,_|  \\\__, |  \\\___| |_|      |_____|\n");
+            printf(" |_|                  |___/\n");
+                           
+            //printf("Player 2\n");
             CetakListB(S.P2.listbangunan, S.ArrBang);
             printf("Skill Available : ");
             PrintSkill(S.P2.skill);
@@ -338,9 +322,13 @@ int main(){
             
             if (IsSameString(CKata, "attack")){
                 attack(&S);
+                if(NbElmtLB(S.P1.listbangunan)==0){
+                    printf("PLAYER 1 WIN!!!");
+                    EndGame=true;
+                }
             }
             else if (IsSameString(CKata, "level_up")){
-                level_up(S.P2.listbangunan, &(S.ArrBang));
+                level_up(&S);
             }
             else if (IsSameString(CKata, "skill")){
                 UseSkill(&S);
