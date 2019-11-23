@@ -304,3 +304,12 @@ boolean ceklvl4(List L, TabInt ArrBang){
 	}
 	return true;
 }
+
+boolean AllAttack(List L,TabInt ArrBang){
+	address P;
+	P = First(L);
+	while(P!=Nil){
+		if(Battle(P)==false) return false;
+	}
+	return true;
+}
