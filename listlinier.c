@@ -266,7 +266,10 @@ boolean CekAttack(List L, int x){
 void SudahAttack(List *L, int x){
 	address P = First(*L);
 	while(P!=Nil){
-		if(x==0) Battle(P)=true;
+		if(x==0){
+			P = Next(P);
+			Battle(P)=true;
+		}
 		else{
 			P = Next(P);
 			x--;
