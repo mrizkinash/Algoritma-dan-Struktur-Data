@@ -4,6 +4,7 @@
 #include "boolean.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "pcolor.h"
 
 /* *** Konstruktor membentuk MATRIKS *** */
 void MakeMATRIKS (int NB, int NK, MATRIKS * M)
@@ -108,7 +109,9 @@ void TulisMATRIKS (MATRIKS M)
         for (j = 0; j <= NKolEff(M); j++)
         {
 
-            printf("%c ", MType(ElmtMat(M, i, j)));
+            if (M.Mem[i][j].Owner == 0) printf("%s%c ",NORMAL, MType(ElmtMat(M, i, j)));
+            if (M.Mem[i][j].Owner == 1) printf("%s%c ",BLUE,MType(ElmtMat(M, i, j)));
+            if (M.Mem[i][j].Owner == 2) printf("%s%c ", RED,MType(ElmtMat(M, i, j)));
         }
          printf("\n");
     }
