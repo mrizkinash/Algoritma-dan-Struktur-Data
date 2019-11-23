@@ -108,17 +108,20 @@ void ReadBangunan(state *S/*TabInt *ArrBang, List *L1, List *L2, MATRIKS *M*/){
 
         CreateBangunan(&B,type,i,j); // create bangunan ke x
         ElmtArr(S->ArrBang,x) = B; // masukin bangunan yg baru di create ke arrbang
+        S->ArrBang.TI[x].P.X = i;
+        S->ArrBang.TI[x].P.Y = j;
         if(x==1){
-
+            S->ArrBang.TI[x].owner = x;
             InsVLastLB(&(S->P1.listbangunan), 1);   // bangunan 1 milik pemain 1
             MOwn(ElmtMat(S->M, i, j)) = 1; // Kepemilikan bangunan di matriks diset jadi 1 (player 1)
         }
         else if(x==2){
-
+            S->ArrBang.TI[x].owner = x;
             InsVLastLB(&(S->P2.listbangunan), 2); // bangunan 2 milik pemain 2
             MOwn(ElmtMat(S->M, i, j)) = 2; // Kepemilikan bangunan di matriks diset jadi 2 (player 2)
         }
         else {
+            S->ArrBang.TI[x].owner = 0;
             MOwn(ElmtMat(S->M, i, j)) = 0; // Kepemilikan bangunan di matriks diset jadi 0 (bukan punya siapa siapa)
         }
 
@@ -214,10 +217,8 @@ void Barrage(state *S){
 }
 
 void extraTurn(state *S){
-	Player cek;
-	if(S->P1.turn) cek=S->P1;
-	else cek=S->P2;
-	cek.et=true;
+	if (S->P1.turn) S->P1.et = true;
+    if (S->P2.turn) S->P2.et = true;
 }
 
 void UseSkill(state *S){
@@ -270,7 +271,7 @@ int main(){
     AddQueue(&(S.P1.skill), 1);       
     AddQueue(&(S.P2.skill), 1);
     while (!EndGame){
-
+        
         TulisMATRIKS(S.M);
         if (P1->turn){
 
@@ -281,7 +282,6 @@ int main(){
             printf("ENTER COMMAND : ");
             STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang
             for (i = 1; i <= CKata.Length; i++){
-
                 CKata.TabKata[i] = tolower(CKata.TabKata[i]);       // Ngelowercase input user, supaya input seperti aTtAcK pun bisa diterima
             }
             
@@ -292,27 +292,30 @@ int main(){
                level_up(&S);
             }
             else if (IsSameString(CKata, "skill")){
-                 UseSkill(&S);
+                UseSkill(&S);
             }
             /*
             else if (IsSameString(CKata, "undo")){
-
-
             }*/
             else if (IsSameString(CKata, "end_turn")){
-                if(P1->et){
-                    P2->turn=false;
-                    P1->turn=true;
-                    P1->et = false;
-                }else{
+                if (S.P1.et){
+                    printf("Extra turn has been used!\n");
+                    AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
+                    ResetBattle(&(S.P1.listbangunan));
+                    S.P1.et = false;
+                }
+                else{
                     P2->turn=true;
                     P1->turn=false;
-                }
-            }/*
+                    AddPasukanLB(S.P2.listbangunan,&(S.ArrBang));
+                    ResetBattle(&(S.P2.listbangunan));
+                    if (S.P2.shieldturn > 0) S.P2.shieldturn -= 1;
+                    }
+            }
             else if (IsSameString(CKata, "save")){
 
 
-            }*/
+            }
             else if (IsSameString(CKata, "move")){
                 move(&S);
             }
@@ -347,14 +350,17 @@ int main(){
 
             }*/
             else if (IsSameString(CKata, "end_turn")){
-                if(P2->et){
-                    P2->turn=true;
-                    P1->turn=false;
-                    P2->et=false;
-                }else{
-                    P2->turn=false;
-                    P1->turn=true;
+                if (S.P1.et){
+                    printf("Extra turn has been used!\n");
+                    AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
+                    ResetBattle(&(S.P1.listbangunan));
+                    S.P1.et = false;
                 }
+                else{P2->turn=false;
+                P1->turn=true;
+                AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
+                ResetBattle(&(S.P1.listbangunan));
+                if (S.P1.shieldturn > 0) S.P1.shieldturn -= 1;}
             }/*
             else if (IsSameString(CKata, "save")){
 
