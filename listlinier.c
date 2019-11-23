@@ -255,7 +255,7 @@ int CariIdxB(List L, int n){
 boolean CekAttack(List L, int x){
 	address P = First(L);
 	while(P!=Nil){
-		if(x==0) return Battle(P);
+		if(x==1) return Battle(P);
 		else{
 			P = Next(P);
 			x--;
@@ -268,6 +268,7 @@ void SudahAttack(List *L, int x){
 	address P = First(*L);
 	while(P!=Nil){
 		if(x==1){
+			//printf("%d sudah pernah\n", Info(P));
 			Battle(P)=true;
 			P = Next(P);
 			x--;
