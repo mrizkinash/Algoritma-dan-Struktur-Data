@@ -135,12 +135,12 @@ void attack(state *S){
                             
                             SudahAttack(&(S->P1.listbangunan),x); // ubah jadi pernah nyerang
                             //printf("halo\n");
-                            if(Type(S->ArrBang.TI[diserang])=='F') AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn 
-                            else if(NbElmtLB(S->P1.listbangunan)==10) AddQueue(&(S->P1.skill),4); // syarat dapet skill barrage 
+                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==2) AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn 
+                            if(NbElmtLB(S->P1.listbangunan)==10) AddQueue(&(S->P2.skill),4); // syarat dapet skill barrage 
                         }else{
                             SudahAttack(&(S->P2.listbangunan),x);
-                            if(Type(S->ArrBang.TI[diserang])=='F') AddQueue(&(S->P1.skill),2);
-                            else if(NbElmtLB(S->P2.listbangunan)==10) AddQueue(&(S->P2.skill),4);
+                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==1) AddQueue(&(S->P1.skill),2);
+                            if(NbElmtLB(S->P2.listbangunan)==10) AddQueue(&(S->P1.skill),4);
                         }
                     }
                 }
@@ -159,8 +159,8 @@ void attack(state *S){
 
 void level_up(state *S){
     boolean all; // cek udh semuanya level 4 atau blom
-    if (S->P1.turn) ceklvl4(S->P1.listbangunan,S->ArrBang);
-    else ceklvl4(S->P2.listbangunan,S->ArrBang);
+    if (S->P1.turn) all =ceklvl4(S->P1.listbangunan,S->ArrBang);
+    else all = ceklvl4(S->P2.listbangunan,S->ArrBang);
     if(all) printf("seluruh bangunan sudah berada di level tertinggi\n");
     else{
         printf("Daftar Bangunan:\n");
@@ -174,12 +174,14 @@ void level_up(state *S){
         else lvlup = CariIdxB(S->P2.listbangunan,x);
         if(Level(S->ArrBang.TI[lvlup])==4) printf("Bangunan ini sudah di level tertinggi\n"); // klo bangunan yg dipilih udah lvl 4
         else{
-            LevelUpBangunan(&(S->ArrBang.TI[lvlup]));
+            if(Army(S->ArrBang.TI[lvlup]) >= 0.5 * GetM(S->ArrBang.TI[lvlup])){
+                LevelUpBangunan(&(S->ArrBang.TI[lvlup]));
+                printf("-------------------------------------\n");
+                printf("|  Anda sukses melakukan level up!  |\n");
+                printf("-------------------------------------\n");
+            }else LevelUpBangunan(&(S->ArrBang.TI[lvlup]));
             if(S->P1.turn && ceklvl4(S->P1.listbangunan,S->ArrBang)) AddQueue(&(S->P1.skill),3); // syarat dapet skill instant reinforcement
             else if(S->P2.turn && ceklvl4(S->P2.listbangunan,S->ArrBang)) AddQueue(&(S->P2.skill),3); // syarat dapet skill instant reinforcement
-            printf("-------------------------------------\n");
-            printf("|  Anda sukses melakukan level up!  |\n");
-            printf("-------------------------------------\n");
         }
     }
 }
