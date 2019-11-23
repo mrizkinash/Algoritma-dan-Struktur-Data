@@ -247,6 +247,7 @@ int CariIdxB(List L, int n){
 	while(P!=Nil && n>0){
 		idx=Info(P);
 		P=Next(P);
+		n--;
 	}
 	return idx;
 }
@@ -266,9 +267,10 @@ boolean CekAttack(List L, int x){
 void SudahAttack(List *L, int x){
 	address P = First(*L);
 	while(P!=Nil){
-		if(x==0){
-			P = Next(P);
+		if(x==1){
 			Battle(P)=true;
+			P = Next(P);
+			x--;
 		}
 		else{
 			P = Next(P);
@@ -289,8 +291,8 @@ void CetakListB(List L, TabInt ArrBang){
 	}
 }
 
-void ResetBattle(List L){
-	address P = First(L);
+void ResetBattle(List *L){
+	address P = First(*L);
 	while(P!=Nil){
 		Battle(P)=false;
 		P=Next(P);
@@ -301,6 +303,7 @@ boolean ceklvl4(List L, TabInt ArrBang){
 	address P = First(L);
 	while(P!=Nil){
 		if(Level(ArrBang.TI[Info(P)])!=4) return false;
+		P = Next(P);
 	}
 	return true;
 }
@@ -310,6 +313,17 @@ boolean AllAttack(List L,TabInt ArrBang){
 	P = First(L);
 	while(P!=Nil){
 		if(Battle(P)==false) return false;
+		P = Next(P);
 	}
 	return true;
+}
+
+void AddPasukanLB(List L,TabInt *ArrBang){
+	address P;
+	P = First(L);
+	while(P!=Nil){				
+		AddPasukan(&(ArrBang->TI[Info(P)]));
+		printf("%d added\n",Info(P));
+		P = Next(P);
+	}
 }
