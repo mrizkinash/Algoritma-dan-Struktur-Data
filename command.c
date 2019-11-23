@@ -46,6 +46,7 @@ void attack(state *S){
                 scanf("%d",&y);
                 while(y<0 || y>i){
                     printf("Masukkan tidak valid\n");
+                    printf("Bangunan yang diserang: ");
                     scanf("%d",&y);
                 }
                 int diserang;
@@ -54,7 +55,8 @@ void attack(state *S){
                 int pas;
                 scanf("%d",&pas);
                 while (pas>Army(S->ArrBang.TI[menyerang]) || pas < 0){
-                    printf("jumlah pasukan tidak valid\n");
+                    printf("Jumlah pasukan tidak valid\n");
+                    printf("Jumlah pasukan: ");
                     scanf("%d",&pas);
                 }
 
@@ -164,7 +166,7 @@ void level_up(state *S){
     }
 }
 
-void move(state *S/*TabInt *ArrBang, Graph G, int player, List L*/){
+void move(state *S){
     int player;
     if (S->P1.turn) player=1;
     else player = 2;
@@ -199,6 +201,7 @@ void move(state *S/*TabInt *ArrBang, Graph G, int player, List L*/){
         scanf("%d",&y);
         while(y<0 || y>i){
             printf("Masukkan tidak valid\n");
+            printf("Bangunan yang akan menerima: ");
             scanf("%d",&y);
         }
         int terima;
@@ -208,10 +211,12 @@ void move(state *S/*TabInt *ArrBang, Graph G, int player, List L*/){
         scanf("%d",&gain);
         while(gain<0 || gain> Army(S->ArrBang.TI[asal])){
             printf("Jumlah pasukan tidak valid\n");
+            printf("Jumlah Pasukan: ");
             scanf("%d",&gain);
         }
         while(Army(S->ArrBang.TI[terima])+gain>GetM(S->ArrBang.TI[terima])){
             printf("Jumlah pasukan melebihi batas\n");
+            printf("Jumlah Pasukan: ");
             scanf("%d",&gain);
         }
 
