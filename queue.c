@@ -121,7 +121,9 @@ void PrintSkill(Queue Q){
             printf("Instant Reinforcement\n");
         }else if(InfoHead(Q) == 4){
             printf("Barrage\n");
-        }
+        }else if(InfoHead(Q)==5){
+			printf("Shield\n");
+		}
     }
 }
 
