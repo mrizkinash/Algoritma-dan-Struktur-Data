@@ -39,7 +39,7 @@ void attack(state *S){
                 P2=Next(P2);
             }
 
-            if(i==0) printf("Tidak ada");
+            if(i==0) printf("Tidak ada\n");
             else{
                 printf("Bangunan yang diserang: ");
                 int y;
@@ -66,7 +66,9 @@ void attack(state *S){
                     if(new_pas<0){
                         Army(S->ArrBang.TI[menyerang])-=pas; // ngurangin pasukan sendiri
                         Army(S->ArrBang.TI[diserang])-=(0.75*pas); // ngurangin pasukan lawan 3/4 dr jumalah pasukan yg attack
-                        printf("Bangunan gagal direbut\n");
+                        printf("----------------------------\n");
+                        printf("|  Bangunan gagal direbut  |\n");
+                        printf("----------------------------\n");
                     }else{
                         if(player==1){
                             //bangunan jd punya player 1
@@ -85,7 +87,9 @@ void attack(state *S){
                             DelPLB (&(S->P1.listbangunan), diserang); // apus dari list player 1
                             InsVLastLB(&(S->P2.listbangunan),diserang);// nambahin bangunan di list L2
                         }
-                        printf("Bangunan menjadi milikmu\n");
+                        printf("----------------------------\n");
+                        printf("| Bangunan menjadi milikmu |\n");
+                        printf("----------------------------\n");
                         if(S->P1.turn){
                             SudahAttack(&(S->P1.listbangunan),x); // ubah jadi pernah nyerang
                             //printf("halo\n");
@@ -102,7 +106,9 @@ void attack(state *S){
                     if(new_pas<0){
                         Army(S->ArrBang.TI[menyerang])-=pas; // ngurangin pasukan sendiri
                         Army(S->ArrBang.TI[diserang])-=pas; // ngurangin pasukan lawan
-                        printf("Bangunan gagal direbut\n");
+                        printf("----------------------------\n");
+                        printf("|  Bangunan gagal direbut  |\n");
+                        printf("----------------------------\n");
                     }else{
                         //kondisi menang
                         if(player==1){
@@ -122,7 +128,9 @@ void attack(state *S){
                             DelPLB (&(S->P1.listbangunan), diserang); // apus dari list player 1
                             InsVLastLB(&(S->P2.listbangunan),diserang);// nambahin bangunan di list L2
                         }
-                        printf("Bangunan menjadi milikmu\n");
+                        printf("----------------------------\n");
+                        printf("| Bangunan menjadi milikmu |\n");
+                        printf("----------------------------\n");
                         if(S->P1.turn){
                             
                             SudahAttack(&(S->P1.listbangunan),x); // ubah jadi pernah nyerang
@@ -137,8 +145,16 @@ void attack(state *S){
                     }
                 }
             }
-        } else printf("Bangunan ini sudah pernah melakukan attack\n");
-    } else printf("Seluruh bangunan anda sudah pernah melakukan attack\n");
+        } else{
+            printf("------------------------------------------------\n");
+            printf("|  Bangunan ini sudah pernah melakukan attack  |\n");
+            printf("------------------------------------------------\n");
+        }
+    } else{
+        printf("---------------------------------------------------------\n");
+        printf("|  Seluruh bangunan anda sudah pernah melakukan attack  |\n");
+        printf("---------------------------------------------------------\n");
+    }
 }
 
 void level_up(state *S){
@@ -161,7 +177,9 @@ void level_up(state *S){
             LevelUpBangunan(&(S->ArrBang.TI[lvlup]));
             if(S->P1.turn && ceklvl4(S->P1.listbangunan,S->ArrBang)) AddQueue(&(S->P1.skill),3); // syarat dapet skill instant reinforcement
             else if(S->P2.turn && ceklvl4(S->P2.listbangunan,S->ArrBang)) AddQueue(&(S->P2.skill),3); // syarat dapet skill instant reinforcement
-            printf("Anda sukses melakukan level up!\n");
+            printf("-------------------------------------\n");
+            printf("|  Anda sukses melakukan level up!  |\n");
+            printf("-------------------------------------\n");
         }
     }
 }
@@ -219,7 +237,9 @@ void move(state *S){
             printf("Jumlah Pasukan: ");
             scanf("%d",&gain);
         }
-
         MovePasukan(&(S->ArrBang.TI[asal]),&(S->ArrBang.TI[terima]), gain);
+        printf("-------------------------------------\n");
+        printf("|  Anda sukses memindahkan pasukan  |\n");
+        printf("-------------------------------------\n");
     }
 }
