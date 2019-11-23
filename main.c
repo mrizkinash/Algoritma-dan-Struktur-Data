@@ -383,11 +383,11 @@ int main(){
                 ResetBattle(&(S.P1.listbangunan));
                 if (S.P1.shieldturn > 0) S.P1.shieldturn -= 1;}
                 CreateEmptyStack(&statestack);
-            }/*
+            }
             else if (IsSameString(CKata, "save")){
 
                 SAVEGAME(S);
-            }*/
+            }
             else if (IsSameString(CKata, "move")){
                 PushStack(&statestack,S);
                 move(&S);
