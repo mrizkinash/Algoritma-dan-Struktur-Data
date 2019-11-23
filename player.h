@@ -10,6 +10,7 @@ typedef struct {
     boolean turn;
     List listbangunan;
     boolean et;
+    int shieldturn;
 } Player;
 
 #define LB(P) P.listbangunan
