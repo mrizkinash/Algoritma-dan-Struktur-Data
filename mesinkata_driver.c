@@ -23,8 +23,33 @@ int KataToInt (Kata CKata){
     return retval;
 }
 
+boolean IsSameString(Kata CKata, char cmp[]){
+	boolean isSame;
+	int i;
+
+	isSame = true;
+	i = 1;
+
+	while ((i <= CKata.Length) && (isSame)){
+
+		if (CKata.TabKata[i] != cmp[i - 1]){
+
+			isSame = false;
+		}
+		i++;
+	}
+
+	if ((int)(cmp[i - 1]) != 0){
+
+		isSame = false;
+	}
+
+	return isSame;
+}
+
 int main(){
 	int jumlah, i;
+	char test[] = "test";
 
 	printf("Membaca file config...\n");
 	STARTKATA();
@@ -80,6 +105,16 @@ int main(){
 		printf("%c", CKata.TabKata[i]);
 	}
 	printf("\n");
+
+	printf("Apakah command yang dimasukkan attack?\n");
+	if (IsSameString(CKata, "attack")){
+
+		printf("yes\n");
+	}
+	else{
+
+		printf("no\n");
+	}
 
 	return 0;
 }

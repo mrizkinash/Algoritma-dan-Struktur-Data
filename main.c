@@ -14,7 +14,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
 
 int KarakterToInt (char CC){
@@ -34,6 +33,30 @@ int KataToInt (Kata CKata){
     }
 
     return retval;
+}
+
+boolean IsSameString(Kata CKata, char cmp[]){
+    boolean isSame;
+    int i;
+
+    isSame = true;
+    i = 1;
+
+    while ((i <= CKata.Length) && (isSame)){
+
+        if (CKata.TabKata[i] != cmp[i - 1]){
+
+            isSame = false;
+        }
+        i++;
+    }
+
+    if ((int)(cmp[i - 1]) != 0){
+
+        isSame = false;
+    }
+
+    return isSame;
 }
 
 void ReadMatriksSize(MATRIKS *M){
@@ -262,32 +285,32 @@ int main(){
                 CKata.TabKata[i] = tolower(CKata.TabKata[i]);       // Ngelowercase input user, supaya input seperti aTtAcK pun bisa diterima
             }
             
-            if (strcmp(CKata.TabKata, "attack")){
+            if (IsSameString(CKata, "attack")){
                 attack(&S);
             }
-            // if (strcmp(CKata.TabKata, "level_up")){
+            // else if (IsSameString(CKata, "level_up")){
             //    level_up(&S);
             //}
-            else if (strcmp(CKata.TabKata, "skill")){
+            else if (IsSameString(CKata, "skill")){
                  UseSkill(&S);
             }
             /*
-            else if (strcmp(CKata.TabKata, "undo")){
+            else if (IsSameString(CKata, "undo")){
 
 
             }*/
-            else if (strcmp(CKata.TabKata, "end_turn")){
+            else if (IsSameString(CKata, "end_turn")){
                 P2->turn=true;
                 P1->turn=false;
             }
-            else if (strcmp(CKata.TabKata, "save")){
+            else if (IsSameString(CKata, "save")){
 
 
             }
-            else if (strcmp(CKata.TabKata, "move")){
+            else if (IsSameString(CKata, "move")){
                 move(&(S.ArrBang), S.G, 1, S.P1.listbangunan);
             }
-            else if (strcmp(CKata.TabKata, "exit")){
+            else if (IsSameString(CKata, "exit")){
                 EndGame = true;
             }
 
@@ -304,31 +327,31 @@ int main(){
                 CKata.TabKata[i] = tolower(CKata.TabKata[i]);       // Ngelowercase input user, supaya input seperti aTtAcK pun bisa diterima
             }
             
-            if (!strcmp(CKata.TabKata, "attack")){
+            if (IsSameString(CKata, "attack")){
                 attack(&S);
             }
-            else if (strcmp(CKata.TabKata, "level_up")){
+            else if (IsSameString(CKata, "level_up")){
                 level_up(S.P2.listbangunan, &(S.ArrBang));
             }
-            else if (strcmp(CKata.TabKata, "skill")){
+            else if (IsSameString(CKata, "skill")){
                 UseSkill(&S);
             }/*
-            else if (strcmp(CKata.TabKata, "undo")){
+            else if (IsSameString(CKata, "undo")){
 
 
             }*/
-            else if (strcmp(CKata.TabKata, "end_turn")){
+            else if (IsSameString(CKata, "end_turn")){
                 P2->turn=false;
                 P1->turn=true;
             }/*
-            else if (strcmp(CKata.TabKata, "save")){
+            else if (IsSameString(CKata, "save")){
 
 
             }*/
-            else if (strcmp(CKata.TabKata, "move")){
+            else if (IsSameString(CKata, "move")){
                 move(&(S.ArrBang), S.G, 2, S.P2.listbangunan);
             }
-            else if (strcmp(CKata.TabKata, "exit")){
+            else if (IsSameString(CKata, "exit")){
                 EndGame=true;
             }
         }
