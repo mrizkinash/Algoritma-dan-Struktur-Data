@@ -288,9 +288,9 @@ int main(){
             if (IsSameString(CKata, "attack")){
                 attack(&S);
             }
-            // else if (IsSameString(CKata, "level_up")){
-            //    level_up(&S);
-            //}
+            else if (IsSameString(CKata, "level_up")){
+               level_up(&S);
+            }
             else if (IsSameString(CKata, "skill")){
                  UseSkill(&S);
             }
