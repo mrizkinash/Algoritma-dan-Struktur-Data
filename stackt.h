@@ -9,7 +9,7 @@
 #include "state.h"
 
 #define NilST 0
-#define MaxElST 10
+#define MaxElST 20
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
