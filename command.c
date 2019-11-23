@@ -25,21 +25,21 @@ void attack(state *S){
             int TLawan[30];
             adrG P = SearchG(S->G,menyerang);
             address P2= Next(P);
-            int i=1;
+            int i=0;
             int player;
             if(S->P1.turn) player=1;
             else player=2;
             while(P2!=Nil){
                 if(Owner(S->ArrBang.TI[Info(P2)])!=player){
+                    i++;
                     TLawan[i]=Info(P2);
                     printf("%d. ",i);
                     CetakBangunan(S->ArrBang.TI[TLawan[i]]);
-                    i++;
                 }
                 P2=Next(P2);
             }
 
-            if(i==0) printf("Tidak terdapat bangunan yang bisa diserang");
+            if(i==0) printf("Tidak ada");
             else{
                 printf("Bangunan yang diserang: ");
                 int y;
@@ -87,8 +87,7 @@ void attack(state *S){
                             else if(NbElmtLB(S->P2.listbangunan)==10) AddQueue(&(S->P2.skill),4);
                         }
                     }
-                }
-                else{
+                }else{ // kalo gada pertahanan
                     new_pas = pas-Army(S->ArrBang.TI[diserang]);
                     if(new_pas<0){
                         Army(S->ArrBang.TI[menyerang])-=pas; // ngurangin pasukan sendiri
@@ -152,28 +151,36 @@ void level_up(state *S){
     }
 }
 
-void move(TabInt *ArrBang, Graph G, int player, List L){
+void move(state *S/*TabInt *ArrBang, Graph G, int player, List L*/){
+    int player;
+    if (S->P1.turn) player=1;
+    else player = 2;
     printf("Daftar Bangunan:\n");
-    CetakListB(L,*ArrBang);
+    if (S->P1.turn) CetakListB(S->P1.listbangunan,S->ArrBang);
+    else CetakListB(S->P2.listbangunan,S->ArrBang);
     printf("Pilih bangunan: ");
     int x;
     scanf("%d",&x);
     int asal;
-    asal= CariIdxB(L,x);
-    printf("Daftar bangunan yang dapat terdekat:\n");
-        int TLawan[30]; // menyimpan data bangunan yg tersambung dan milik sendiri
-        adrG P = SearchG(G,asal);
-        address P2= Next(P);
-        int i=1;
-        while(P2!=Nil){
-            if(Owner(ArrBang->TI[Info(P2)])==player){
-                TLawan[i]=Info(P2);
-                printf("%d. ",i);
-                CetakBangunan(ArrBang->TI[Info(P2)]);
-                i++;
-            }
-            P2=Next(P2);
+    if(S->P1.turn) asal = CariIdxB(S->P1.listbangunan,x);
+    else asal = CariIdxB(S->P2.listbangunan,x);
+
+    printf("Daftar bangunan yang terdekat:\n");
+    int TLawan[30];
+    adrG P = SearchG(S->G,asal);
+    address P2= Next(P);
+    int i=0;
+    while(P2!=Nil){
+        if(Owner(S->ArrBang.TI[Info(P2)])==player){
+            i++;
+            TLawan[i]=Info(P2);
+            printf("%d. ",i);
+            CetakBangunan(S->ArrBang.TI[TLawan[i]]);
         }
+        P2=Next(P2);
+    }
+    if(i==0) printf("Tidak ada");
+    else{
         printf("Bangunan yang akan menerima: ");
         int y;
         scanf("%d",&y);
@@ -182,5 +189,6 @@ void move(TabInt *ArrBang, Graph G, int player, List L){
         printf("Jumlah pasukan: ");
         int gain;
         scanf("%d",&gain);
-        MovePasukan(&(ArrBang->TI[asal]),&(ArrBang->TI[terima]), gain);
+        MovePasukan(&(S->ArrBang.TI[asal]),&(S->ArrBang.TI[terima]), gain);
+    }
 }
