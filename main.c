@@ -298,6 +298,7 @@ int main(){
                     AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
                     ResetBattle(&(S.P1.listbangunan));
                     S.P1.et = false;
+                    CreateEmptyStack(&statestack);
                 }
                 else{
                     P2->turn=true;
@@ -305,6 +306,7 @@ int main(){
                     AddPasukanLB(S.P2.listbangunan,&(S.ArrBang));
                     ResetBattle(&(S.P2.listbangunan));
                     if (S.P2.shieldturn > 0) S.P2.shieldturn -= 1;
+                    CreateEmptyStack(&statestack);
                     }
                 aksi=0;
             }/*
@@ -319,7 +321,7 @@ int main(){
             }
             else if (IsSameString(CKata, "exit")){
                 EndGame = true;
-            }
+            }else printf("Command tidak terdaftar\n");
 
         }
         else if (P2->turn){
@@ -367,17 +369,19 @@ int main(){
                 }else printf("Anda belum melakukan aksi apapun");
             }
             else if (IsSameString(CKata, "end_turn")){
-                if (S.P1.et){
+                if (S.P2.et){
                     printf("Extra turn has been used!\n");
                     AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
                     ResetBattle(&(S.P1.listbangunan));
-                    S.P1.et = false;
+                    S.P2.et = false;
                 }
-                else{P2->turn=false;
+                else{
+                P2->turn=false;
                 P1->turn=true;
                 AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
                 ResetBattle(&(S.P1.listbangunan));
                 if (S.P1.shieldturn > 0) S.P1.shieldturn -= 1;}
+                CreateEmptyStack(&statestack);
             }/*
             else if (IsSameString(CKata, "save")){
 
@@ -390,7 +394,7 @@ int main(){
             }
             else if (IsSameString(CKata, "exit")){
                 EndGame=true;
-            }
+            }else printf("Command tidak terdaftar\n");
         }
     }
 
