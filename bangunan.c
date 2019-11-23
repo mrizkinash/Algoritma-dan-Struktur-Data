@@ -2,6 +2,7 @@
 #include "bangunan.h"
 
 int GetA(Bangunan B){
+// mereturn nilai penambahan pasukan / A dari Bangunan B sesuai dengan levelnya
 	//CASTLE
 	if(Type(B)=='C' && Level(B)==1) return 10;
 	else if(Type(B)=='C' && Level(B)==2) return 15;
@@ -25,6 +26,7 @@ int GetA(Bangunan B){
 }
 
 int GetM(Bangunan B){
+// mereturn nilai Maksimum penambahan pasukan dari Bangunan B sesuai dengan levelnya
 	//CASTLE
 	if(Type(B)=='C' && Level(B)==1) return 40;
 	else if(Type(B)=='C' && Level(B)==2) return 60;
@@ -48,6 +50,7 @@ int GetM(Bangunan B){
 }
 
 boolean GetP(Bangunan B){
+// mereturn ada atau tidaknya pertahanan dari Bangunan B sesuai dengan levelnya
 	//CASTLE
 	if(Type(B)=='C') return false;
 	//TOWER
@@ -62,6 +65,9 @@ boolean GetP(Bangunan B){
 }
 
 void CreateBangunan (Bangunan *B, char c, int i, int j){
+// aksi : menginisialisasi type, point, level, dan pasukan pada bangunan B
+// I.S. bangunan belum di inisialisasi
+// F.s. terbentuk bangunan
 	Type(*B) = c;
     AbsisBangunan(*B) = i;
     OrdinatBangunan(*B) = j;
@@ -73,44 +79,58 @@ void CreateBangunan (Bangunan *B, char c, int i, int j){
 }
 
 void LevelUpBangunan(Bangunan *B){
+// menaikan level suatu bangunan dengan syarat pasukannya 
+// sudah lebih dari setengah M bangunan tsb
+// I.S. bangunan terdefinisi
+// F.s bangunan naik level, dan pasukannya berkurang
+
 	if(Army(*B) >= 0.5 * GetM(*B)){
 		Army(*B)-=(0.5 * GetM(*B));
 		Level(*B)+=1;
 	}
 	else printf("Anda tidak bisa level up\n");
 }
-// level +=1
-// jumlah pasukan berkurang M/2
 
 boolean CekBatasPasukan(Bangunan B){
+	// Cek apakah nilai dari penambahan pasukan melebihi M
+	// jika sudah melebihi, stop penambahan
 	return (Army(B)+GetA(B) <= GetM(B));
 }
-// Cek apakah nilai dari penambahan pasukan melebihi M
-// jika sudah melebihi, stop penambahan
 
 void AddPasukan(Bangunan *B){
+// menambahkan A jumlah pasukan ke bangunan dengan syarat
+// bangunan sudah berkepemilikan
+// I.S. bangunan terdefinisi
+// F.S pasukan pada bangunan bertambah sebanyak A pada setiap turn
 	if(CekBatasPasukan(*B) && Owner(*B)!=0){
 		Army(*B)+=GetA(*B);
 	}
 }
-// menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
 
 void ChangeOwnerB(Bangunan *B, int X, int Y){
+// reset bangunan saat pindah kepemilikan, 
+// dengan X sebagai jumlah pasukan yang baru
+// dan Y sebagai pemilik yang baru
+// I.S. bangunan terdefinisi
+// F.S. pemilik B berubah dari X menjadi Y
     Level(*B) = 1;
     Army(*B) = X;
     Owner(*B) = Y;
 }
-// reset bangunan saat pindah kepemilikan, 
-// dengan X sebagai jumlah pasukan yang baru
-// dan Y sebagai pemilik yang baru
 
 void MovePasukan(Bangunan *B1, Bangunan *B2, int x){
+// memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
+// I.S. 2 Bangunan terdefinsi
+// F.S. pasukan B1 berkurang sebanyak x dan pasukan B2 bertambah sebanyak y
 	Army(*B1)-=x;
     Army(*B2)+=x;
 }
-// memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
 
 void CetakBangunan(Bangunan B){
+// mencetak bagunan dengan format:
+// <no> <tipe bangunan> <(point)> <pasukan> <level>
+// I.S. bangunan terdefinisi
+// F.S tercetak isi bangunan B
 	if(Type(B)=='C') printf("Castle ");
 	else if(Type(B)=='T') printf("Tower ");
 	else if(Type(B)=='F') printf("Fort ");
