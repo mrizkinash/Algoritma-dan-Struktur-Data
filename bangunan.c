@@ -83,7 +83,7 @@ void LevelUpBangunan(Bangunan *B){
 // jumlah pasukan berkurang M/2
 
 boolean CekBatasPasukan(Bangunan B){
-	return (Army(B)+GetA(B) >= GetM(B));
+	return (Army(B)+GetA(B) <= GetM(B));
 }
 // Cek apakah nilai dari penambahan pasukan melebihi M
 // jika sudah melebihi, stop penambahan
