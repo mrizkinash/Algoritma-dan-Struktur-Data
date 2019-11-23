@@ -131,7 +131,7 @@ int CariIdxB(List L, int n);
 boolean CekAttack(List L, int x);
 void SudahAttack(List *L, int x);
 void CetakListB(List L, TabInt ArrBang);
-void ResetBattle(List L);
+void ResetBattle(List *L);
 boolean ceklvl4(List L, TabInt ArrBang);
 boolean AllAttack(List L,TabInt ArrBang);
 /*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
@@ -146,5 +146,15 @@ boolean AllAttack(List L,TabInt ArrBang);
 /* menghasilkan L3 yang baru (dengan elemen list L1 dan L2) */
 /* dan L1 serta L2 menjadi list kosong.*/
 /* Tidak ada alokasi/dealokasi pada prosedur ini */
+
+
+
+
+
+
+void AddPasukanLB(List L,TabInt *ArrBang);
+
+
+
 
 #endif
