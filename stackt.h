@@ -9,7 +9,7 @@
 #include "state.h"
 
 #define NilST 0
-#define MaxElST 1000
+#define MaxElST 10
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
@@ -19,7 +19,7 @@ typedef int adrST;   /* indeks tabel */
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
 typedef struct {
-  infotypeST T[MaxElST+1]; /* tabel penyimpan elemen */
+  state T[MaxElST+1]; /* tabel penyimpan elemen */
   adrST TOP;  /* alamat TOP: elemen puncak */
 } Stack;
 /* Definisi stack S kosong : S.TOP = Nil */
