@@ -12,14 +12,9 @@
 
 
 
-void attack(); //otw
-void level_up(); //ok
-void skill();
-void undo();
-void end_turn();
-//void save();
-void move(); //ok
-void exit();
+void attack(state *S);
+void level_up(state *S);
+void move(state *S);
 
 
 #endif
