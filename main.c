@@ -308,7 +308,7 @@ int main(){
 
             }
             else if (IsSameString(CKata, "move")){
-                move(&(S.ArrBang), S.G, 1, S.P1.listbangunan);
+                move(&S);
             }
             else if (IsSameString(CKata, "exit")){
                 EndGame = true;
@@ -349,7 +349,7 @@ int main(){
 
             }*/
             else if (IsSameString(CKata, "move")){
-                move(&(S.ArrBang), S.G, 2, S.P2.listbangunan);
+                move(&S);
             }
             else if (IsSameString(CKata, "exit")){
                 EndGame=true;
