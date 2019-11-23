@@ -87,14 +87,8 @@ boolean IsFullAB(TabInt T){
 /* *** Mendefinisikan isi tabel dari pembacaan *** */
 
 void TulisIsiAB(TabInt T){
-/* Proses : Menuliskan isi tabel dengan traversal, tabel ditulis di antara kurung siku;
-   antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
-   di tengah, atau di belakang, termasuk spasi dan enter */
-/* I.S. T boleh kosong */
-/* F.S. Jika T tidak kosong: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika tabel kosong : menulis [] */
-
+// Proses : mencetak isi bangunan yang terdapat pada array T
+// format 1. <Type Bangunan> (absis,ordinat) <jml army> <level bangunan>
     IdxType i;
     if(Neff(T) > 0){
         for (i = 1; i <=Neff(T); i++){
