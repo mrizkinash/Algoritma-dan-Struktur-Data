@@ -43,7 +43,7 @@ void attack(state *S){
         printf("Jumlah pasukan: ");
         int pas;
         scanf("%d",&pas);
-        while (pas<Army(S->ArrBang.TI[menyerang])){
+        while (pas>Army(S->ArrBang.TI[menyerang])){
             printf("jumlah pasukan tidak valid\n");
             scanf("%d",&pas);
         }
@@ -57,17 +57,20 @@ void attack(state *S){
             if(player==1){
                 //bangunan jd punya player 1
                 ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 1);
+                Army(S->ArrBang.TI[menyerang])-=pas;
                 DelPLB (&(S->P2.listbangunan), diserang); // apus bangunan dari list player 2
                 InsVLastLB(&(S->P1.listbangunan),diserang);// nambahin bangunan di list L1
             }
             else{
                 ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 2);
+                Army(S->ArrBang.TI[menyerang])-=pas;
                 DelPLB (&(S->P1.listbangunan), diserang); // apus dari list player 1
                 InsVLastLB(&(S->P2.listbangunan),diserang);// nambahin bangunan di list L2
             }
             printf("Bangunan menjadi milikmu\n");
             if(S->P1.turn){
                 SudahAttack(&(S->P1.listbangunan),x); // ubah jadi pernah nyerang
+                //printf("halo\n");
                 if(Type(S->ArrBang.TI[diserang])=='F') AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn 
                 else if(NbElmtLB(S->P1.listbangunan)==10) AddQueue(&(S->P1.skill),4); // syarat dapet skill barrage 
             }else{
@@ -81,7 +84,7 @@ void attack(state *S){
 
 void level_up(state *S/*List L, TabInt *ArrBang, int player*/){
     printf("Daftar Bangunan:\n");
-    if(S->P1.turn) CetakListB(S->P1.listbangunan,S->ArrBang);
+    if (S->P1.turn) CetakListB(S->P1.listbangunan,S->ArrBang);
     else CetakListB(S->P2.listbangunan,S->ArrBang);
     printf("Bangunan yang akan di level up: ");
     int x;
