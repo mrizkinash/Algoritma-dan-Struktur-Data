@@ -79,7 +79,6 @@ void STARTKATACMD()
 {
     STARTCMD();
     IgnoreBlank();
-
     if(CC == '.'){
         EndKata = true;
     } else {
