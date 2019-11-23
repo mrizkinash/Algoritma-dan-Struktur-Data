@@ -11,6 +11,7 @@
 #include "command.h"
 #include "player.h"
 #include "state.h"
+#include "saveload.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -309,11 +310,11 @@ int main(){
                     CreateEmptyStack(&statestack);
                     }
                 aksi=0;
-            }/*
+            }
             else if (IsSameString(CKata, "save")){
 
-
-            }*/
+                SAVEGAME(S);
+            }
             else if (IsSameString(CKata, "move")){
                 PushStack(&statestack,S);
                 move(&S);
@@ -385,7 +386,7 @@ int main(){
             }/*
             else if (IsSameString(CKata, "save")){
 
-
+                SAVEGAME(S);
             }*/
             else if (IsSameString(CKata, "move")){
                 PushStack(&statestack,S);
