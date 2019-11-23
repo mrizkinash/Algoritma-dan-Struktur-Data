@@ -41,7 +41,7 @@ void ADV() {
 void STARTCMD() {
 
     pita = stdin;
-    ADVCMD();
+    ADV();
 }
 
 void ADVCMD(){
