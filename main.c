@@ -11,6 +11,7 @@
 #include "command.h"
 #include "player.h"
 #include "state.h"
+#include "saveload.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -307,11 +308,11 @@ int main(){
                     if (S.P2.shieldturn > 0) S.P2.shieldturn -= 1;
                     }
                 aksi=0;
-            }/*
+            }
             else if (IsSameString(CKata, "save")){
 
-
-            }*/
+                SAVEGAME(S);
+            }
             else if (IsSameString(CKata, "move")){
                 PushStack(&statestack,S);
                 move(&S);
@@ -378,11 +379,11 @@ int main(){
                 AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
                 ResetBattle(&(S.P1.listbangunan));
                 if (S.P1.shieldturn > 0) S.P1.shieldturn -= 1;}
-            }/*
+            }
             else if (IsSameString(CKata, "save")){
 
-
-            }*/
+                SAVEGAME(S);
+            }
             else if (IsSameString(CKata, "move")){
                 PushStack(&statestack,S);
                 move(&S);
