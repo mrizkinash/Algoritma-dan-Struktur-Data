@@ -152,7 +152,9 @@ void instantUpgrade(state *S){
         S->ArrBang.TI[Info(adr)].level += 1;
         adr = Next(adr);
     }
-    printf("skill 'Instant Upgrade' berhasil dilakukan!\n");
+    printf("-------------------------------------------------\n");
+    printf("|  skill 'Instant Upgrade' berhasil dilakukan!  |\n");
+    printf("-------------------------------------------------\n");
 }
 
 void instantReinforcement(state *S){
@@ -166,7 +168,9 @@ void instantReinforcement(state *S){
         Army(S->ArrBang.TI[Info(adr)]) += 5;
         adr = Next(adr);
     }
-    printf("skill 'Instant Reinforcement' berhasil dilakukan!\n");
+    printf("-------------------------------------------------------\n");
+    printf("|  skill 'Instant Reinforcement' berhasil dilakukan!  |\n");
+    printf("-------------------------------------------------------\n");
 }
 
 void Barrage(state *S){
@@ -184,8 +188,9 @@ void Barrage(state *S){
         }
         adr = Next(adr);
     }
-    
-    printf("skill 'Barrage' berhasil dilakukan!\n");
+    printf("-----------------------------------------\n");
+    printf("|  skill 'Barrage' berhasil dilakukan!  |\n");
+    printf("-----------------------------------------\n");
 }
 
 void extraTurn(state *S){
@@ -217,6 +222,8 @@ void UseSkill(state *S){
 int main(){
     Player *P1,*P2;
     state S;
+    Stack statestack;
+    CreateEmptyStack(&statestack);
     P1 = &(S.P1);
     P2 = &(S.P2);
     InitPlayer(P1);
@@ -230,7 +237,7 @@ int main(){
     ReadMatriksSize(&(S.M));
     ReadBangunan(&S);
     ReadGraph(&(S.G), NbElmtAB(S.ArrBang));
-
+    int aksi=0;
     EndGame = false;
     P1->turn = true;
     P2->turn = false;
@@ -239,7 +246,6 @@ int main(){
     AddQueue(&(S.P1.skill), 1);       
     AddQueue(&(S.P2.skill), 1);
     while (!EndGame){
-        
         TulisMATRIKS(S.M);
         if (P1->turn){
             printf("          _                                   _ \n");
@@ -260,21 +266,32 @@ int main(){
             }
             
             if (IsSameString(CKata, "attack")){
+                PushStack(&statestack,S);
                 attack(&S);
                 if(NbElmtLB(S.P2.listbangunan)==0){
                     printf("PLAYER 2 WIN!!!");
                     EndGame=true;
                 }
+                aksi++;
+                //if(aksi) printf("masuk bro\n");
             }
             else if (IsSameString(CKata, "level_up")){
-               level_up(&S);
+                PushStack(&statestack,S);
+                level_up(&S);
+                aksi++;
             }
             else if (IsSameString(CKata, "skill")){
+                PushStack(&statestack,S);
                 UseSkill(&S);
+                aksi++;
             }
-            /*
             else if (IsSameString(CKata, "undo")){
-            }*/
+                if(aksi>0){
+                    state prev;
+                    PopStack(&statestack,&prev);
+                    aksi-=1;
+                }else printf("Anda belum melakukan aksi apapun\n");
+            }
             else if (IsSameString(CKata, "end_turn")){
                 if (S.P1.et){
                     printf("Extra turn has been used!\n");
@@ -289,13 +306,16 @@ int main(){
                     ResetBattle(&(S.P2.listbangunan));
                     if (S.P2.shieldturn > 0) S.P2.shieldturn -= 1;
                     }
-            }
+                aksi=0;
+            }/*
             else if (IsSameString(CKata, "save")){
 
 
-            }
+            }*/
             else if (IsSameString(CKata, "move")){
+                PushStack(&statestack,S);
                 move(&S);
+                aksi++;
             }
             else if (IsSameString(CKata, "exit")){
                 EndGame = true;
@@ -321,22 +341,31 @@ int main(){
             }
             
             if (IsSameString(CKata, "attack")){
+                PushStack(&statestack,S);
                 attack(&S);
                 if(NbElmtLB(S.P1.listbangunan)==0){
                     printf("PLAYER 1 WIN!!!");
                     EndGame=true;
                 }
+                aksi++;
             }
             else if (IsSameString(CKata, "level_up")){
+                PushStack(&statestack,S);
                 level_up(&S);
+                aksi++;
             }
             else if (IsSameString(CKata, "skill")){
+                PushStack(&statestack,S);
                 UseSkill(&S);
-            }/*
+                aksi++;
+            }
             else if (IsSameString(CKata, "undo")){
-
-
-            }*/
+                if(aksi>0){
+                    state prev;
+                    PopStack(&statestack,&prev);
+                    aksi-=1;
+                }else printf("Anda belum melakukan aksi apapun");
+            }
             else if (IsSameString(CKata, "end_turn")){
                 if (S.P1.et){
                     printf("Extra turn has been used!\n");
@@ -355,7 +384,9 @@ int main(){
 
             }*/
             else if (IsSameString(CKata, "move")){
+                PushStack(&statestack,S);
                 move(&S);
+                aksi++;
             }
             else if (IsSameString(CKata, "exit")){
                 EndGame=true;
