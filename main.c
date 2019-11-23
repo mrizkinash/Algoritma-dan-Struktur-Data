@@ -300,13 +300,19 @@ int main(){
 
             }*/
             else if (IsSameString(CKata, "end_turn")){
-                P2->turn=true;
-                P1->turn=false;
-            }
+                if(P1->et){
+                    P2->turn=false;
+                    P1->turn=true;
+                    P1->et = false;
+                }else{
+                    P2->turn=true;
+                    P1->turn=false;
+                }
+            }/*
             else if (IsSameString(CKata, "save")){
 
 
-            }
+            }*/
             else if (IsSameString(CKata, "move")){
                 move(&S);
             }
@@ -341,8 +347,14 @@ int main(){
 
             }*/
             else if (IsSameString(CKata, "end_turn")){
-                P2->turn=false;
-                P1->turn=true;
+                if(P2->et){
+                    P2->turn=true;
+                    P1->turn=false;
+                    P2->et=false;
+                }else{
+                    P2->turn=false;
+                    P1->turn=true;
+                }
             }/*
             else if (IsSameString(CKata, "save")){
 
