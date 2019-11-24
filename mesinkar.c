@@ -46,6 +46,6 @@ void STARTCMD() {
 
 void STARTLOAD() {
 
-  pita = fopen("savedata.txt", "r");
+  pita = fopen("tc2.txt", "r");
   ADV();
 }
