@@ -69,4 +69,6 @@ void DelQueue (Queue * Q, infotype * X);
 void PrintSkill(Queue Q);
 // mencetak skill yang dimiliki oleh player
 
+void CopyQueue(Queue Qin, Queue *Qout);
+
 #endif
