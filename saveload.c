@@ -32,7 +32,7 @@ void ReadMatriksSize(MATRIKS *M){
     ADVKATA();
 
     MakeMATRIKS(tinggi + 1, lebar + 1, M);  // Membuat matriks (+ 1 karna pagar Map ujung kanan dan bawah, pagar kiri menggunakan indeks 0 yang awalnya tidak dipakai)
-    
+
     for (i = 0; i <= (*M).NBrsEff; i++){          // Bikin pager
         for (j = 0; j<= (*M).NKolEff; j++){
 
@@ -160,12 +160,12 @@ void LoadBangunan(state *S){
         S->ArrBang.TI[x].P.Y = j;
         if(milik==1){
             S->ArrBang.TI[x].owner = x;
-            InsVLastLB(&(S->P1.listbangunan), 1);   // bangunan 1 milik pemain 1
+            InsVLastLB(&(S->P1.listbangunan), x);   // bangunan x milik pemain 1
             MOwn(ElmtMat(S->M, i, j)) = 1; // Kepemilikan bangunan di matriks diset jadi 1 (player 1)
         }
         else if(milik==2){
             S->ArrBang.TI[x].owner = x;
-            InsVLastLB(&(S->P2.listbangunan), 2); // bangunan 2 milik pemain 2
+            InsVLastLB(&(S->P2.listbangunan), x); // bangunan x milik pemain 2
             MOwn(ElmtMat(S->M, i, j)) = 2; // Kepemilikan bangunan di matriks diset jadi 2 (player 2)
         }
         else {
