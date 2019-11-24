@@ -324,7 +324,7 @@ void AddPasukanLB(List L,TabInt *ArrBang){
 	P = First(L);
 	while(P!=Nil){				
 		AddPasukan(&(ArrBang->TI[Info(P)]));
-		printf("%d added\n",Info(P));
+		//printf("%d added\n",Info(P));
 		P = Next(P);
 	}
 }
