@@ -17,25 +17,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int KarakterToInt (char CC){
-
-    return (int) CC - 48;
-}
-
-int KataToInt (Kata CKata){
-    int i, retval;
-
-    i = 1;
-    retval = 0;
-    while (i <= CKata.Length){
-
-        retval = (retval * 10) + KarakterToInt(CKata.TabKata[i]);
-        i++;
-    }
-
-    return retval;
-}
-
 boolean IsSameString(Kata CKata, char cmp[]){
     boolean isSame;
     int i;
@@ -60,94 +41,11 @@ boolean IsSameString(Kata CKata, char cmp[]){
     return isSame;
 }
 
-void ReadMatriksSize(MATRIKS *M){
-    int tinggi, lebar, i, j;
-
-    tinggi = KataToInt(CKata);
-    ADVKATA();
-    lebar = KataToInt(CKata);
-    ADVKATA();
-
-    MakeMATRIKS(tinggi + 2, lebar + 2, M);  // Membuat matriks (+ 2 karna pagar Mapnya)
-
-    for (i = 0; i <= (*M).NBrsEff; i++){          // Bikin pager
-        for (j = 0; j<= (*M).NKolEff; j++){
-
-            if ((i == 0) || (i == (*M).NBrsEff) || (j == 0) || (j == (*M).NKolEff)){
-                        
-                MOwn(ElmtMat(*M, i, j)) = 0;
-                MType(ElmtMat(*M, i, j)) = '*';
-            }
-            else {
-
-                MOwn(ElmtMat(*M, i, j)) = 0;
-                MType(ElmtMat(*M, i, j)) = ' ';  
-            }
-        }
-    }    
-}
-
-void ReadBangunan(state *S/*TabInt *ArrBang, List *L1, List *L2, MATRIKS *M*/){
-    Bangunan B;
-    int size, x, i, j;
-    char type;
-
-    CreateEmptyLB(&(S->P1.listbangunan));
-    CreateEmptyLB(&(S->P2.listbangunan));
-    size = KataToInt(CKata);
-    ADVKATA();
-    MakeEmptyAB(&(S->ArrBang),size); // bikin array bangunan
-    x = 1; // idx array bangunan
-            
-    while (x <= size){
-        // Bikin bangunan disini
-        type = CKata.TabKata[1];
-        ADVKATA();
-        i = KataToInt(CKata);
-        ADVKATA();
-        j = KataToInt(CKata);
-
-        CreateBangunan(&B,type,i,j); // create bangunan ke x
-        ElmtArr(S->ArrBang,x) = B; // masukin bangunan yg baru di create ke arrbang
-        S->ArrBang.TI[x].P.X = i;
-        S->ArrBang.TI[x].P.Y = j;
-        if(x==1){
-            S->ArrBang.TI[x].owner = x;
-            InsVLastLB(&(S->P1.listbangunan), 1);   // bangunan 1 milik pemain 1
-            MOwn(ElmtMat(S->M, i, j)) = 1; // Kepemilikan bangunan di matriks diset jadi 1 (player 1)
-        }
-        else if(x==2){
-            S->ArrBang.TI[x].owner = x;
-            InsVLastLB(&(S->P2.listbangunan), 2); // bangunan 2 milik pemain 2
-            MOwn(ElmtMat(S->M, i, j)) = 2; // Kepemilikan bangunan di matriks diset jadi 2 (player 2)
-        }
-        else {
-            S->ArrBang.TI[x].owner = 0;
-            MOwn(ElmtMat(S->M, i, j)) = 0; // Kepemilikan bangunan di matriks diset jadi 0 (bukan punya siapa siapa)
-        }
-
-        MType(ElmtMat(S->M, i, j)) = type;
-
-        ADVKATA();
-        x+=1;
-    }
-}
-
-void ReadGraph(Graph *G, int size){
-    CreateEmptyG(G);
-    for(int i=1; i<=size; i++){
-        for(int j=1; j<=size; j++){
-            if(CKata.TabKata[1]=='1') AddRel(G,i,j);
-            ADVKATA();
-        }
-    }
-}
-
 void instantUpgrade(state *S){
     // seluruh bangunan yg dimiliki player levelnya naik 1
-	Player cek;
-	if(S->P1.turn) cek=S->P1;
-	else cek=S->P2;
+    Player cek;
+    if(S->P1.turn) cek=S->P1;
+    else cek=S->P2;
     address adr = First(cek.listbangunan);
     while(adr != Nil){
         S->ArrBang.TI[Info(adr)].level += 1;
@@ -160,9 +58,9 @@ void instantUpgrade(state *S){
 
 void instantReinforcement(state *S){
     // seluruh bangunan +5 army
-	Player cek;
-	if(S->P1.turn) cek=S->P1;
-	else cek=S->P2;
+    Player cek;
+    if(S->P1.turn) cek=S->P1;
+    else cek=S->P2;
     address adr;
     adr = First(cek.listbangunan);
     while(adr != Nil){
@@ -176,9 +74,9 @@ void instantReinforcement(state *S){
 
 void Barrage(state *S){
     // iterasi buat semua bangunan lawan di -10 army
-	Player cek;
-	if(S->P1.turn) cek=S->P1;
-	else cek=S->P2;
+    Player cek;
+    if(S->P1.turn) cek=S->P1;
+    else cek=S->P2;
     address adr;
     adr = First(cek.listbangunan);
     while(adr != Nil){
@@ -195,15 +93,15 @@ void Barrage(state *S){
 }
 
 void extraTurn(state *S){
-	if (S->P1.turn) S->P1.et = true;
+    if (S->P1.turn) S->P1.et = true;
     if (S->P2.turn) S->P2.et = true;
 }
 
 void UseSkill(state *S){
     int InfoSkill;
-	Player *cek;
-	if(S->P1.turn) cek=&S->P1;
-	else cek=&S->P2;
+    Player *cek;
+    if(S->P1.turn) cek=&S->P1;
+    else cek=&S->P2;
     InfoSkill = InfoHead(cek->skill);
     if (InfoSkill == 1){
         instantUpgrade(S);

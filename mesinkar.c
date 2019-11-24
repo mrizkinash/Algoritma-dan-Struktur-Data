@@ -3,6 +3,7 @@
 
 #include "mesinkar.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 char CC;
 boolean EOP;
@@ -44,11 +45,15 @@ void STARTCMD() {
     ADV();
 }
 
-void ADVCMD(){
+void STARTLOAD() {
 
-    retval = fscanf(pita,"%c",&CC);
-    EOP = (CC == '\n');
-    if (EOP) {
-       fclose(pita);
-    }  
+  pita = fopen("savedata.txt", "r");
+  if (pita = NULL){
+
+    printf("Save data not found\n");
+  }
+  else{
+
+    ADV();
+  }
 }

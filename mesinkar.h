@@ -28,6 +28,6 @@ void ADV();
 
 void STARTCMD();
 
-void ADVCMD();
+void STARTLOAD();
 
 #endif

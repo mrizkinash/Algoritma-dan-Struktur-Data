@@ -47,4 +47,6 @@ void SalinKata();
 
 void STARTKATACMD();
 
+void STARTKATALOAD();
+
 #endif
