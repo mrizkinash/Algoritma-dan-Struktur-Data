@@ -3,7 +3,6 @@
 
 #include "mesinkar.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 char CC;
 boolean EOP;
@@ -48,12 +47,5 @@ void STARTCMD() {
 void STARTLOAD() {
 
   pita = fopen("savedata.txt", "r");
-  if (pita = NULL){
-
-    printf("Save data not found\n");
-  }
-  else{
-
-    ADV();
-  }
+  ADV();
 }

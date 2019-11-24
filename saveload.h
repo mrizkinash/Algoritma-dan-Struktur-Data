@@ -20,8 +20,6 @@ void LoadPlayer(Player *P);
 
 void LoadBangunan(state *S);
 
-void LoadGraph(Graph *G);
-
 void SAVEGAME(state S);
 
 void LOADGAME(state *S);

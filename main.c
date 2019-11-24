@@ -162,19 +162,33 @@ int main(){
     boolean EndGame;
     int i;
 
-    STARTKATA();         // Baca dari file config
-    ReadMatriksSize(&(S.M));
-    ReadBangunan(&S);
-    ReadGraph(&(S.G), NbElmtAB(S.ArrBang));
+    welcome();
+    printf("New_Game\n");
+    printf("Load\n");
+    printf("Enter choice : ");
+    STARTKATACMD();
+    for (i = 1; i <= CKata.Length; i++){
+        CKata.TabKata[i] = tolower(CKata.TabKata[i]);
+    }
+    if (IsSameString(CKata, "new_game")){
+
+        STARTKATA();         // Baca dari file config
+        ReadMatriksSize(&(S.M));
+        ReadBangunan(&S);
+        ReadGraph(&(S.G), NbElmtAB(S.ArrBang));
+        P1->turn = true;
+        P2->turn = false;
+        CreateEmptyQueue(&(S.P1.skill), 10);      // Inisialisasi Queue dan ngasih Instant Upgrade (direpresentasikan dengan 1 untuk sementara) ke Skill Queue kedua player 
+        CreateEmptyQueue(&(S.P2.skill), 10);
+        AddQueue(&(S.P1.skill), 1);       
+        AddQueue(&(S.P2.skill), 1);
+    }
+    else if (IsSameString(CKata, "load")){
+        
+        LOADGAME(&S);
+    }
     int aksi=0;
     EndGame = false;
-    P1->turn = true;
-    P2->turn = false;
-    CreateEmptyQueue(&(S.P1.skill), 10);      // Inisialisasi Queue dan ngasih Instant Upgrade (direpresentasikan dengan 1 untuk sementara) ke Skill Queue kedua player 
-    CreateEmptyQueue(&(S.P2.skill), 10);
-    AddQueue(&(S.P1.skill), 1);       
-    AddQueue(&(S.P2.skill), 1);
-    welcome();
     while (!EndGame){
         //TulisMATRIKS(S.M);
         if (P1->turn){
