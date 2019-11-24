@@ -157,7 +157,6 @@ int main(){
     P2 = &(S.P2);
     InitPlayer(P1);
     InitPlayer(P2);
-    MATRIKS M;
     //boolean P1Turn, P2Turn, EndGame;
     boolean EndGame;
     int i;
@@ -184,7 +183,7 @@ int main(){
         AddQueue(&(S.P2.skill), 1);
     }
     else if (IsSameString(CKata, "load")){
-        
+
         LOADGAME(&S);
     }
     int aksi=0;

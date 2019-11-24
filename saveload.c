@@ -32,7 +32,7 @@ void ReadMatriksSize(MATRIKS *M){
     ADVKATA();
 
     MakeMATRIKS(tinggi + 1, lebar + 1, M);  // Membuat matriks (+ 1 karna pagar Map ujung kanan dan bawah, pagar kiri menggunakan indeks 0 yang awalnya tidak dipakai)
-
+    
     for (i = 0; i <= (*M).NBrsEff; i++){          // Bikin pager
         for (j = 0; j<= (*M).NKolEff; j++){
 

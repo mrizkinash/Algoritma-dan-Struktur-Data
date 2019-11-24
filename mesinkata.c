@@ -100,5 +100,6 @@ void STARTKATALOAD()
     } else {
         EndKata = false;
         SalinKata();
+        IgnoreBlank();
     }
 }
