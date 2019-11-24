@@ -19,5 +19,6 @@ typedef struct {
 #define ET(P) P.et
 
 void InitPlayer (Player *P);
+// menginisialisasi player saat awal permainan
 
 #endif
