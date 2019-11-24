@@ -159,12 +159,12 @@ void LoadBangunan(state *S){
         S->ArrBang.TI[x].P.X = i;
         S->ArrBang.TI[x].P.Y = j;
         if(milik==1){
-            S->ArrBang.TI[x].owner = x;
+            S->ArrBang.TI[x].owner = 1;
             InsVLastLB(&(S->P1.listbangunan), x);   // bangunan x milik pemain 1
             MOwn(ElmtMat(S->M, i, j)) = 1; // Kepemilikan bangunan di matriks diset jadi 1 (player 1)
         }
         else if(milik==2){
-            S->ArrBang.TI[x].owner = x;
+            S->ArrBang.TI[x].owner = 2;
             InsVLastLB(&(S->P2.listbangunan), x); // bangunan x milik pemain 2
             MOwn(ElmtMat(S->M, i, j)) = 2; // Kepemilikan bangunan di matriks diset jadi 2 (player 2)
         }
