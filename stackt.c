@@ -74,9 +74,9 @@ void CopyState (state Sin, state *Sout){
 
 void DeallocState(state *S){
 
-	free(&(S->P1.skill));
-	free(&(S->P1.listbangunan));
-	free(&(S->P2.skill));
-	free(&(S->P2.listbangunan));
-	free(&(S->ArrBang));
+	DeAlokasiQueue(&(S->P1.skill));
+	DealokasiLB(&First(S->P1.listbangunan));
+	DeAlokasiQueue(&(S->P2.skill));
+	DealokasiLB(&First(S->P2.listbangunan));
+	DealokasiAB(&(S->ArrBang));
 }

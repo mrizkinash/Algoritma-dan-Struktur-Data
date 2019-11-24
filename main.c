@@ -233,6 +233,7 @@ int main(){
                 if(aksi>0){
                     state prev;
                     PopStack(&statestack,&prev);
+                    DeallocState(&S);
                     S = prev;
                     aksi-=1;
                 }else printf("Anda belum melakukan aksi apapun\n");
@@ -309,6 +310,7 @@ int main(){
                 if(aksi>0){
                     state prev;
                     PopStack(&statestack,&prev);
+                    DeallocState(&S);
                     S = prev;
                     aksi-=1;
                 }else printf("Anda belum melakukan aksi apapun\n");
