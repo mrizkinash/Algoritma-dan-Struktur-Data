@@ -162,9 +162,10 @@ int main(){
     int i;
 
     welcome();
-    printf("New_Game\n");
-    printf("Load\n");
-    printf("Enter choice : ");
+    printf("***************************************\n");
+    printf("*** PLEASE CHOOSE ! NEW_GAME / LOAD ***\n");
+    printf("***************************************\n");
+    printf("ENTER CHOICE : ");
     STARTKATACMD();
     for (i = 1; i <= CKata.Length; i++){
         CKata.TabKata[i] = tolower(CKata.TabKata[i]);
@@ -310,7 +311,7 @@ int main(){
                     PopStack(&statestack,&prev);
                     S = prev;
                     aksi-=1;
-                }else printf("Anda belum melakukan aksi apapun");
+                }else printf("Anda belum melakukan aksi apapun\n");
             }
             else if (IsSameString(CKata, "end_turn")){
                 if (S.P2.et){
