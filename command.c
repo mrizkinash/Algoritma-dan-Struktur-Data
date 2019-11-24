@@ -66,6 +66,8 @@ void attack(state *S){
                     if(new_pas<0){
                         Army(S->ArrBang.TI[menyerang])-=pas; // ngurangin pasukan sendiri
                         Army(S->ArrBang.TI[diserang])-=(0.75*pas); // ngurangin pasukan lawan 3/4 dr jumalah pasukan yg attack
+                        if(S->P1.turn) SudahAttack(&(S->P1.listbangunan),x);
+                        else SudahAttack(&(S->P2.listbangunan),x);
                         printf("----------------------------\n");
                         printf("|  Bangunan gagal direbut  |\n");
                         printf("----------------------------\n");
