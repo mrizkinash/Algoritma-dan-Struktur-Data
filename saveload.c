@@ -109,18 +109,19 @@ void ReadGraph(Graph *G, int size){
 void LoadPlayer(Player *P){
 	int i, length;
 
+	InitPlayer(P);
 	length = KataToInt(CKata);
 	ADVKATA();
 	for (i = 1; i <= length; i++){
 
-		AddQueue(&((*P).skill), KataToInt(CKata));
+		AddQueue(&(P->skill), KataToInt(CKata));
 		ADVKATA();
 	}
-	(*P).turn = KataToInt(CKata);
+	P->turn = KataToInt(CKata);
 	ADVKATA();
-	(*P).et = KataToInt(CKata);
+	P->et = KataToInt(CKata);
 	ADVKATA();
-	(*P).shieldturn = KataToInt(CKata);
+	P->shieldturn = KataToInt(CKata);
 	ADVKATA();
 
 }
@@ -179,29 +180,8 @@ void LoadBangunan(state *S){
     }
 }
 
-void LoadGraph(Graph *G){
-    int i, counter, current;
-    boolean newline;
-
-    CreateEmptyG(G);
-    while (!EndKata){
-
-    	newline = false;
-    	current = KataToInt(CKata);
-		InsVLastG(G, current);
-		ADVKATA();
-		while (!newline){
-
-			AddRel(G, current, KataToInt(CKata));
-			newline = (CC == '\n');
-			ADVKATA();
-		}
-    }
-}
-
-
 void SAVEGAME(state S){
-	int i;
+	int i, size;
 	adrG P;
 	address Q;
 
@@ -249,9 +229,10 @@ void SAVEGAME(state S){
 	fprintf(save, "%d %d %d\n", S.P2.turn, S.P2.et, S.P2.shieldturn);
 
 	// Menuliskan jumlah bangunan yang ada
+	size = NbElmtAB(S.ArrBang);
 	fprintf(save, "%d\n", NbElmtAB(S.ArrBang));
 
-	for (i = 1; i <= NbElmtAB(S.ArrBang); i++){
+	for (i = 1; i <= size; i++){
 
 		// Menuliskan kepemilikan, jumlah pasukan, level, tipe, dan posisi bangunan
 		fprintf(save, "%d %d %d %c %d %d\n", Owner(ElmtArr(S.ArrBang, i)), Army((ElmtArr(S.ArrBang, i))), Level((ElmtArr(S.ArrBang, i))), Type((ElmtArr(S.ArrBang, i))), AbsisBangunan((ElmtArr(S.ArrBang, i))), OrdinatBangunan((ElmtArr(S.ArrBang, i))));			
@@ -260,7 +241,22 @@ void SAVEGAME(state S){
 	P = FirstG(S.G);
 	while (P != Nil){
 
-		fprintf(save, "%d ", Info(P));
+		i = 1;
+		while (i <= size){
+
+			if (SearchCon(S.G, P, i) == Nil){
+
+				fprintf(save, "0 ");
+			}
+			else {
+
+				fprintf(save, "1 ");
+			}
+			i++;
+		}
+		fprintf(save, "\n");
+		P = Nextg(P);
+		/*fprintf(save, "%d ", Info(P));
 		Q = list(P);
 		while (Q != Nil){
 
@@ -269,7 +265,7 @@ void SAVEGAME(state S){
 		}
 		
 		fprintf(save, "\n");
-		P = Nextg(P); 
+		P = Nextg(P);*/ 
 	}
 	fprintf(save, ".");
 	fclose(save);
@@ -279,9 +275,9 @@ void SAVEGAME(state S){
 void LOADGAME(state *S){
 
 	STARTKATALOAD();
-	ReadMatriksSize(&((*S).M));
-	LoadPlayer(&((*S).P1));
-	LoadPlayer(&((*S).P2));
+	ReadMatriksSize(&(S->M));
+	LoadPlayer(&(S->P1));
+	LoadPlayer(&(S->P2));
 	LoadBangunan(S);
-	LoadGraph(&((*S).G));
+	ReadGraph(&(S->G), NbElmtAB(S->ArrBang));
 }
