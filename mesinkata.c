@@ -15,7 +15,7 @@ void IgnoreBlank()
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 {
-    while((CC == BLANK) && (CC !='.')){
+    while(((CC == BLANK) || (CC == '\n')) && (CC !='.')){
         ADV();
     }
 }
@@ -57,7 +57,7 @@ void SalinKata()
 /* Mengakuisisi kata, menyimpan dalam CKata
    I.S. : CC adalah karakter pertama dari kata
    F.S. : CKata berisi kata yang sudah diakuisisi;
-          CC = BLANK atau CC = MARK;
+          CC = BLANK atau CC = MARK atau CC = '\n;
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
@@ -67,6 +67,38 @@ void SalinKata()
         CKata.TabKata[i]=CC; 
         ADV();
         i++;
-    } while(((CC != BLANK)&& (CC != '.')) && (i<=NMax));
+    } while(((CC != BLANK) && (CC != '.')) && (i<=NMax) && (CC != '\n'));
     CKata.Length = i-1;
 }   
+
+void STARTKATACMD()
+/* I.S. : CC sembarang
+   F.S. : EndKata = true, dan CC = MARK;
+          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
+{
+    STARTCMD();
+    IgnoreBlank();
+    if(CC == '.'){
+        EndKata = true;
+    } else {
+        EndKata = false;
+        SalinKata();
+    }
+}
+
+void STARTKATALOAD()
+/* I.S. : CC sembarang
+   F.S. : EndKata = true, dan CC = MARK;
+          atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
+          CC karakter pertama sesudah karakter terakhir kata */
+{
+    STARTLOAD();
+    IgnoreBlank();
+    if(CC == '.'){
+        EndKata = true;
+    } else {
+        EndKata = false;
+        SalinKata();
+    }
+}

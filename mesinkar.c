@@ -37,3 +37,15 @@ void ADV() {
        fclose(pita);
     }
 }
+
+void STARTCMD() {
+
+    pita = stdin;
+    ADV();
+}
+
+void STARTLOAD() {
+
+  pita = fopen("savedata.txt", "r");
+  ADV();
+}

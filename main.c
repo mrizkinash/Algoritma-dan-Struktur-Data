@@ -1,123 +1,342 @@
-#include "ADT/point.h"
-#include "ADT/arraydin.h"
-#include "ADT/matriks.h"
-#include "ADT/mesinkata.h"
-#include "ADT/queue.h"
-#include "ADT/stackt.h"
-#include "ADT/listlinier.h"
-#include "ADT/boolean.h"
-#include "ADT/graph.h"
+#include "point.h"
+#include "arraydin.h"
+#include "matriks.h"
+#include "mesinkata.h"
+#include "queue.h"
+#include "stackt.h"
+#include "listlinier.h"
+#include "boolean.h"
+#include "graph.h"
 #include "bangunan.h"
+#include "command.h"
+#include "player.h"
+#include "state.h"
+#include "saveload.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-int KarakterToInt (char CC){
+void welcome(){
+    printf("                                                                                                   .-.       \n");
+    printf("                                                                                                  {{#}}      \n");
+    printf("          {}                                                                                       8@8       \n");
+    printf("        .::::.                                                                                     888       \n");
+    printf("    @\\\\/W\\\/\\\/W\\\//@                                                                                 8@8       \n");
+    printf("     \\\\/^\\\/\\\/^\\\//                                                                             _    )8(    _  \n");
+    printf("      \\\_O_{}_O_/                                                                             (@)__/8@8\\\__(@) \n");
+    printf(" ____________________                                                                         `~'-=|:|=-'~`  \n");
+    printf("|<><><>  |  |  <><><>|                                                                             |.|       \n");
+    printf("|<>      |  |      <>|                            .__                                              |S|       \n");    
+    printf("|<>      |  |      <>|         __  _  __   ____   |  |     ____     ____     _____     ____        |'|       \n");
+    printf("|<>   .--------.   <>|         \\\ \\\/ \\\/ / _/ __ \\\  |  |   _/ ___\\\   /  _ \\\   /     \\\  _/ __ \\\       |.|       \n");
+    printf("|     |   ()   |     |          \\\     /  \\\  ___/  |  |__ \\\  \\\___  (  <_> ) |  Y Y  \\\ \\\  ___/       |P|       \n");
+    printf("|_____| (O\\\/O) |_____|           \\\/\\\_/    \\\___  > |____/  \\\___  >  \\\____/  |__|_|  /  \\\___  >      |'|       \n");
+    printf("|     \\\   /\\\   /     |                        \\\/              \\\/                 \\\/       \\\/       |.|       \n");
+    printf("|------\\\  \\\/  /------|                                                                             |U|       \n");
+    printf("|       '.__.'       |                                  T O                                        |'|       \n");
+    printf("|        |  |        |                                                                             |.|       \n");
+    printf(":        |  |        :                      A V A T A R     G A M E                                |N|       \n");
+    printf(" \\\       |  |       /                                                                              |'|       \n");
+    printf("  \\\<>    |  |    <>/                                                                               |.|       \n");
+    printf("   \\\<>   |  |   <>/                                                                                |K|       \n");
+    printf("    `\\\<> |  | <>/'                                                                                 |'|       \n");
+    printf("      `-.|__|.-`                                                                                   \\\ /       \n");
+    printf("                                                                                                    ^        \n");
+    
 
-    return (int) CC - 48;
 }
 
-int KataToInt (Kata CKata){
-    int i, retval;
+boolean IsSameString(Kata CKata, char cmp[]){
+    boolean isSame;
+    int i;
 
+    isSame = true;
     i = 1;
-    retval = 0;
-    while (i <= CKata.Length){
 
-        retval = (retval * 10) + KarakterToInt(CKata.TabKata[i]);
+    while ((i <= CKata.Length) && (isSame)){
+
+        if (CKata.TabKata[i] != cmp[i - 1]){
+
+            isSame = false;
+        }
         i++;
     }
 
-    return retval;
+    if ((int)(cmp[i - 1]) != 0){
+
+        isSame = false;
+    }
+
+    return isSame;
+}
+
+void instantUpgrade(state *S){
+    // seluruh bangunan yg dimiliki player levelnya naik 1
+    Player cek;
+    if(S->P1.turn) cek=S->P1;
+    else cek=S->P2;
+    address adr = First(cek.listbangunan);
+    while(adr != Nil){
+        S->ArrBang.TI[Info(adr)].level += 1;
+        adr = Next(adr);
+    }
+    printf("-------------------------------------------------\n");
+    printf("|  skill 'Instant Upgrade' berhasil dilakukan!  |\n");
+    printf("-------------------------------------------------\n");
+}
+
+void instantReinforcement(state *S){
+    // seluruh bangunan +5 army
+    Player cek;
+    if(S->P1.turn) cek=S->P1;
+    else cek=S->P2;
+    address adr;
+    adr = First(cek.listbangunan);
+    while(adr != Nil){
+        Army(S->ArrBang.TI[Info(adr)]) += 5;
+        adr = Next(adr);
+    }
+    printf("-------------------------------------------------------\n");
+    printf("|  skill 'Instant Reinforcement' berhasil dilakukan!  |\n");
+    printf("-------------------------------------------------------\n");
+}
+
+void Barrage(state *S){
+    // iterasi buat semua bangunan lawan di -10 army
+    Player cek;
+    if(S->P1.turn) cek=S->P1;
+    else cek=S->P2;
+    address adr;
+    adr = First(cek.listbangunan);
+    while(adr != Nil){
+        if (Army(S->ArrBang.TI[Info(adr)]) >= 10){
+            Army(S->ArrBang.TI[Info(adr)]) -= 10;
+        }else{
+            Army(S->ArrBang.TI[Info(adr)]) = 0;
+        }
+        adr = Next(adr);
+    }
+    printf("-----------------------------------------\n");
+    printf("|  skill 'Barrage' berhasil dilakukan!  |\n");
+    printf("-----------------------------------------\n");
+}
+
+void extraTurn(state *S){
+    if (S->P1.turn) S->P1.et = true;
+    if (S->P2.turn) S->P2.et = true;
+}
+
+void UseSkill(state *S){
+    int InfoSkill;
+    Player *cek;
+    if(S->P1.turn) cek=&S->P1;
+    else cek=&S->P2;
+    InfoSkill = InfoHead(cek->skill);
+    if (InfoSkill == 1){
+        instantUpgrade(S);
+    }else if (InfoSkill == 3){
+        instantReinforcement(S);
+    }else if (InfoSkill == 4){
+        Barrage(S);
+    }else if (InfoSkill == 2){
+        extraTurn(S);
+    }else if(InfoSkill == 5){
+        if(S->P1.turn) S->P1.shieldturn=2;
+        else S->P2.shieldturn=2;
+    }
+    DelQueue(&(cek->skill), &InfoSkill);
 }
 
 int main(){
-    int counter, tinggi, lebar, i, j;
+    Player *P1,*P2;
+    state S;
+    Stack statestack;
+    CreateEmptyStack(&statestack);
+    P1 = &(S.P1);
+    P2 = &(S.P2);
+    InitPlayer(P1);
+    InitPlayer(P2);
     MATRIKS M;
-    char type;
-    TabInt ArrBang; //array dinamis yang menyimpan seluruh bangunan
-    List *L1, *L2; // L1( list keterhubungan bangunan yang dimiliki player 1)
-                   // L2( list keterhubungan bangunan yang dimiliki player 2)
+    //boolean P1Turn, P2Turn, EndGame;
+    boolean EndGame;
+    int i;
 
-    // DEKRALASI A, M, P BANGUNAN
-    int AC[4],MC[4],AT[4],MT[4],AF[4],MF[4],AV[4],MV[4];
-    boolean PC[4],PT[4],PF[4],PV[4];
-    AC[1]=10; AC[2]=15; AC[3]=20; AC[4]=25;
-    MC[1]=40; MC[2]=60; MC[3]=80; MC[4]=100;
-    AT[1]=5;  AT[2]=10; AT[3]=20; AT[4]=30;
-    MT[1]=20; MT[2]=30; MT[3]=40; MT[4]=50;
-    AF[1]=10; AF[2]=20; AF[3]=30; AF[4]=40;
-    MF[1]=20; MF[2]=40; MF[3]=60; MF[4]=80;
-    AV[1]=5;  AV[2]=10; AV[3]=15; AV[4]=20;
-    MV[1]=20; MV[2]=30; MV[3]=40; MV[4]=50;
-    for(int i=1; i<=4; i++){
-        PC[i]=false;
-        PT[i]=true;
-        PV[i]=false;
-        PF[i]=false;
+    welcome();
+    printf("New_Game\n");
+    printf("Load\n");
+    printf("Enter choice : ");
+    STARTKATACMD();
+    for (i = 1; i <= CKata.Length; i++){
+        CKata.TabKata[i] = tolower(CKata.TabKata[i]);
     }
-    PF[3]=true; PF[4]=true;
+    if (IsSameString(CKata, "new_game")){
 
-    CreateEmptyLB(&L1);
-    CreateEmptyLB(&L2);
-
-
-    
-    counter = 1;
-    STARTKATA();         // Baca dari file config
-    while (!EndKata){
-
-        if (counter == 1){
-
-            tinggi = KataToInt(CKata);
-            ADVKATA()
-            lebar = KataToInt(CKata);
-
-            MakeMATRIKS(tinggi + 1, lebar + 1, &M);  // Membuat matriks (+ 2 karna pagar Mapnya)
-
-            for (i = 0; i <= M.NBrsEff; i++){          // Bikin pager
-                for (j = 0; j<= M.NKolEff; j++){
-
-                    if ((i == 0) || (i == M.NBrsEff) || (j == 0) || (j == M.NKolEff)){
-                        // matriks ganti jd nyimpen type sm owner aja
-                        Elmt(M, i, j) = B;
-                    }
+        STARTKATA();         // Baca dari file config
+        ReadMatriksSize(&(S.M));
+        ReadBangunan(&S);
+        ReadGraph(&(S.G), NbElmtAB(S.ArrBang));
+        P1->turn = true;
+        P2->turn = false;
+        CreateEmptyQueue(&(S.P1.skill), 10);      // Inisialisasi Queue dan ngasih Instant Upgrade (direpresentasikan dengan 1 untuk sementara) ke Skill Queue kedua player 
+        CreateEmptyQueue(&(S.P2.skill), 10);
+        AddQueue(&(S.P1.skill), 1);       
+        AddQueue(&(S.P2.skill), 1);
+    }
+    else if (IsSameString(CKata, "load")){
+        
+        LOADGAME(&S);
+    }
+    int aksi=0;
+    EndGame = false;
+    while (!EndGame){
+        //TulisMATRIKS(S.M);
+        if (P1->turn){
+            printf("          _                                   _ \n");
+            printf("  _ __   | |   __ _   _   _    ___   _ __    / |\n");
+            printf(" | '_ \\\  | |  / _` | | | | |  / _ \\\ | '__|   | |\n");
+            printf(" | |_) | | | | (_| | | |_| | |  __/ | |      | |\n");
+            printf(" | .__/  |_|  \\\__,_|  \\\__, |  \\\___| |_|      |_|\n");
+            printf(" |_|                  |___/                     \n");
+            TulisMATRIKS(S.M);
+            //printf("Player 1\n");
+            CetakListB(S.P1.listbangunan, S.ArrBang);
+            printf("Skill Available : ");
+            PrintSkill(S.P1.skill);
+            printf("ENTER COMMAND : ");
+            STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang
+            for (i = 1; i <= CKata.Length; i++){
+                CKata.TabKata[i] = tolower(CKata.TabKata[i]);       // Ngelowercase input user, supaya input seperti aTtAcK pun bisa diterima
+            }
+            
+            if (IsSameString(CKata, "attack")){
+                PushStack(&statestack,S);
+                attack(&S);
+                if(NbElmtLB(S.P2.listbangunan)==0){
+                    printf("PLAYER 2 WIN!!!");
+                    EndGame=true;
                 }
+                aksi++;
+                //if(aksi) printf("masuk bro\n");
             }
-            counter++;
-        }
-        else if(counter == 2){
-            int size = KataToInt(CKata)
-            counter += size;
-            ADVKATA();
-            MakeEmptyAB(&ArrBang,size);
-            int x=1; // idx array bangunan
-            Bangunan B;
-            while (counter > 2){
-                // Bikin bangunan disini
-                type = CKata.TabKata[1];
-                ADVKATA();
-                i = KataToInt(CKata);
-                ADVKATA();
-                j = KataToInt(CKata);
-
-                B = Elmt(ArrBang,x);
-                CreateBangunan(&B,type,i,j); // create bangunan ke x
-                if(x==1) InsVLastLB(&L1,1); // bangunan 1 milik pemain 1
-                else if(x==2) InsVLastLB(&L2,2); // bangunan 2 milik pemain 2
-                
-                // matriks ganti jd nyimpen type sm owner aja
-                Elmt(M, i, j) = B;  // Bangunan dijadikan elemen matriks of bangunan
-
-                ADVKATA();
-                x+=1;
-                counter--
+            else if (IsSameString(CKata, "level_up")){
+                PushStack(&statestack,S);
+                level_up(&S);
+                aksi++;
             }
-            counter++;
-        }
-        else if (counter == 3){
+            else if (IsSameString(CKata, "skill")){
+                PushStack(&statestack,S);
+                UseSkill(&S);
+                aksi++;
+            }
+            else if (IsSameString(CKata, "undo")){
+                if(aksi>0){
+                    state prev;
+                    PopStack(&statestack,&prev);
+                    aksi-=1;
+                }else printf("Anda belum melakukan aksi apapun\n");
+            }
+            else if (IsSameString(CKata, "end_turn")){
+                if (S.P1.et){
+                    printf("Extra turn has been used!\n");
+                    AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
+                    ResetBattle(&(S.P1.listbangunan));
+                    S.P1.et = false;
+                    CreateEmptyStack(&statestack);
+                }
+                else{
+                    P2->turn=true;
+                    P1->turn=false;
+                    AddPasukanLB(S.P2.listbangunan,&(S.ArrBang));
+                    ResetBattle(&(S.P2.listbangunan));
+                    if (S.P2.shieldturn > 0) S.P2.shieldturn -= 1;
+                    CreateEmptyStack(&statestack);
+                    }
+                aksi=0;
+            }
+            else if (IsSameString(CKata, "save")){
+                SAVEGAME(S);
+            }
+            else if (IsSameString(CKata, "move")){
+                PushStack(&statestack,S);
+                move(&S);
+                aksi++;
+            }
+            else if (IsSameString(CKata, "exit")){
+                EndGame = true;
+            }else printf("Command tidak terdaftar\n");
 
-            // Keterhubungan bangunan disini
+        }
+        else if (P2->turn){
+            printf("          _                                   ____ \n");
+            printf("  _ __   | |   __ _   _   _    ___   _ __    |___ \\\ \n");
+            printf(" | '_ \\\  | |  / _` | | | | |  / _ \\\ | '__|     __) |\n");
+            printf(" | |_) | | | | (_| | | |_| | |  __/ | |       / __/ \n");
+            printf(" | .__/  |_|  \\\__,_|  \\\__, |  \\\___| |_|      |_____|\n");
+            printf(" |_|                  |___/\n");
+            TulisMATRIKS(S.M);       
+            //printf("Player 2\n");
+            CetakListB(S.P2.listbangunan, S.ArrBang);
+            printf("Skill Available : ");
+            PrintSkill(S.P2.skill);
+            printf("ENTER COMMAND : ");
+            STARTKATACMD();  // Command yang dimasukin ada di CKata sekarang   
+            for (i = 1; i <= CKata.Length; i++){
+                CKata.TabKata[i] = tolower(CKata.TabKata[i]);       // Ngelowercase input user, supaya input seperti aTtAcK pun bisa diterima
+            }
+            
+            if (IsSameString(CKata, "attack")){
+                PushStack(&statestack,S);
+                attack(&S);
+                if(NbElmtLB(S.P1.listbangunan)==0){
+                    printf("PLAYER 1 WIN!!!");
+                    EndGame=true;
+                }
+                aksi++;
+            }
+            else if (IsSameString(CKata, "level_up")){
+                PushStack(&statestack,S);
+                level_up(&S);
+                aksi++;
+            }
+            else if (IsSameString(CKata, "skill")){
+                PushStack(&statestack,S);
+                UseSkill(&S);
+                aksi++;
+            }
+            else if (IsSameString(CKata, "undo")){
+                if(aksi>0){
+                    state prev;
+                    PopStack(&statestack,&prev);
+                    aksi-=1;
+                }else printf("Anda belum melakukan aksi apapun");
+            }
+            else if (IsSameString(CKata, "end_turn")){
+                if (S.P2.et){
+                    printf("Extra turn has been used!\n");
+                    AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
+                    ResetBattle(&(S.P1.listbangunan));
+                    S.P2.et = false;
+                }
+                else{
+                P2->turn=false;
+                P1->turn=true;
+                AddPasukanLB(S.P1.listbangunan,&(S.ArrBang));
+                ResetBattle(&(S.P1.listbangunan));
+                if (S.P1.shieldturn > 0) S.P1.shieldturn -= 1;}
+                CreateEmptyStack(&statestack);
+            }
+            else if (IsSameString(CKata, "save")){
+                SAVEGAME(S);
+            }
+            else if (IsSameString(CKata, "move")){
+                PushStack(&statestack,S);
+                move(&S);
+                aksi++;
+            }
+            else if (IsSameString(CKata, "exit")){
+                EndGame=true;
+            }else printf("Command tidak terdaftar\n");
         }
     }
 

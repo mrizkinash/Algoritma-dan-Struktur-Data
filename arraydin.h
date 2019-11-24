@@ -40,7 +40,7 @@ typedef struct
 /* ********** SELEKTOR ********** */
 #define Neff(T) (T).Neff
 #define TI(T) (T).TI
-#define Elmt(T, i) (T).TI[(i)]
+#define ElmtArr(T, i) (T).TI[(i)]
 #define MaxEl(T) (T).MaxEl
 
 /* ********** KONSTRUKTOR ********** */
@@ -177,22 +177,6 @@ void DelLastElAB(TabInt *T, ElType *X);
 /*      Banyaknya elemen tabel berkurang satu */
 /*      Tabel T mungkin menjadi kosong */
 
-/* ********* MENGUBAH UKURAN ARRAY ********* */
-void GrowTab(TabInt *T, int num);
-/* Proses : Menambahkan max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi */
-/* F.S. Ukuran tabel bertambah sebanyak num */
-
-void ShrinkTab(TabInt *T, int num);
-/* Proses : Mengurangi max element sebanyak num */
-/* I.S. Tabel sudah terdefinisi, ukuran MaxEl >= num. */
-/* F.S. Ukuran tabel berkurang sebanyak num.*/
-/*      Elemen yang berada di indeks di atas Neff dihapus.*/
-
-void CompactTab(TabInt *T);
-/* Proses : Mengurangi max element sehingga Neff = MaxEl */
-/* I.S. Tabel tidak kosong */
-/* F.S. Ukuran MaxEl = Neff */
 
 /* TAMBAHAN PUNGSI BANGUNAN */
 int JmlBOwnedX(TabInt T, int X);

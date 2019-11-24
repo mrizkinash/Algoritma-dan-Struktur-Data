@@ -1,7 +1,73 @@
 #include <stdio.h>
 #include "bangunan.h"
 
+int GetA(Bangunan B){
+// mereturn nilai penambahan pasukan / A dari Bangunan B sesuai dengan levelnya
+	//CASTLE
+	if(Type(B)=='C' && Level(B)==1) return 10;
+	else if(Type(B)=='C' && Level(B)==2) return 15;
+	else if(Type(B)=='C' && Level(B)==3) return 20;
+	else if(Type(B)=='C' && Level(B)==4) return 25;
+	//TOWER
+	else if(Type(B)=='T' && Level(B)==1) return 5;
+	else if(Type(B)=='T' && Level(B)==2) return 10;
+	else if(Type(B)=='T' && Level(B)==3) return 20;
+	else if(Type(B)=='T' && Level(B)==4) return 30;
+	//FORT
+	else if(Type(B)=='F' && Level(B)==1) return 10;
+	else if(Type(B)=='F' && Level(B)==2) return 20;
+	else if(Type(B)=='F' && Level(B)==3) return 30;
+	else if(Type(B)=='F' && Level(B)==4) return 40;
+	//VILLAGE
+	else if(Type(B)=='V' && Level(B)==1) return 5;
+	else if(Type(B)=='V' && Level(B)==2) return 10;
+	else if(Type(B)=='V' && Level(B)==3) return 15;
+	else if(Type(B)=='V' && Level(B)==4) return 20;
+}
+
+int GetM(Bangunan B){
+// mereturn nilai Maksimum penambahan pasukan dari Bangunan B sesuai dengan levelnya
+	//CASTLE
+	if(Type(B)=='C' && Level(B)==1) return 40;
+	else if(Type(B)=='C' && Level(B)==2) return 60;
+	else if(Type(B)=='C' && Level(B)==3) return 80;
+	else if(Type(B)=='C' && Level(B)==4) return 100;
+	//TOWER
+	else if(Type(B)=='T' && Level(B)==1) return 20;
+	else if(Type(B)=='T' && Level(B)==2) return 30;
+	else if(Type(B)=='T' && Level(B)==3) return 40;
+	else if(Type(B)=='T' && Level(B)==4) return 50;
+	//FORT
+	else if(Type(B)=='F' && Level(B)==1) return 20;
+	else if(Type(B)=='F' && Level(B)==2) return 40;
+	else if(Type(B)=='F' && Level(B)==3) return 60;
+	else if(Type(B)=='F' && Level(B)==4) return 80;
+	//VILLAGE
+	else if(Type(B)=='V' && Level(B)==1) return 20;
+	else if(Type(B)=='V' && Level(B)==2) return 30;
+	else if(Type(B)=='V' && Level(B)==3) return 40;
+	else if(Type(B)=='V' && Level(B)==4) return 50;
+}
+
+boolean GetP(Bangunan B){
+// mereturn ada atau tidaknya pertahanan dari Bangunan B sesuai dengan levelnya
+	//CASTLE
+	if(Type(B)=='C') return false;
+	//TOWER
+	else if(Type(B)=='T') return true;
+	//FORT
+	else if(Type(B)=='F' && Level(B)==1) return false;
+	else if(Type(B)=='F' && Level(B)==2) return false;
+	else if(Type(B)=='F' && Level(B)==3) return true;
+	else if(Type(B)=='F' && Level(B)==4) return true;
+	//VILLAGE
+	else if(Type(B)=='V') return false;
+}
+
 void CreateBangunan (Bangunan *B, char c, int i, int j){
+// aksi : menginisialisasi type, point, level, dan pasukan pada bangunan B
+// I.S. bangunan belum di inisialisasi
+// F.s. terbentuk bangunan
 	Type(*B) = c;
     AbsisBangunan(*B) = i;
     OrdinatBangunan(*B) = j;
@@ -13,47 +79,65 @@ void CreateBangunan (Bangunan *B, char c, int i, int j){
 }
 
 void LevelUpBangunan(Bangunan *B){
-    if(Type(*B)=='C') Army(B)-(0.5 * MC[Level(*B)]);
-	else if(Type(*B)=='T') Army(B)-(0.5 * MT[Level(*B)]);
-	else if(Type(*B)=='F') Army(B)-(0.5 * MF[Level(*B)]);
-	else if(Type(*B)=='V') Army(B)-(0.5 * MV[Level(*B)]);
-    Level(B)+=1;
+// menaikan level suatu bangunan dengan syarat pasukannya 
+// sudah lebih dari setengah M bangunan tsb
+// I.S. bangunan terdefinisi
+// F.s bangunan naik level, dan pasukannya berkurang
+
+	if(Army(*B) >= 0.5 * GetM(*B)){
+		Army(*B)-=(0.5 * GetM(*B));
+		Level(*B)+=1;
+	}
+	else printf("Anda tidak bisa level up\n");
 }
-// level +=1
-// jumlah pasukan berkurang M/2
 
-Boolean CekBatasPasukan(Bangunan B){
-    if(Type(B)=='C') return (Army(B)+AC[Level(B)] >= MC[Level(B)]);
-	else if(Type(B)=='T') return (Army(B)+AT[Level(B)] >= MT[Level(B)]);
-	else if(Type(B)=='F') return (Army(B)+AF[Level(B)] >= MF[Level(B)]);
-	else if(Type(B)=='V') return (Army(B)+AV[Level(B)] >= MV[Level(B)]);
+boolean CekBatasPasukan(Bangunan B){
+	// Cek apakah nilai dari penambahan pasukan melebihi M
+	// jika sudah melebihi, stop penambahan
+	return (Army(B)+GetA(B) <= GetM(B));
 }
-// Cek apakah nilai dari penambahan pasukan melebihi M
-// jika sudah melebihi, stop penambahan
-
-
 
 void AddPasukan(Bangunan *B){
+// menambahkan A jumlah pasukan ke bangunan dengan syarat
+// bangunan sudah berkepemilikan
+// I.S. bangunan terdefinisi
+// F.S pasukan pada bangunan bertambah sebanyak A pada setiap turn
 	if(CekBatasPasukan(*B) && Owner(*B)!=0){
-		if(Type(*B)=='C') Army(*B)+=AC[Level(*B)];
-		else if(Type(*B)=='T') Army(*B)+=AT[Level(*B)];
-		else if(Type(*B)=='F') Army(*B)+=AF[Level(*B)];
-		else if(Type(*B)=='V') Army(*B)+=AV[Level(*B)];
+		Army(*B)+=GetA(*B);
 	}
 }
-// menambahkan A jumlah pasukan ke seluruh bangunan yang dimiliki X pada setiap turn X
 
 void ChangeOwnerB(Bangunan *B, int X, int Y){
+// reset bangunan saat pindah kepemilikan, 
+// dengan X sebagai jumlah pasukan yang baru
+// dan Y sebagai pemilik yang baru
+// I.S. bangunan terdefinisi
+// F.S. pemilik B berubah dari X menjadi Y
     Level(*B) = 1;
     Army(*B) = X;
     Owner(*B) = Y;
 }
-// reset bangunan saat pindah kepemilikan, 
-// dengan X sebagai jumlah pasukan yang baru
-// dan Y sebagai pemilik yang baru
 
-void MovePasukan(Bangunan *B1, Bangunan *B2, int X){
-	Army(*B1)-=pas;
-    Army(*B2)+=pas;
-}
+void MovePasukan(Bangunan *B1, Bangunan *B2, int x){
 // memindahkan X buah pasukan dari bangunan B1 ke bangunan B2
+// I.S. 2 Bangunan terdefinsi
+// F.S. pasukan B1 berkurang sebanyak x dan pasukan B2 bertambah sebanyak y
+	Army(*B1)-=x;
+    Army(*B2)+=x;
+}
+
+void CetakBangunan(Bangunan B){
+// mencetak bagunan dengan format:
+// <no> <tipe bangunan> <(point)> <pasukan> <level>
+// I.S. bangunan terdefinisi
+// F.S tercetak isi bangunan B
+	if(Type(B)=='C') printf("Castle ");
+	else if(Type(B)=='T') printf("Tower ");
+	else if(Type(B)=='F') printf("Fort ");
+	else if(Type(B)=='V') printf("Village ");
+	int x = AbsisBangunan(B);
+	int y = OrdinatBangunan(B);
+	printf("(%d,%d) ",x,y);
+	printf("%d ",Army(B));
+	printf("lv. %d\n",Level(B));
+}

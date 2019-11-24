@@ -1,5 +1,4 @@
 /* ********** Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
-
 #ifndef MATRIKS_H
 #define MATRIKS_H
 
@@ -12,9 +11,12 @@
 #define KolMax 100
 
 typedef int indeks; /* indeks baris, kolom */
-typedef int ElType;
+typedef struct{
+	int Owner;
+	char TypeBangunan;	
+} ElTypeMat;
 typedef struct {
-    ElType Mem[BrsMax+1][KolMax+1];
+    ElTypeMat Mem[BrsMax+1][KolMax+1];
     int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
     int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } MATRIKS;
@@ -32,7 +34,10 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M);
 /* *** Selektor *** */
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
-#define Elmt(M,i,j) (M).Mem[(i)][(j)]
+#define ElmtMat(M,i,j) (M).Mem[(i)][(j)]
+/* Misal E adalah ElTypeMat */
+#define MOwn(E) (E).Owner
+#define MType(E) (E).TypeBangunan
 
 /* *** Selektor "DUNIA MATRIKS" *** */
 boolean IsIdxValidMatriks (int i, int j);
@@ -49,15 +54,15 @@ indeks GetLastIdxKolMatriks (MATRIKS M);
 /* Mengirimkan indeks kolom terbesar M */
 boolean IsIdxEffMatriks (MATRIKS M, indeks i, indeks j);
 /* Mengirimkan true jika i, j adalah indeks efektif bagi M */
-ElType GetElmtDiagonalMatriks (MATRIKS M, indeks i);
+ElTypeMat GetElmtDiagonalMatriks (MATRIKS M, indeks i);
 /* Mengirimkan elemen M(i,i) */
 
 /* ********** Assignment  MATRIKS ********** */
-void CopyMATRIKSMatriks (MATRIKS MIn, MATRIKS * MHsl);
+void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl);
 /* Melakukan assignment MHsl  MIn */
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void BacaMATRIKSMatriks (MATRIKS * M, int NB, int NK);
+void BacaMATRIKS (MATRIKS * M, int NB, int NK);
 /* I.S. IsIdxValid(NB,NK) */
 /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
 /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
@@ -67,7 +72,7 @@ void BacaMATRIKSMatriks (MATRIKS * M, int NB, int NK);
 4 5 6
 8 9 10
 */
-void TulisMATRIKSMatriks (MATRIKS M);
+void TulisMATRIKS (MATRIKS M);
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
    dipisahkan sebuah spasi */

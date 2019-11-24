@@ -4,6 +4,7 @@
 #include "boolean.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "pcolor.h"
 
 /* *** Konstruktor membentuk MATRIKS *** */
 void MakeMATRIKS (int NB, int NK, MATRIKS * M)
@@ -11,7 +12,7 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M)
 /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
 {
-	NBrsEff(*M) = NB;
+    NBrsEff(*M) = NB;
     NKolEff(*M) = NK;
  }
 /* *** Selektor "DUNIA MATRIKS" *** */
@@ -47,10 +48,10 @@ boolean IsIdxEffMatriksMatriks (MATRIKS M, indeks i, indeks j)
 {
     return ((i >= 1) && (i <= NBrsEff(M)) && (j <= NKolEff(M)) && (j >= 1));
 }
-ElType GetElmtDiagonalMatriks (MATRIKS M, indeks i)
+ElTypeMat GetElmtDiagonalMatriks (MATRIKS M, indeks i)
 /* Mengirimkan elemen M(i,i) */
 {
-    return(Elmt(M,i,i));
+    return(ElmtMat(M,i,i));
 }
 /* ********** Assignment  MATRIKS ********** */
 void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
@@ -61,7 +62,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl)
     MakeMATRIKS(NBrsEff(MIn),NKolEff(MIn),MHsl);
     for (i=1;i<=NBrsEff(MIn);i++){
         for(j=1;j<=NKolEff(MIn);j++){
-            Elmt(*MHsl,i,j) = Elmt(MIn,i,j);
+            ElmtMat(*MHsl,i,j) = ElmtMat(MIn,i,j);
         }
     }
 }
@@ -77,14 +78,16 @@ void BacaMATRIKS (MATRIKS * M, int NB, int NK)
 8 9 10
 */
 {
-    int i, j;
+    int i, j, temp;
+    char CC; 
 
     MakeMATRIKS(NB, NK, M);
     for (i = 1; i <= NB; i++)
     {
         for (j = 1; j <= NK; j++)
         {
-            scanf("%d", &Elmt(*M, i, j));
+            scanf("%d", &MOwn(ElmtMat(*M, i, j)));
+            scanf(" %c", &MType(ElmtMat(*M, i, j)));
         }
     }
 }
@@ -101,22 +104,15 @@ void TulisMATRIKS (MATRIKS M)
 {
     int i, j;
 
-    for (i = 1; i <= NBrsEff(M); i++)
+    for (i = 0; i <= NBrsEff(M); i++)
     {
-        for (j = 1; j <= NKolEff(M); j++)
+        for (j = 0; j <= NKolEff(M); j++)
         {
 
-            printf("%d", M.Mem[i][j]);
-
-            if (j != NKolEff(M))
-            {
-                printf(" ");
-            } else {
-                if (i != NBrsEff(M))
-                {
-                    printf("\n");
-                }
-            }
+            if (M.Mem[i][j].Owner == 0) printf("%s%c ",NORMAL, MType(ElmtMat(M, i, j)));
+            if (M.Mem[i][j].Owner == 1) printf("%s%c ",BLUE,MType(ElmtMat(M, i, j)));
+            if (M.Mem[i][j].Owner == 2) printf("%s%c ", RED,MType(ElmtMat(M, i, j)));
         }
+         printf("\n");
     }
 }

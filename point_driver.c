@@ -1,7 +1,3 @@
-/* File: main_point.c */
-/* Tanggal: 4 September 2018 */
-/* Driver ADT POINT */
-
 #include <stdio.h>
 #include "point.h"
 
