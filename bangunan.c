@@ -104,8 +104,6 @@ void AddPasukan(Bangunan *B){
 // F.S pasukan pada bangunan bertambah sebanyak A pada setiap turn
 	if(CekBatasPasukan(*B) && Owner(*B)!=0){
 		Army(*B)+=GetA(*B);
-	}else if(CekBatasPasukan(*B)==false && Owner(*B)!=0){
-		Army(*B) = GetM(*B);
 	}
 }
 
