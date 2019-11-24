@@ -11,8 +11,7 @@ typedef struct {
     Player P1,P2;
     TabInt ArrBang;
     MATRIKS M;
-    Graph G; // ini knp
-    char lastaction[30];
+    Graph G; 
 }state;
 
 #endif

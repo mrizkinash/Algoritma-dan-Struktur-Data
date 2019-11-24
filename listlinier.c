@@ -328,3 +328,18 @@ void AddPasukanLB(List L,TabInt *ArrBang){
 		P = Next(P);
 	}
 }
+
+void CopyList(List Lin, List *Lout){
+	address P;
+
+	CreateEmptyLB(Lout);
+	if(!IsEmptyLB(Lin)){
+
+		P = First(Lin);
+		while (P != Nil){
+
+			InsVLastLB(Lout, Info(P));
+			P = Next(P);
+		}
+	}
+}

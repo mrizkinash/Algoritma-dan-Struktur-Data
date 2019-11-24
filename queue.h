@@ -73,4 +73,6 @@ void PrintSkill(Queue Q);
 // void Barrage(state *S);
 // void extraTurn(state *S);
 
+void CopyQueue(Queue Qin, Queue *Qout);
+
 #endif

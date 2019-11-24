@@ -139,7 +139,7 @@ void TulisIsiAB(TabInt T);
 //         Min berisi nilai minimum T */
 
 /* ********** OPERASI LAIN ********** */
-// void CopyTab(TabInt Tin, TabInt *Tout);
+void CopyArr(TabInt Tin, TabInt *Tout);
 // /* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
 // /* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
 // /* Proses : Menyalin isi Tin ke Tout */

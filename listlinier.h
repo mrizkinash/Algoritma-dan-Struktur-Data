@@ -154,7 +154,7 @@ boolean AllAttack(List L,TabInt ArrBang);
 
 void AddPasukanLB(List L,TabInt *ArrBang);
 
-
+void CopyList(List Lin, List *Lout);
 
 
 #endif

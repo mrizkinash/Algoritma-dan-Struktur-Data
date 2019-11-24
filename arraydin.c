@@ -142,3 +142,18 @@ TabInt BOwnedX(TabInt T, int X){
     return *owned;
 }
 // mengeluarkan array bangunan yang dimiliki oleh X
+/* ********** OPERASI LAIN ********** */
+void CopyArr(TabInt Tin, TabInt *Tout){
+/* I.S. Tin terdefinisi tidak kosong, Tout sembarang */
+/* F.S. Tout berisi salinan dari Tin (identik, Neff dan MaxEl sama) */
+/* Proses : Menyalin isi Tin ke Tout */
+
+    IdxType i;
+
+    MakeEmptyAB(Tout, MaxEl(Tin));
+    Neff(*Tout) = Neff(Tin);
+
+    for (i = GetFirstIdxAB(Tin); i <= GetLastIdxAB(Tin); i++){
+        ElmtArr(*Tout, i) = ElmtArr(Tin, i);
+    }
+}

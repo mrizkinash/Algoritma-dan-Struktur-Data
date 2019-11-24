@@ -58,4 +58,8 @@ void PopStack (Stack * S, infotypeST* X);
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
 
+void CopyState(state Sin, state *Sout);
+
+void DeallocState(state *S);
+
 #endif

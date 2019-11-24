@@ -7,6 +7,8 @@
 #include "boolean.h"
 #include "stackt.h"
 
+#include <stdlib.h>
+
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyStack (Stack *S)
@@ -33,10 +35,12 @@ void PushStack (Stack * S, infotypeST X)
 /* Menambahkan X sebagai elemen Stack S. */
 /* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
-{
+{	
+	state NS;
+
 	Top(*S)++;
-	InfoTop(*S) =X;
-	
+	CopyState(X, &NS);
+	InfoTop(*S) = NS;
 }
 /* ************ Menghapus sebuah elemen Stack ************ */
 void PopStack (Stack * S, infotypeST* X)
@@ -46,4 +50,33 @@ void PopStack (Stack * S, infotypeST* X)
 {
 	*X =InfoTop(*S);
 	Top(*S)--;
+}
+
+
+void CopyState (state Sin, state *Sout){
+	Player P1out, P2out;
+	TabInt ABout;
+
+	CopyQueue(Sin.P1.skill, &(Sout->P1.skill));					// Yang dicopy yang bersifat dinamik
+	Sout->P1.turn = Sin.P1.turn;
+	CopyList(Sin.P1.listbangunan, &(Sout->P1.listbangunan));
+	Sout->P1.et = Sin.P1.et;
+	Sout->P1.shieldturn = Sin.P1.shieldturn;
+	CopyQueue(Sin.P2.skill, &(Sout->P2.skill));
+	Sout->P2.turn = Sin.P2.turn;
+	CopyList(Sin.P2.listbangunan, &(Sout->P2.listbangunan));
+	Sout->P2.et = Sin.P2.et;
+	Sout->P2.shieldturn = Sin.P2.shieldturn;
+	CopyArr(Sin.ArrBang, &(Sout->ArrBang));
+	Sout->M = Sin.M;
+	Sout->G = Sin.G;											// Graph dinamik namun tidak pernah mengalami perubahan selama permainan
+}
+
+void DeallocState(state *S){
+
+	free(&(S->P1.skill));
+	free(&(S->P1.listbangunan));
+	free(&(S->P2.skill));
+	free(&(S->P2.listbangunan));
+	free(&(S->ArrBang));
 }

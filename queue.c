@@ -127,6 +127,21 @@ void PrintSkill(Queue Q){
     }
 }
 
+void CopyQueue(Queue Qin, Queue *Qout){
+	adrQ i;
+
+	i = Head(Qin);
+	CreateEmptyQueue(Qout, MaxElQueue(Qin));
+	if (!IsEmptyQueue(Qin)){
+		
+		while (Head(Qin) <= Tail(Qin)){
+
+			AddQueue(Qout, InfoHead(Qin));
+			Head(Qin)++;
+		}
+	}
+	Head(Qin) = i;
+}
 // void UseSkill(state *S){
 //     int InfoSkill;
 // 	Player cek;
