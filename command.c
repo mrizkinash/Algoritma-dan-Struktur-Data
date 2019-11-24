@@ -73,6 +73,7 @@ void attack(state *S){
                         if(player==1){
                             //bangunan jd punya player 1
                             if((Owner(S->ArrBang.TI[diserang])==2) && (NbElmtLB(S->P2.listbangunan)==3)) AddQueue(&(S->P2.skill),5);
+                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==2) AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn 
                             ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 1);
                             S->M.Mem[(S->ArrBang.TI[diserang].P.X)][(S->ArrBang.TI[diserang].P.Y)].Owner = 1;
                             Army(S->ArrBang.TI[menyerang])-=pas;
@@ -81,24 +82,22 @@ void attack(state *S){
                     }
                         else{
                             if((Owner(S->ArrBang.TI[diserang])==2) && (NbElmtLB(S->P1.listbangunan)==3)) AddQueue(&(S->P1.skill),5);
+                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==1) AddQueue(&(S->P1.skill),2);
                             ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 2);
                             S->M.Mem[(S->ArrBang.TI[diserang].P.X)][(S->ArrBang.TI[diserang].P.Y)].Owner = 2;
                             Army(S->ArrBang.TI[menyerang])-=pas;
                             DelPLB (&(S->P1.listbangunan), diserang); // apus dari list player 1
                             InsVLastLB(&(S->P2.listbangunan),diserang);// nambahin bangunan di list L2
                         }
-                        printf("----------------------------\n");
-                        printf("| Bangunan menjadi milikmu |\n");
-                        printf("----------------------------\n");
+                        printf("------------------------------\n");
+                        printf("|  Bangunan menjadi milikmu!  |\n");
+                        printf("------------------------------\n");
                         if(S->P1.turn){
                             SudahAttack(&(S->P1.listbangunan),x); // ubah jadi pernah nyerang
-                            //printf("halo\n");
-                            if(Type(S->ArrBang.TI[diserang])=='F') AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn 
-                            else if(NbElmtLB(S->P1.listbangunan)==10) AddQueue(&(S->P1.skill),4); // syarat dapet skill barrage 
+                            if(NbElmtLB(S->P1.listbangunan)==10) AddQueue(&(S->P1.skill),4); // syarat dapet skill barrage 
                         }else{
                             SudahAttack(&(S->P2.listbangunan),x);
-                            if(Type(S->ArrBang.TI[diserang])=='F') AddQueue(&(S->P1.skill),2);
-                            else if(NbElmtLB(S->P2.listbangunan)==10) AddQueue(&(S->P2.skill),4);
+                            if(NbElmtLB(S->P2.listbangunan)==10) AddQueue(&(S->P2.skill),4);
                         }
                     }
                 }else{ // kalo gada pertahanan
@@ -114,6 +113,7 @@ void attack(state *S){
                         if(player==1){
                             //bangunan jd punya player 1
                             if((Owner(S->ArrBang.TI[diserang])==2) && (NbElmtLB(S->P2.listbangunan)==3)) AddQueue(&(S->P2.skill),5);
+                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==2) AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn
                             ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 1);
                             S->M.Mem[(S->ArrBang.TI[diserang].P.X)][(S->ArrBang.TI[diserang].P.Y)].Owner = 1;
                             Army(S->ArrBang.TI[menyerang])-=pas;
@@ -122,24 +122,23 @@ void attack(state *S){
                         }
                         else{
                             if((Owner(S->ArrBang.TI[diserang])==2) && (NbElmtLB(S->P1.listbangunan)==3)) AddQueue(&(S->P1.skill),5);
+                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==1) AddQueue(&(S->P1.skill),2);
                             ChangeOwnerB(&(S->ArrBang.TI[diserang]), new_pas, 2);
                             S->M.Mem[(S->ArrBang.TI[diserang].P.X)][(S->ArrBang.TI[diserang].P.Y)].Owner = 2;
                             Army(S->ArrBang.TI[menyerang])-=pas;
                             DelPLB (&(S->P1.listbangunan), diserang); // apus dari list player 1
                             InsVLastLB(&(S->P2.listbangunan),diserang);// nambahin bangunan di list L2
                         }
-                        printf("----------------------------\n");
-                        printf("| Bangunan menjadi milikmu |\n");
-                        printf("----------------------------\n");
+                        printf("------------------------------\n");
+                        printf("|  Bangunan menjadi milikmu!  |\n");
+                        printf("------------------------------\n");
                         if(S->P1.turn){
                             
                             SudahAttack(&(S->P1.listbangunan),x); // ubah jadi pernah nyerang
-                            //printf("halo\n");
-                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==2) AddQueue(&(S->P2.skill),2); // syarat dapet skill extra turn 
+                            //printf("halo\n"); 
                             if(NbElmtLB(S->P1.listbangunan)==10) AddQueue(&(S->P2.skill),4); // syarat dapet skill barrage 
                         }else{
                             SudahAttack(&(S->P2.listbangunan),x);
-                            if(Type(S->ArrBang.TI[diserang])=='F' && Owner(S->ArrBang.TI[diserang])==1) AddQueue(&(S->P1.skill),2);
                             if(NbElmtLB(S->P2.listbangunan)==10) AddQueue(&(S->P1.skill),4);
                         }
                     }
