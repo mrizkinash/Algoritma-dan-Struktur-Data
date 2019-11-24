@@ -67,12 +67,6 @@ void DelQueue (Queue * Q, infotype * X);
         Q mungkin kosong */
 // void PrintQueue(Queue Q);
 void PrintSkill(Queue Q);
-// void UseSkill(state *S);
-// void instantUpgrade(state *S);
-// void instantReinforcement(state *S);
-// void Barrage(state *S);
-// void extraTurn(state *S);
-
-void CopyQueue(Queue Qin, Queue *Qout);
+// mencetak skill yang dimiliki oleh player
 
 #endif
