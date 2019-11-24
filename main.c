@@ -17,6 +17,36 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+void welcome(){
+    printf("                                                                                                   .-.       \n");
+    printf("                                                                                                  {{#}}      \n");
+    printf("          {}                                                                                       8@8       \n");
+    printf("        .::::.                                                                                     888       \n");
+    printf("    @\\\\/W\\\/\\\/W\\\//@                                                                                 8@8       \n");
+    printf("     \\\\/^\\\/\\\/^\\\//                                                                             _    )8(    _  \n");
+    printf("      \\\_O_{}_O_/                                                                             (@)__/8@8\\\__(@) \n");
+    printf(" ____________________                                                                         `~'-=|:|=-'~`  \n");
+    printf("|<><><>  |  |  <><><>|                                                                             |.|       \n");
+    printf("|<>      |  |      <>|                            .__                                              |S|       \n");    
+    printf("|<>      |  |      <>|         __  _  __   ____   |  |     ____     ____     _____     ____        |'|       \n");
+    printf("|<>   .--------.   <>|         \\\ \\\/ \\\/ / _/ __ \\\  |  |   _/ ___\\\   /  _ \\\   /     \\\  _/ __ \\\       |.|       \n");
+    printf("|     |   ()   |     |          \\\     /  \\\  ___/  |  |__ \\\  \\\___  (  <_> ) |  Y Y  \\\ \\\  ___/       |P|       \n");
+    printf("|_____| (O\\\/O) |_____|           \\\/\\\_/    \\\___  > |____/  \\\___  >  \\\____/  |__|_|  /  \\\___  >      |'|       \n");
+    printf("|     \\\   /\\\   /     |                        \\\/              \\\/                 \\\/       \\\/       |.|       \n");
+    printf("|------\\\  \\\/  /------|                                                                             |U|       \n");
+    printf("|       '.__.'       |                                  T O                                        |'|       \n");
+    printf("|        |  |        |                                                                             |.|       \n");
+    printf(":        |  |        :                      A V A T A R     G A M E                                |N|       \n");
+    printf(" \\\       |  |       /                                                                              |'|       \n");
+    printf("  \\\<>    |  |    <>/                                                                               |.|       \n");
+    printf("   \\\<>   |  |   <>/                                                                                |K|       \n");
+    printf("    `\\\<> |  | <>/'                                                                                 |'|       \n");
+    printf("      `-.|__|.-`                                                                                   \\\ /       \n");
+    printf("                                                                                                    ^        \n");
+    
+
+}
+
 int KarakterToInt (char CC){
 
     return (int) CC - 48;
@@ -246,8 +276,9 @@ int main(){
     CreateEmptyQueue(&(S.P2.skill), 10);
     AddQueue(&(S.P1.skill), 1);       
     AddQueue(&(S.P2.skill), 1);
+    welcome();
     while (!EndGame){
-        TulisMATRIKS(S.M);
+        //TulisMATRIKS(S.M);
         if (P1->turn){
             printf("          _                                   _ \n");
             printf("  _ __   | |   __ _   _   _    ___   _ __    / |\n");
@@ -255,7 +286,7 @@ int main(){
             printf(" | |_) | | | | (_| | | |_| | |  __/ | |      | |\n");
             printf(" | .__/  |_|  \\\__,_|  \\\__, |  \\\___| |_|      |_|\n");
             printf(" |_|                  |___/                     \n");
-                    
+            TulisMATRIKS(S.M);
             //printf("Player 1\n");
             CetakListB(S.P1.listbangunan, S.ArrBang);
             printf("Skill Available : ");
@@ -311,10 +342,9 @@ int main(){
                     }
                 aksi=0;
             }
-            else if (IsSameString(CKata, "save")){
-
-                SAVEGAME(S);
-            }
+            // else if (IsSameString(CKata, "save")){
+            //     SAVEGAME(S);
+            // }
             else if (IsSameString(CKata, "move")){
                 PushStack(&statestack,S);
                 move(&S);
@@ -332,7 +362,7 @@ int main(){
             printf(" | |_) | | | | (_| | | |_| | |  __/ | |       / __/ \n");
             printf(" | .__/  |_|  \\\__,_|  \\\__, |  \\\___| |_|      |_____|\n");
             printf(" |_|                  |___/\n");
-                           
+            TulisMATRIKS(S.M);       
             //printf("Player 2\n");
             CetakListB(S.P2.listbangunan, S.ArrBang);
             printf("Skill Available : ");
@@ -384,10 +414,9 @@ int main(){
                 if (S.P1.shieldturn > 0) S.P1.shieldturn -= 1;}
                 CreateEmptyStack(&statestack);
             }
-            else if (IsSameString(CKata, "save")){
-
-                SAVEGAME(S);
-            }
+            // else if (IsSameString(CKata, "save")){
+            //     SAVEGAME(S);
+            // }
             else if (IsSameString(CKata, "move")){
                 PushStack(&statestack,S);
                 move(&S);
